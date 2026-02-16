@@ -21,7 +21,7 @@ export default function Banner() {
           <span className="font-normal">Cupos limitados</span>
         </h2>
         <p className="text-cream text-base sm:text-lg mt-1 font-normal">
-          <a href="tel:+543564565369" className="hover:underline">Cel 3564 565369</a>
+          <a href="tel:+543564565369" className="hover:underline">Cel 3564 565327</a>
         </p>
       </div>
     </div>
