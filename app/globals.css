@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --cream: #FFFDF5;
+  --celisan-red: #B52C2C;
+  --olive: #556B2F;
+  --olive-light: #6B8E23;
+}
+
+body {
+  background-color: var(--cream);
+}
