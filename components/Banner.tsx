@@ -16,7 +16,7 @@ export default function Banner() {
       />
       <div className="relative z-10 text-center">
         <h2 className="text-xl sm:text-2xl tracking-wide">
-          <span className="font-semibold">Pedidos Martes y Viernes</span>
+          <span className="font-semibold">Entrega Martes y Viernes</span>
           <span className="mx-2">—</span>
           <span className="font-normal">Cupos limitados</span>
         </h2>
