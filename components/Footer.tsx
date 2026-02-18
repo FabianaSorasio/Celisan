@@ -41,7 +41,20 @@ export default function Footer() {
             <MessageCircle size={iconSize} strokeWidth={1.8} />
           </a>
         </div>
-        <p className="text-center text-gray-500 text-xs mt-6">
+        <div className="mt-8 border-t border-gray-200 pt-8 text-center text-sm text-gray-500">
+  <p>© {new Date().getFullYear()} Celisan - Todos los derechos reservados.</p>
+  <div className="mt-4 flex flex-col items-center gap-2">
+    <span>Creado por</span>
+    <img 
+      src="/iso-disenadora.png" 
+      alt="Iso Fabiana Sorasio" 
+      className="h-10 w-auto" 
+    />
+    <span className="font-semibold text-olive">
+      Fabiana Sorasio – Diseñadora Gráfica
+    </span>
+  </div>
+</div><p className="text-center text-gray-500 text-xs mt-6">
           Celisan — Waffles sin gluten
         </p>
       </div>
