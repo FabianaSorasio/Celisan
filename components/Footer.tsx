@@ -1,62 +1,58 @@
 "use client";
 
+import React from 'react';
 import { Instagram, Facebook, MessageCircle } from "lucide-react";
 import { socialLinks } from "@/lib/social";
 
-const iconSize = 26;
+const iconSize = 24;
 
 export default function Footer() {
   return (
-    <footer className="bg-cream border-t border-gray-200/80 mt-auto">
-      <div className="max-w-6xl mx-auto px-4 py-8">
-        <p className="text-center text-gray-600 text-sm mb-5">
-          Seguinos en redes
-        </p>
-        <div className="flex justify-center gap-8">
-          <a
-            href={socialLinks.instagram}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-olive transition-colors hover:text-celisan-red focus:outline-none focus-visible:ring-2 focus-visible:ring-celisan-red/50 rounded-full p-1"
-            aria-label="Instagram"
-          >
-            <Instagram size={iconSize} strokeWidth={1.8} />
+    <footer className="bg-stone-50 border-t border-gray-200 pt-16 pb-8">
+      <div className="max-w-7xl mx-auto px-4">
+        
+        {/* SECCIÓN QUIÉNES SOMOS */}
+        <div className="max-w-3xl mx-auto text-center mb-12">
+          <h2 className="text-3xl font-bold text-olive mb-6 italic">Nuestra Historia</h2>
+          <p className="text-lg text-gray-700 leading-relaxed mb-4">
+            Celisan nació en 2019 como un proyecto que inicié con mucha dedicación para brindar opciones seguras y ricas sin TACC. 
+            Hoy, con esa misma esencia, vuelvo a acercarles una propuesta renovada y divertida: nuestros waffles artesanales.
+          </p>
+          <p className="text-lg text-gray-700 leading-relaxed">
+            Soy <span className="font-semibold text-olive">Fabiana Sorasio</span>, y cada uno de estos waffles está hecho por mí misma, 
+            pensando en acompañar cualquier ocasión, ya sea en versiones dulces o saladas. 
+            ¡Un sabor que nos une y se disfruta sin límites!
+          </p>
+        </div>
+
+        {/* REDES SOCIALES */}
+        <div className="flex justify-center gap-8 mb-10">
+          <a href={socialLinks.instagram} target="_blank" rel="noopener noreferrer" className="text-olive hover:text-celisan-red transition-colors" aria-label="Instagram">
+            <Instagram size={iconSize} />
           </a>
-          <a
-            href={socialLinks.facebook}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-olive transition-colors hover:text-celisan-red focus:outline-none focus-visible:ring-2 focus-visible:ring-celisan-red/50 rounded-full p-1"
-            aria-label="Facebook"
-          >
-            <Facebook size={iconSize} strokeWidth={1.8} />
+          <a href={socialLinks.facebook} target="_blank" rel="noopener noreferrer" className="text-olive hover:text-celisan-red transition-colors" aria-label="Facebook">
+            <Facebook size={iconSize} />
           </a>
-          <a
-            href={socialLinks.whatsapp}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-olive transition-colors hover:text-celisan-red focus:outline-none focus-visible:ring-2 focus-visible:ring-celisan-red/50 rounded-full p-1"
-            aria-label="WhatsApp"
-          >
-            <MessageCircle size={iconSize} strokeWidth={1.8} />
+          <a href={socialLinks.whatsapp} target="_blank" rel="noopener noreferrer" className="text-olive hover:text-celisan-red transition-colors" aria-label="WhatsApp">
+            <MessageCircle size={iconSize} />
           </a>
         </div>
-        <div className="mt-8 border-t border-gray-200 pt-8 text-center text-sm text-gray-500">
-  <p>© {new Date().getFullYear()} Celisan - Todos los derechos reservados.</p>
-  <div className="mt-4 flex flex-col items-center gap-2">
-    <span>Creado por</span>
-    <img 
-      src="/iso-disenadora.png" 
-      alt="Iso Fabiana Sorasio" 
-      className="h-10 w-auto" 
-    />
-    <span className="font-semibold text-olive">
-      Fabiana Sorasio – Diseñadora Gráfica
-    </span>
-  </div>
-</div><p className="text-center text-gray-500 text-xs mt-6">
-          Celisan — Waffles sin gluten
-        </p>
+
+        {/* FIRMA Y DERECHOS */}
+        <div className="text-center border-t border-gray-200 pt-8">
+          <img 
+            src="/iso-fps.png" 
+            alt="Fabiana Sorasio – Diseñadora Gráfica" 
+            className="h-12 w-auto mx-auto mb-4" 
+          />
+          <p className="text-sm text-gray-500">
+            © {new Date().getFullYear()} Celisan - Todos los derechos reservados.
+          </p>
+          <p className="text-xs text-gray-400 mt-2 italic">
+            Diseño y Desarrollo por Fabiana Sorasio
+          </p>
+        </div>
+
       </div>
     </footer>
   );

@@ -13,7 +13,7 @@ export default function Header() {
     <>
       <header className="sticky top-0 z-40 bg-cream/95 backdrop-blur border-b border-gray-200/80">
         <div className="relative max-w-6xl mx-auto px-4 py-4 flex items-center justify-between min-h-[3.5rem]">
-          <div className="flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-start">
+          <div className="flex-shrink-0 w-12 h-12 sm:w-14 sm:h-16 flex items-center justify-start">
             <img
               src="/img/sin_gluten_legal-01.png"
               alt="Sin TACC"
@@ -21,11 +21,11 @@ export default function Header() {
             />
           </div>
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-            <img
-              src="/img/logo-celisan.png"
-              alt="Celisan"
-              className="h-11 sm:h-12 w-auto object-contain"
-            />
+          <img 
+  src="/logo-celisan.png" 
+  alt="Celisan" 
+  className="h-16 w-auto transition-transform hover:scale-105" 
+/>
           </div>
           <button
             type="button"
