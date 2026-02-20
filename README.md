@@ -1,34 +1,36 @@
-# Celisan - Landing Page
+# 🧇 Celisan - Waffles Sin TACC
 
-Landing de waffles artesanales con catálogo, carrito y pedidos por WhatsApp.
+¡Bienvenidos al repositorio de **Celisan**! Este proyecto es la evolución de un sueño que comenzó en 2019, enfocado en brindar opciones gastronómicas seguras, ricas y divertidas para la comunidad celíaca y para todos los que disfrutan de comer bien.
 
-## Cómo correr el proyecto
+## 👩‍🎨 Sobre el Proyecto
+Celisan nació de la dedicación por crear alimentos artesanales sin gluten. Hoy, volvemos con una propuesta renovada: **Waffles artesanales** hechos por nosotros mismos, ideales para cualquier ocasión, ya sea en versiones dulces o saladas.
 
-```bash
-npm install
-npm run dev
-```
+* **Fundadora:** Fabiana Sorasio
+* **Ubicación:** San Francisco, Córdoba, Argentina.
+* **Especialidad:** Waffles 100% Libres de Gluten (Sin TACC).
 
-Abre [http://localhost:3000](http://localhost:3000).
+---
 
-## Imágenes
+## 🛠️ Tecnologías utilizadas
+Para esta Landing Page, utilizamos herramientas de última generación para asegurar velocidad y diseño:
+* **Next.js 14** (Framework de React)
+* **Tailwind CSS** (Para un diseño estético y responsive)
+* **Lucide React** (Iconografía moderna)
+* **Vercel** (Alojamiento y despliegue)
 
-Las fotos de productos se sirven desde `/public/`. Si no existen, se muestra un placeholder. Nombres esperados:
+---
 
-- `avocado-tomato.jpg` — Avocado & Tomato
-- `jamon-queso.jpg` — Jamón y Queso
-- `dulce-banana.jpg` — Dulce de Leche y Banana
-- `frutos-bosque.jpg` — Frutos del Bosque
-- `ready-toast.jpg` — Packs Ready to Toast
+## 🎨 Identidad Visual
+El diseño de esta página refleja la esencia artesanal de la marca:
+* **Colores:** Inspirados en la naturaleza y la cocina saludable (Verde Oliva, tonos piedra y crema).
+* **Tipografía:** Seleccionada para transmitir calidez y profesionalismo.
 
-Ver `public/README-imagenes.md` para más detalle.
+---
 
-## WhatsApp
+## 📬 Contacto
+Si querés probar nuestros waffles o conocer más sobre el proyecto:
+* **Instagram:** [@celisan.gf](https://instagram.com/celisan.gf)
+* **Diseño y Desarrollo:** Fabiana Sorasio - [LinkedIn](https://www.linkedin.com/in/fabiana-sorasio/)
 
-En `lib/cart.ts` define la constante `WHATSAPP_NUMBER` (número con código de país, sin +). Ejemplo: `5491112345678`.
-
-## Stack
-
-- Next.js 14 (App Router)
-- Tailwind CSS
-- TypeScript
+---
+*Hecho con ❤️ y dedicación por Fabiana Sorasio.*
