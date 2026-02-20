@@ -25,7 +25,7 @@ export default function Cart({ onClose }: CartProps) {
     const text = encodeURIComponent(
       formatWhatsAppMessage(items, total, selectedDay)
     );
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, "_blank");
+    window.open(`https://wa.me/${5493564629177}?text=${text}`, "_blank");
   };
 
   if (items.length === 0) {
