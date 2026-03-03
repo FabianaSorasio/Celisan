@@ -15,9 +15,9 @@ export const products: Product[] = [
   {
     id: "morado-veggie",
     name: "Morado Veggie",
-    description: "Berenjena asada, tomates cherry y mucho queso sobre waffle artesanal",
+    description: "Berenjena asada, tomates y queso fundido sobre waffle artesanal",
     price: 1300, 
-    image: "/img/waffle-palta.png", 
+    image: "/img/waffle-berenjena.png", 
     category: "salados",
   },
   {
@@ -30,7 +30,7 @@ export const products: Product[] = [
   },
   {
     id: "dulce-banana",
-    name: "Dulce de Leche y Banana",
+    name: "Dulce de Leche y Banana con chocolate",
     description: "Dulce de leche artesanal con banana e hilos de chocolate",
     price: 1000,
     image: "/img/waffle-dulce.png",
@@ -38,7 +38,7 @@ export const products: Product[] = [
   },
   {
     id: "frutos-bosque",
-    name: "Frutos del Bosque",
+    name: "Frutos del Bosque con crema",
     description: "Mix de frutos rojos con toques de crema",
     price: 1100,
     image: "/img/waffle-frutos.png",
