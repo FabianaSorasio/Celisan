@@ -13,11 +13,11 @@ export interface Product {
 // Rutas de imagen vía /img/ (Route Handler sirve desde /public). Nombres = archivos en public.
 export const products: Product[] = [
   {
-    id: "avocado-tomato",
-    name: "Avocado & Tomato",
-    description: "Palta y tomate fresco sobre waffle artesanal",
-    price: 1200,
-    image: "/img/waffle-palta.png",
+    id: "morado-veggie",
+    name: "Morado Veggie",
+    description: "Berenjena asada, tomates cherry y mucho queso sobre waffle artesanal",
+    price: 1300, 
+    image: "/img/waffle-palta.png", 
     category: "salados",
   },
   {
@@ -31,7 +31,7 @@ export const products: Product[] = [
   {
     id: "dulce-banana",
     name: "Dulce de Leche y Banana",
-    description: "Dulce de leche artesanal con banana",
+    description: "Dulce de leche artesanal con banana e hilos de chocolate",
     price: 1000,
     image: "/img/waffle-dulce.png",
     category: "dulces",
@@ -39,7 +39,7 @@ export const products: Product[] = [
   {
     id: "frutos-bosque",
     name: "Frutos del Bosque",
-    description: "Mix de frutos rojos con crema",
+    description: "Mix de frutos rojos con toques de crema",
     price: 1100,
     image: "/img/waffle-frutos.png",
     category: "dulces",
