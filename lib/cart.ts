@@ -21,4 +21,4 @@ export function formatWhatsAppMessage(
   const detail = lines.join("\n");
   return `¡Hola Celisan! Quiero encargar:\n${detail}\n\nPara el día ${day}.\nTotal: $${total}\n\nDatos de transferencia:\nAlias: TU.ALIAS.AQUI`;}
 
-export const WHATSAPP_NUMBER = "5493564565327"; // Reemplazar con número real
+export const WHATSAPP_NUMBER = "5493564626508"; // Reemplazar con número real
