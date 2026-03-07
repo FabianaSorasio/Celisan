@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Cart from "./Cart";
 import { useCart } from "./CartProvider";
+import Image from "next/image";
 
 export default function Header() {
   const [cartOpen, setCartOpen] = useState(false);
@@ -13,6 +14,8 @@ export default function Header() {
     <>
       <header className="sticky top-0 z-40 bg-cream/95 backdrop-blur border-b border-gray-200/80">
         <div className="relative max-w-6xl mx-auto px-4 py-4 flex items-center justify-between min-h-[3.5rem]">
+          
+          {/* Logo Sin TACC a la izquierda */}
           <div className="flex-shrink-0 w-12 h-12 sm:w-14 sm:h-16 flex items-center justify-start">
             <img
               src="/img/sin_gluten_legal-01.png"
@@ -20,20 +23,23 @@ export default function Header() {
               className="w-full h-full object-contain object-left"
             />
           </div>
-        {/* ESTO ES EL CAMBIO PARA CELISAN */}
-<div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-  <img 
-    src="/img/logo-celisan.png"  // Agregué /img/ porque ahí está tu archivo
-    alt="Celisan" 
-    className="h-10 sm:h-14 md:h-16 w-auto transition-transform hover:scale-105" 
-  />
-</div>
+
+          {/* Logo Celisan Central */}
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+            <img 
+              src="/img/logo-celisan.png" 
+              alt="Celisan" 
+              className="h-10 sm:h-14 md:h-16 w-auto transition-transform hover:scale-105" 
+            />
+          </div>
+
+          {/* Botón Carrito a la derecha */}
           <button
             type="button"
             onClick={() => setCartOpen((o) => !o)}
-            className="relative flex items-center gap-2 px-4 py-2 rounded-xl bg-olive text-cream font-medium hover:bg-olive-light transition-colors"
+            className="relative flex items-center gap-2 p-2 sm:px-4 sm:py-2 rounded-xl bg-olive text-cream font-medium hover:bg-olive-light transition-colors"
           >
-            <span>Carrito</span>
+            <span className="hidden sm:inline">Carrito</span>
             {count > 0 && (
               <span className="absolute -top-1 -right-1 min-w-[1.25rem] h-5 px-1 flex items-center justify-center rounded-full bg-celisan-red text-white text-xs font-bold">
                 {count}
