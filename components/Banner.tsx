@@ -3,7 +3,7 @@ export default function Banner() {
     <div
       className="relative py-4 px-4 text-center font-medium tracking-wide text-cream bg-cover bg-center bg-no-repeat min-h-[4.5rem] flex items-center justify-center"
       style={{
-        backgroundImage: "url(/img/banner.jpg)",
+        backgroundImage: "url(/img/banner.png)",
       }}
     >
       {/* Degradé verde oliva → rojo */}
