@@ -20,13 +20,14 @@ export default function Header() {
               className="w-full h-full object-contain object-left"
             />
           </div>
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-          <img 
-  src="/logo-celisan.png" 
-  alt="Celisan" 
-  className="h-16 w-auto transition-transform hover:scale-105" 
-/>
-          </div>
+        {/* ESTO ES EL CAMBIO PARA CELISAN */}
+<div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+  <img 
+    src="/img/logo-celisan.png"  // Agregué /img/ porque ahí está tu archivo
+    alt="Celisan" 
+    className="h-10 sm:h-14 md:h-16 w-auto transition-transform hover:scale-105" 
+  />
+</div>
           <button
             type="button"
             onClick={() => setCartOpen((o) => !o)}
