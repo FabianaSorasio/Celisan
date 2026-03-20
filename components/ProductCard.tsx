@@ -2,6 +2,7 @@
 
 import type { Product } from "@/lib/products";
 import { useCart } from "@/components/CartProvider";
+import Image from "next/image";
 
 interface ProductCardProps {
   product: Product;
@@ -21,10 +22,12 @@ export default function ProductCard({ product }: ProductCardProps) {
       }}
     >
       <div className="aspect-[4/3] relative bg-gray-100 overflow-hidden">
-        <img
+        <Image
           src={imageSrc}
           alt={product.name}
-          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+          fill
+          sizes="(max-width: 640px) 90vw, 20rem"
+          className="object-cover transition-transform duration-300 group-hover:scale-105"
         />
       </div>
       <div className="p-5">

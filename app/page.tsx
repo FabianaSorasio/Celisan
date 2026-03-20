@@ -14,7 +14,7 @@ export default function Home() {
       <Header />
       <div className="flex justify-center w-full bg-cream">
         <img
-          src="/img/banner.png"
+          src="/banner.png"
           alt=""
           className="w-full max-w-6xl object-contain"
         />

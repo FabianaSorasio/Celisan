@@ -18,7 +18,7 @@ export default function Header() {
           {/* Logo Sin TACC a la izquierda */}
           <div className="flex-shrink-0 w-12 h-12 sm:w-14 sm:h-16 flex items-center justify-start">
             <img
-              src="/img/sin_gluten_legal-01.png"
+              src="/sin_gluten_legal-01.png"
               alt="Sin TACC"
               className="w-full h-full object-contain object-left"
             />
@@ -27,7 +27,7 @@ export default function Header() {
           {/* Logo Celisan Central */}
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
             <img 
-              src="/img/logo-celisan.png" 
+              src="/logo-celisan.png" 
               alt="Celisan" 
               className="h-10 sm:h-14 md:h-16 w-auto transition-transform hover:scale-105" 
             />

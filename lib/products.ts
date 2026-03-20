@@ -10,14 +10,14 @@ export interface Product {
   variant?: string; // e.g. "x4" | "x6" for congelados
 }
 
-// Rutas de imagen vía /img/ (Route Handler sirve desde /public). Nombres = archivos en public.
+// Rutas de imagen directas desde `/public/`.
 export const products: Product[] = [
   {
     id: "morado-veggie",
     name: "Morado Veggie",
     description: "Berenjena asada, tomates cherry y mucho queso sobre waffle artesanal",
     price: 1300, 
-    image: "/img/waffle-berenjena.png",
+    image: "/waffle-berenjena.png",
     category: "salados",
   },
   {
@@ -25,7 +25,7 @@ export const products: Product[] = [
     name: "Jamón y Queso",
     description: "Jamón y queso fundido en waffle recién hecho",
     price: 1100,
-    image: "/img/waffle-jyqueso.png",
+    image: "/waffle-jyqueso.png",
     category: "salados",
   },
   {
@@ -33,7 +33,7 @@ export const products: Product[] = [
     name: "Dulce de Leche y Banana",
     description: "Dulce de leche artesanal con banana e hilos de chocolate",
     price: 1000,
-    image: "/img/waffle-dulce.png",
+    image: "/waffle-dulce.png",
     category: "dulces",
   },
   {
@@ -41,7 +41,7 @@ export const products: Product[] = [
     name: "Frutos del Bosque",
     description: "Mix de frutos rojos con toques de crema",
     price: 1100,
-    image: "/img/waffle-frutos.png",
+    image: "/waffle-frutos.png",
     category: "dulces",
   },
   {
@@ -49,7 +49,7 @@ export const products: Product[] = [
     name: "Listos para que prepares x2 unidades",
     description: "Por 2 unidades",
     price: 2800,
-    image: "/img/waffle-solo-01.png",
+    image: "/waffle-solo-01.png",
     category: "congelados",
     variant: "x2",
   },
@@ -58,7 +58,7 @@ export const products: Product[] = [
     name: "Listos para que prepares x4 unidades",
     description: "Por 4 unidades",
     price: 3900,
-    image: "/img/waffle-solo-01.png",
+    image: "/waffle-solo-01.png",
     category: "congelados",
     variant: "x4",
   },
