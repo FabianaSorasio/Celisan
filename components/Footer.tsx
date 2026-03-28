@@ -15,13 +15,14 @@ export default function Footer() {
         <div className="max-w-3xl mx-auto text-center mb-12">
           <h2 className="text-3xl font-bold text-olive mb-6 italic">Nuestra Historia</h2>
           <p className="text-lg text-gray-700 leading-relaxed mb-4">
-            Celisan nació en 2019 como un proyecto que inicié con mucha dedicación para brindar opciones seguras y ricas sin TACC. 
-            Hoy, con esa misma esencia, vuelvo a acercarles una propuesta renovada y divertida: nuestros waffles artesanales.
+            En 2019 iniciamos un camino: revender opciones sin TACC para la comunidad celíaca de San Francisco y zona. Hoy,
+            mantenemos esa esencia intacta pero te traemos una invitación renovada y original: ¡descubrir la magia de nuestros
+            waffles artesanales hechos por nosotros mismos!
           </p>
           <p className="text-lg text-gray-700 leading-relaxed">
-            Soy <span className="font-semibold text-olive">Fabiana Sorasio</span>, y cada uno de estos waffles está hecho por mí misma, 
-            pensando en acompañar cualquier ocasión, ya sea en versiones dulces o saladas. 
-            ¡Un sabor que nos une y se disfruta sin límites!
+            Celisan es sabor, cuidado y autenticidad en cada bocado. Detrás de cada waffle hay una receta propia, pensada
+            para convertir cualquier momento en una celebración, sin límites. Dulces o salados, son el placer seguro que
+            estabas esperando.
           </p>
         </div>
 

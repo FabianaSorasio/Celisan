@@ -15,7 +15,8 @@ export const products: Product[] = [
   {
     id: "morado-veggie",
     name: "Morado Veggie",
-    description: "Berenjena asada, tomates cherry y mucho queso sobre waffle artesanal",
+    description:
+      "Berenjena asada, tomates y mucho queso sobre waffle artesanal sin gluten, ¡lleno de sabor!",
     price: 1300, 
     image: "/waffle-berenjena.png",
     category: "salados",
@@ -23,15 +24,16 @@ export const products: Product[] = [
   {
     id: "jamon-queso",
     name: "Jamón y Queso",
-    description: "Jamón y queso fundido en waffle recién hecho",
+    description: "Jamón y queso fundido en waffle recién hecho sin gluten.",
     price: 1100,
     image: "/waffle-jyqueso.png",
     category: "salados",
   },
   {
     id: "dulce-banana",
-    name: "Dulce de Leche y Banana",
-    description: "Dulce de leche artesanal con banana e hilos de chocolate",
+    name: "Banana con Dulce de leche",
+    description:
+      "Banana con dulce de leche e hilos de chocolate, con una base de waffle artesanal sin gluten, ¡Opción para golosos!",
     price: 1000,
     image: "/waffle-dulce.png",
     category: "dulces",
@@ -39,7 +41,8 @@ export const products: Product[] = [
   {
     id: "frutos-bosque",
     name: "Frutos del Bosque",
-    description: "Mix de frutos rojos con toques de crema",
+    description:
+      "Mix de frutos rojos con toques de crema en una base de waffle artesanal sin gluten.",
     price: 1100,
     image: "/waffle-frutos.png",
     category: "dulces",
@@ -48,7 +51,7 @@ export const products: Product[] = [
     id: "ready-toast-2",
     name: "Listos para que prepares x2 unidades",
     description: "Por 2 unidades",
-    price: 2800,
+    price: 3500,
     image: "/waffle-solo-01.png",
     category: "congelados",
     variant: "x2",
@@ -57,7 +60,7 @@ export const products: Product[] = [
     id: "ready-toast-4",
     name: "Listos para que prepares x4 unidades",
     description: "Por 4 unidades",
-    price: 3900,
+    price: 6800,
     image: "/waffle-solo-01.png",
     category: "congelados",
     variant: "x4",
