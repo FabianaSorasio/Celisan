@@ -15,15 +15,37 @@ export default function Home() {
       <Header />
       <div className="w-full bg-cream px-3 sm:px-6 flex justify-center">
         <div className="w-full max-w-6xl min-w-0">
-          <Image
-            src="/banner.png"
-            alt="Celisan — Waffles artesanales sin gluten"
-            width={1920}
-            height={279}
-            className="w-full h-auto max-w-full object-contain object-center align-top"
-            sizes="(max-width: 640px) calc(100vw - 1.5rem), (max-width: 1152px) 100vw, 72rem"
-            priority
-          />
+          {/* Móvil: dos tiras 750×215 apiladas */}
+          <div className="flex flex-col md:hidden">
+            <Image
+              src="/banner_responsive_celular1.png"
+              alt="Waffles salados sin gluten"
+              width={750}
+              height={215}
+              className="w-full h-auto max-w-full object-contain object-center block"
+              sizes="calc(100vw - 1.5rem)"
+              priority
+            />
+            <Image
+              src="/banner_responsive_celular2.png"
+              alt="Waffles dulces sin gluten"
+              width={750}
+              height={215}
+              className="w-full h-auto max-w-full object-contain object-center block"
+              sizes="calc(100vw - 1.5rem)"
+            />
+          </div>
+          {/* Tablet/desktop: banner panorámico */}
+          <div className="hidden md:block">
+            <Image
+              src="/banner.png"
+              alt="Celisan — Waffles artesanales sin gluten"
+              width={1920}
+              height={279}
+              className="w-full h-auto max-w-full object-contain object-center align-top"
+              sizes="(max-width: 1152px) 100vw, 72rem"
+            />
+          </div>
         </div>
       </div>
       <main className="max-w-6xl mx-auto px-4 py-20 md:py-32 pb-20">
