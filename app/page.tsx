@@ -48,13 +48,12 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <main className="max-w-6xl mx-auto px-4 py-20 md:py-32 pb-20">
+      <main className="max-w-6xl mx-auto px-4 pt-14 sm:pt-16 pb-20 md:pb-32">
         <div className="text-center mb-16 max-w-xl mx-auto">
           <h1 className="text-3xl sm:text-4xl font-bold text-olive mb-2">
             Waffles sin gluten
           </h1>
-          <h3 className="text-gray-700 text-lg font-bold">Pedidos sólo martes y viernes</h3>
-          <h3 className="text-gray-600 text-lg font-normal">Cupos limitados, take away</h3>
+          <p className="text-gray-700 text-lg font-bold">Entrega Take Away</p>
         </div>
 
         {categories.map((cat) => {
