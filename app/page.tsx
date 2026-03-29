@@ -62,7 +62,9 @@ export default function Home() {
           return (
             <section key={cat} className="mb-20">
               <h2
-                className={`text-3xl sm:text-4xl font-bold mb-10 border-b-2 pb-3 text-center uppercase tracking-tight ${
+                className={`text-3xl sm:text-4xl font-bold mb-10 border-b-2 pb-3 text-center tracking-tight ${
+                  cat === "congelados" ? "" : "uppercase "
+                }${
                   cat === "dulces"
                     ? "text-celisan-red border-celisan-red/20"
                     : cat === "congelados"

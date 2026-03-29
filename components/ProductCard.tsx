@@ -2,7 +2,6 @@
 
 import type { Product } from "@/lib/products";
 import { useCart } from "@/components/CartProvider";
-import Image from "next/image";
 
 interface ProductCardProps {
   product: Product;
@@ -10,7 +9,6 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   const { addItem } = useCart();
-  // src usa ruta exacta desde raíz: /waffle-xxx.png (archivos en /public)
   const imageSrc = product.image;
 
   return (
@@ -22,12 +20,12 @@ export default function ProductCard({ product }: ProductCardProps) {
       }}
     >
       <div className="aspect-[4/3] relative bg-gray-100 overflow-hidden">
-        <Image
+        <img
           src={imageSrc}
           alt={product.name}
-          fill
-          sizes="(max-width: 640px) 90vw, 20rem"
-          className="object-cover transition-transform duration-300 group-hover:scale-105"
+          className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+          loading="lazy"
+          decoding="async"
         />
       </div>
       <div className="p-5">
