@@ -15,7 +15,7 @@ export const products: Product[] = [
   {
     id: "morado-veggie",
     name: "Morado Veggie",
-    description:"**¡Precio Lanzamiento!** \n Berenjena asada, tomates y mucho queso sobre waffle artesanal sin gluten, ¡lleno de sabor!",
+    description: "**¡Precio Lanzamiento!** \n Berenjena asada, tomates y mucho queso sobre waffle artesanal sin gluten, ¡lleno de sabor!",
     price: 13900,
     image: "/waffle-berenjena.png",
     category: "salados",
@@ -31,7 +31,7 @@ export const products: Product[] = [
   {
     id: "dulce-banana",
     name: "Banana con Dulce de leche",
-    description: "**¡Precio Lanzamiento!** \n Banana con dulce de leche e hilos de chocolate, con una base de waffle artesanal sin gluten, ¡Opción para golosos!",
+    description: "**¡Precio Lanzamiento!** \n Banana con dulce de leche e hilos de chocolate, con una base de waffle artesanal sin gluten ¡Opción para golosos!.",
     price: 13900,
     image: "/waffle-dulce.png",
     category: "dulces",

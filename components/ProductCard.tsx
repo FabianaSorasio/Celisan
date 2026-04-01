@@ -32,7 +32,9 @@ export default function ProductCard({ product }: ProductCardProps) {
         <h3 className="font-semibold text-lg text-gray-800 mb-1">
           {product.name}
         </h3>
-        <p className="text-sm text-gray-600 mb-3">{product.description}</p>
+        <p className="text-sm text-gray-600 mb-3 whitespace-pre-line first-line:font-bold first-line:text-celisan-red">
+  {product.description}
+</p>
         <div className="flex items-center justify-between">
           <span className="text-celisan-red font-bold text-lg">
             ${product.price.toLocaleString("es-AR")}
