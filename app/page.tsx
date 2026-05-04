@@ -49,31 +49,35 @@ export default function Home() {
         </div>
       </div>
       <main className="max-w-6xl mx-auto px-4 pt-14 sm:pt-16 pb-20 md:pb-32">
-        <div className="text-center mb-16 max-w-xl mx-auto">
-          <h1 className="text-3xl sm:text-4xl font-bold text-olive mb-2">
-            Waffles sin gluten
-          </h1>
-          <p className="text-gray-700 text-lg font-bold">Entrega Take Away</p>
-        </div>
+        <section className="mb-16 rounded-2xl p-6 sm:p-8 text-center border border-gray-200 bg-white">
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-olive mb-2">
+            Waffles con Cobertura
+          </h2>
+          <p className="text-sm sm:text-base font-semibold text-gray-800">
+            Stock limitado - Martes y Viernes - Take away
+          </p>
+        </section>
 
         {categories.map((cat) => {
           const list = products.filter((p) => p.category === cat);
           if (list.length === 0) return null;
           return (
             <section key={cat} className="mb-20">
-              <h2
-                className={`text-3xl sm:text-4xl font-bold mb-10 border-b-2 pb-3 text-center tracking-tight ${
-                  cat === "congelados" ? "" : "uppercase "
-                }${
-                  cat === "dulces"
-                    ? "text-celisan-red border-celisan-red/20"
-                    : cat === "congelados"
-                      ? "text-black border-black/20"
+              {cat === "congelados" ? (
+                <h2 className="text-2xl sm:text-3xl font-bold mb-10 text-center tracking-tight text-olive">
+                  Waffles Congelados
+                </h2>
+              ) : (
+                <h2
+                  className={`text-3xl sm:text-4xl font-bold mb-10 border-b-2 pb-3 text-center tracking-tight uppercase ${
+                    cat === "dulces"
+                      ? "text-celisan-red border-celisan-red/20"
                       : "text-olive border-olive/20"
-                }`}
-              >
-                {categoryLabels[cat]}
-              </h2>
+                  }`}
+                >
+                  {categoryLabels[cat]}
+                </h2>
+              )}
               <div className="flex flex-wrap justify-center gap-8">
                 {list.map((product) => (
                   <div key={product.id} className="w-full sm:w-[min(100%,20rem)] lg:w-[min(100%,18rem)]">

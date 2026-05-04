@@ -6,8 +6,13 @@ import type { CartItem } from "@/lib/cart";
 interface CartContextType {
   items: CartItem[];
   addItem: (item: Omit<CartItem, "quantity">, quantity?: number) => void;
-  removeItem: (productId: string, variant?: string) => void;
-  updateQuantity: (productId: string, quantity: number, variant?: string) => void;
+  removeItem: (productId: string, variant?: string, sabor?: CartItem["sabor"]) => void;
+  updateQuantity: (
+    productId: string,
+    quantity: number,
+    variant?: string,
+    sabor?: CartItem["sabor"]
+  ) => void;
   clearCart: () => void;
 }
 
@@ -19,13 +24,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const addItem = useCallback(
     (item: Omit<CartItem, "quantity">, quantity = 1) => {
       setItems((prev) => {
-        const key = item.variant ? `${item.productId}-${item.variant}` : item.productId;
+        const key = `${item.productId}-${item.variant ?? ""}-${item.sabor ?? ""}`;
         const existing = prev.find(
-          (i) => (i.variant ? `${i.productId}-${i.variant}` : i.productId) === key
+          (i) => `${i.productId}-${i.variant ?? ""}-${i.sabor ?? ""}` === key
         );
         if (existing) {
           return prev.map((i) =>
-            (i.variant ? `${i.productId}-${i.variant}` : i.productId) === key
+            `${i.productId}-${i.variant ?? ""}-${i.sabor ?? ""}` === key
               ? { ...i, quantity: i.quantity + quantity }
               : i
           );
@@ -36,21 +41,38 @@ export function CartProvider({ children }: { children: ReactNode }) {
     []
   );
 
-  const removeItem = useCallback((productId: string, variant?: string) => {
+  const removeItem = useCallback(
+    (productId: string, variant?: string, sabor?: CartItem["sabor"]) => {
     setItems((prev) =>
-      prev.filter((i) => !(i.productId === productId && (i.variant ?? undefined) === variant))
+        prev.filter(
+          (i) =>
+            !(
+              i.productId === productId &&
+              (i.variant ?? undefined) === variant &&
+              (i.sabor ?? undefined) === sabor
+            )
+        )
     );
-  }, []);
+    },
+    []
+  );
 
   const updateQuantity = useCallback(
-    (productId: string, quantity: number, variant?: string) => {
+    (
+      productId: string,
+      quantity: number,
+      variant?: string,
+      sabor?: CartItem["sabor"]
+    ) => {
       if (quantity <= 0) {
-        removeItem(productId, variant);
+        removeItem(productId, variant, sabor);
         return;
       }
       setItems((prev) =>
         prev.map((i) =>
-          i.productId === productId && (i.variant ?? undefined) === variant
+          i.productId === productId &&
+          (i.variant ?? undefined) === variant &&
+          (i.sabor ?? undefined) === sabor
             ? { ...i, quantity }
             : i
         )

@@ -15,15 +15,15 @@ export const products: Product[] = [
   {
     id: "morado-veggie",
     name: "Morado Veggie",
-    description: "Berenjena asada, tomates y mucho queso sobre waffle artesanal sin gluten, ¡lleno de sabor!",
+    description: "Berenjena asada, tomates y mucho queso sobre waffle artesanal sin gluten, \u00a1lleno de sabor!",
     price: 15500,
     image: "/waffle-berenjena.png",
     category: "salados",
   },
   {
     id: "jamon-queso",
-    name: "Jamón y Queso",
-    description: "Jamón y queso fundido en waffle recién hecho sin gluten.",
+    name: "Jam\u00f3n y Queso",
+    description: "Jam\u00f3n y queso fundido en waffle reci\u00e9n hecho sin gluten.",
     price: 15500,
     image: "/waffle-jyqueso.png",
     category: "salados",
@@ -31,7 +31,7 @@ export const products: Product[] = [
   {
     id: "dulce-banana",
     name: "Banana con Dulce de leche",
-    description: "Banana con dulce de leche e hilos de chocolate, con una base de waffle artesanal sin gluten ¡Opción para golosos!.",
+    description: "Banana con dulce de leche e hilos de chocolate, con una base de waffle artesanal sin gluten \u00a1Opci\u00f3n para golosos!.",
     price: 15500,
     image: "/waffle-dulce.png",
     category: "dulces",
@@ -46,19 +46,19 @@ export const products: Product[] = [
   },
   {
     id: "ready-toast-2",
-    name: "Listos para que prepares x2 unidades",
+    name: "Armalos como quieras x2.",
     description: "Por 2 unidades",
     price: 6000,
-    image: "/waffle-solo-01.png",
+    image: "/congeladox2.png",
     category: "congelados",
     variant: "x2",
   },
   {
     id: "ready-toast-4",
-    name: "Listos para que prepares x4 unidades",
+    name: "Armalos como quieras x4.",
     description: "Por 4 unidades",
     price: 11000,
-    image: "/waffle-solo-01.png",
+    image: "/congeladox4.png",
     category: "congelados",
     variant: "x4",
   },
@@ -67,5 +67,5 @@ export const products: Product[] = [
 export const categoryLabels: Record<ProductCategory, string> = {
   salados: "SALADOS",
   dulces: "DULCES",
-  congelados: "CONGELADOS ¡Preparalos vos mismo!",
+  congelados: "CONGELADOS",
 };

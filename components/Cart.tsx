@@ -85,9 +85,7 @@ export default function Cart({ onClose }: CartProps) {
             <>
               <div className="flex-1 overflow-y-auto p-4 space-y-3">
                 {items.map((item) => {
-                  const key = item.variant
-                    ? `${item.productId}-${item.variant}`
-                    : item.productId;
+                  const key = `${item.productId}-${item.variant ?? ""}-${item.sabor ?? ""}`;
                   return (
                     <div
                       key={key}
@@ -97,6 +95,7 @@ export default function Cart({ onClose }: CartProps) {
                         <p className="font-medium text-gray-800 truncate">
                           {item.name}
                           {item.variant ? ` (${item.variant})` : ""}
+                          {item.sabor ? ` (Sabor: ${item.sabor})` : ""}
                         </p>
                         <p className="text-sm text-gray-600">
                           ${(item.price * item.quantity).toLocaleString("es-AR")}
@@ -109,7 +108,8 @@ export default function Cart({ onClose }: CartProps) {
                             updateQuantity(
                               item.productId,
                               item.quantity - 1,
-                              item.variant
+                              item.variant,
+                              item.sabor
                             )
                           }
                           className="w-8 h-8 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-100"
@@ -125,7 +125,8 @@ export default function Cart({ onClose }: CartProps) {
                             updateQuantity(
                               item.productId,
                               item.quantity + 1,
-                              item.variant
+                              item.variant,
+                              item.sabor
                             )
                           }
                           className="w-8 h-8 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-100"
@@ -134,7 +135,9 @@ export default function Cart({ onClose }: CartProps) {
                         </button>
                         <button
                           type="button"
-                          onClick={() => removeItem(item.productId, item.variant)}
+                          onClick={() =>
+                            removeItem(item.productId, item.variant, item.sabor)
+                          }
                           className="ml-1 text-red-600 hover:text-celisan-red text-sm"
                           aria-label="Quitar"
                         >
