@@ -13,6 +13,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   const isCongelado = product.category === "congelados";
   const [sabor, setSabor] = useState<"Dulces" | "Salados">("Dulces");
   const highlightedTitle = product.name.match(/(.*)\s(x[24]\.)$/i);
+  const descriptionLines = product.description.split("\n");
 
   const imageSrc = product.image;
 
@@ -47,13 +48,14 @@ export default function ProductCard({ product }: ProductCardProps) {
           )}
         </h3>
 
-        {!isCongelado ? (
-          <p className="text-sm text-gray-600 mb-3 whitespace-pre-line first-line:font-bold first-line:text-celisan-red">
-            {product.description}
-          </p>
-        ) : (
-          <div className="mb-3 h-2" aria-hidden />
-        )}
+        <p className="text-sm text-gray-600 mb-3 whitespace-pre-line first-line:text-celisan-red">
+          {descriptionLines.map((line, index) => (
+            <span key={`${product.id}-desc-${index}`} className={line.trim().startsWith("Medida:") ? "font-bold" : ""}>
+              {index > 0 && <br />}
+              {line}
+            </span>
+          ))}
+        </p>
 
         {isCongelado && (
           <div className="mb-5">
