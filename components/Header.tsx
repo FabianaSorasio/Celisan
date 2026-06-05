@@ -1,66 +1,204 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Menu, Search, ShoppingCart, User, X } from "lucide-react";
 import Cart from "./Cart";
 import { useCart } from "./CartProvider";
-import Image from "next/image";
+
+const NAV_LINKS = [
+  { label: "Inicio", href: "/" },
+  { label: "Productos", href: "/#productos" },
+  { label: "Nuestra Historia", href: "/#historia" },
+  { label: "Contacto", href: "/#contacto" },
+] as const;
+
+function isActive(pathname: string, hash: string, href: string): boolean {
+  if (href === "/") {
+    return pathname === "/" && (hash === "" || hash === "#" || hash === "#inicio");
+  }
+  const targetHash = href.includes("#") ? href.split("#")[1] : "";
+  return pathname === "/" && hash === `#${targetHash}`;
+}
 
 export default function Header() {
+  const pathname = usePathname();
+  const [hash, setHash] = useState("");
   const [cartOpen, setCartOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const { items } = useCart();
   const count = items.reduce((acc, i) => acc + i.quantity, 0);
 
+  useEffect(() => {
+    const updateHash = () => setHash(window.location.hash);
+    updateHash();
+    window.addEventListener("hashchange", updateHash);
+    return () => window.removeEventListener("hashchange", updateHash);
+  }, []);
+
+  const closeMobile = useCallback(() => setMobileOpen(false), []);
+
+  const handleNavClick = (href: string) => {
+    closeMobile();
+    if (href.startsWith("/#")) {
+      const id = href.replace("/#", "");
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        window.history.pushState(null, "", href);
+        setHash(`#${id}`);
+      }
+    }
+  };
+
   return (
     <>
-      <header className="sticky top-0 z-40 bg-cream/95 backdrop-blur border-b border-gray-200/80">
-        <div className="relative max-w-6xl mx-auto px-4 py-4 flex items-center justify-between min-h-[3.5rem]">
-          <div className="flex items-center gap-3 min-w-0">
-            {/* Logo Sin TACC a la izquierda */}
-            <div className="flex-shrink-0 w-12 h-12 sm:w-14 sm:h-16 flex items-center justify-start">
+      <header className="sticky top-0 z-50 bg-white shadow-[0_2px_12px_rgba(0,0,0,0.06)]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="flex items-center justify-between gap-4 min-h-[4.25rem]">
+            {/* Izquierda: logo */}
+            <Link
+              href="/"
+              className="flex-shrink-0 flex items-center"
+              aria-label="Celisan - Inicio"
+            >
               <img
-                src="/sin_gluten_legal-01.png"
-                alt="Sin TACC"
-                className="w-full h-full object-contain object-left"
+                src="/logo-celisan.png"
+                alt="Celisan"
+                className="h-9 sm:h-11 w-auto object-contain"
               />
+            </Link>
+
+            {/* Centro: navegación desktop */}
+            <nav
+              className="hidden lg:flex items-center justify-center gap-8 xl:gap-10 flex-1"
+              aria-label="Principal"
+            >
+              {NAV_LINKS.map((link) => {
+                const active = isActive(pathname, hash, link.href);
+                const isProductos = link.label === "Productos";
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={(e) => {
+                      if (link.href.startsWith("/#")) {
+                        e.preventDefault();
+                        handleNavClick(link.href);
+                      }
+                    }}
+                    className={`text-sm font-medium tracking-wide transition-colors ${
+                      active
+                        ? isProductos
+                          ? "text-celisan-red font-semibold"
+                          : "text-celisan-red"
+                        : "text-gray-700 hover:text-olive"
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
+            </nav>
+
+            {/* Derecha: utilidades */}
+            <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
+              <button
+                type="button"
+                className="hidden sm:flex p-2.5 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-olive transition-colors"
+                aria-label="Búsqueda"
+                onClick={() => handleNavClick("/#productos")}
+              >
+                <Search className="h-5 w-5" strokeWidth={2} />
+              </button>
+              <button
+                type="button"
+                className="hidden sm:flex p-2.5 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-olive transition-colors"
+                aria-label="Mi cuenta"
+                title="Próximamente"
+              >
+                <User className="h-5 w-5" strokeWidth={2} />
+              </button>
+              <button
+                type="button"
+                onClick={() => setCartOpen(true)}
+                className="relative p-2.5 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-olive transition-colors"
+                aria-label={`Carrito${count > 0 ? `, ${count} productos` : ""}`}
+              >
+                <ShoppingCart className="h-5 w-5" strokeWidth={2} />
+                {count > 0 && (
+                  <span className="absolute top-1 right-1 min-w-[1.125rem] h-[1.125rem] px-0.5 flex items-center justify-center rounded-full bg-celisan-red text-white text-[10px] font-bold leading-none">
+                    {count > 99 ? "99+" : count}
+                  </span>
+                )}
+              </button>
+              <button
+                type="button"
+                className="lg:hidden p-2.5 rounded-lg text-gray-700 hover:bg-gray-100"
+                aria-label={mobileOpen ? "Cerrar menú" : "Abrir menú"}
+                aria-expanded={mobileOpen}
+                onClick={() => setMobileOpen((o) => !o)}
+              >
+                {mobileOpen ? (
+                  <X className="h-6 w-6" />
+                ) : (
+                  <Menu className="h-6 w-6" />
+                )}
+              </button>
             </div>
           </div>
 
-          {/* Logo Celisan Central */}
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-            <img 
-              src="/logo-celisan.png" 
-              alt="Celisan" 
-              className="h-10 sm:h-14 md:h-16 w-auto transition-transform hover:scale-105" 
-            />
-          </div>
-
-          {/* Botón Carrito a la derecha */}
-          <button
-            type="button"
-            onClick={() => setCartOpen((o) => !o)}
-            className="relative flex items-center gap-2 p-2 sm:px-4 sm:py-2 rounded-xl bg-olive text-cream font-medium hover:bg-olive-light transition-colors"
-          >
-            <span className="hidden sm:inline">Carrito</span>
-            {count > 0 && (
-              <span className="absolute -top-1 -right-1 min-w-[1.25rem] h-5 px-1 flex items-center justify-center rounded-full bg-celisan-red text-white text-xs font-bold">
-                {count}
-              </span>
-            )}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+          {/* Menú móvil */}
+          {mobileOpen && (
+            <nav
+              className="lg:hidden border-t border-gray-100 py-4 flex flex-col gap-1"
+              aria-label="Principal móvil"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-              />
-            </svg>
-          </button>
+              {NAV_LINKS.map((link) => {
+                const active = isActive(pathname, hash, link.href);
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={(e) => {
+                      if (link.href.startsWith("/#")) {
+                        e.preventDefault();
+                        handleNavClick(link.href);
+                      } else {
+                        closeMobile();
+                      }
+                    }}
+                    className={`px-3 py-2.5 rounded-lg text-base font-medium ${
+                      active
+                        ? "bg-celisan-red/10 text-celisan-red"
+                        : "text-gray-700 hover:bg-gray-50"
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
+              <div className="flex gap-2 px-3 pt-2 sm:hidden">
+                <button
+                  type="button"
+                  className="flex-1 flex items-center justify-center gap-2 py-2 rounded-lg border border-gray-200 text-gray-600 text-sm"
+                  onClick={() => handleNavClick("/#productos")}
+                >
+                  <Search className="h-4 w-4" />
+                  Buscar
+                </button>
+                <button
+                  type="button"
+                  className="flex-1 flex items-center justify-center gap-2 py-2 rounded-lg border border-gray-200 text-gray-600 text-sm"
+                  title="Próximamente"
+                >
+                  <User className="h-4 w-4" />
+                  Cuenta
+                </button>
+              </div>
+            </nav>
+          )}
         </div>
       </header>
       {cartOpen && <Cart onClose={() => setCartOpen(false)} />}

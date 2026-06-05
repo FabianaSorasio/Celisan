@@ -2,8 +2,10 @@
 
 import { useCart } from "@/components/CartProvider";
 import {
+  cartItemKey,
   cartTotal,
   formatWhatsAppMessage,
+  itemSubtotal,
   WHATSAPP_NUMBER,
 } from "@/lib/cart";
 import { useState } from "react";
@@ -14,23 +16,15 @@ interface CartProps {
 
 export default function Cart({ onClose }: CartProps) {
   const { items, removeItem, updateQuantity, clearCart } = useCart();
-  const [selectedDay, setSelectedDay] = useState<"Martes" | "Viernes">(
-    "Martes"
-  );
   const [pedidoEnviado, setPedidoEnviado] = useState(false);
 
   const total = cartTotal(items);
 
   const handleConfirm = () => {
     if (items.length === 0) return;
-    const text = encodeURIComponent(
-      formatWhatsAppMessage(items, total, selectedDay)
-    );
-    // 1) Abrir WhatsApp en una nueva pestaña
+    const text = encodeURIComponent(formatWhatsAppMessage(items, total));
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, "_blank");
-    // 2) Vaciar el carrito en la web
     clearCart();
-    // 3) Informar al cliente del proceso
     setPedidoEnviado(true);
   };
 
@@ -47,6 +41,9 @@ export default function Cart({ onClose }: CartProps) {
             <div className="text-celisan-red text-lg font-semibold">
               Pedido enviado
             </div>
+            <p className="text-sm text-gray-600 mt-2">
+              Abrimos WhatsApp con el detalle de tu pedido. Completá el envío desde la app.
+            </p>
             <button
               type="button"
               onClick={() => setPedidoEnviado(false)}
@@ -85,63 +82,71 @@ export default function Cart({ onClose }: CartProps) {
             <>
               <div className="flex-1 overflow-y-auto p-4 space-y-3">
                 {items.map((item) => {
-                  const key = `${item.productId}-${item.variant ?? ""}-${item.sabor ?? ""}`;
+                  const subtotal = itemSubtotal(item);
                   return (
                     <div
-                      key={key}
+                      key={cartItemKey(item)}
                       className="flex gap-3 p-3 rounded-xl bg-gray-50 border border-gray-100"
                     >
                       <div className="flex-1 min-w-0">
                         <p className="font-medium text-gray-800 truncate">
                           {item.name}
-                          {item.variant ? ` (${item.variant})` : ""}
-                          {item.sabor ? ` (Sabor: ${item.sabor})` : ""}
+                          {item.sabor ? (
+                            <span className="text-gray-600 font-normal">
+                              {" "}
+                              (Sabor: {item.sabor})
+                            </span>
+                          ) : null}
                         </p>
-                        <p className="text-sm text-gray-600">
-                          ${(item.price * item.quantity).toLocaleString("es-AR")}
+                        <p className="text-xs text-gray-500 mt-0.5">
+                          ${item.price.toLocaleString("es-AR")} c/u
+                        </p>
+                        <p className="text-sm font-semibold text-celisan-red mt-1">
+                          Subtotal: ${subtotal.toLocaleString("es-AR")}
                         </p>
                       </div>
-                      <div className="flex items-center gap-1">
+                      <div className="flex flex-col items-end gap-2">
+                        <div className="flex items-center gap-1">
+                          <button
+                            type="button"
+                            onClick={() =>
+                              updateQuantity(
+                                item.productId,
+                                item.quantity - 1,
+                                item.sabor
+                              )
+                            }
+                            className="w-8 h-8 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-100"
+                            aria-label="Menos cantidad"
+                          >
+                            −
+                          </button>
+                          <span className="w-8 text-center text-sm font-medium">
+                            {item.quantity}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() =>
+                              updateQuantity(
+                                item.productId,
+                                item.quantity + 1,
+                                item.sabor
+                              )
+                            }
+                            className="w-8 h-8 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-100"
+                            aria-label="Más cantidad"
+                          >
+                            +
+                          </button>
+                        </div>
                         <button
                           type="button"
                           onClick={() =>
-                            updateQuantity(
-                              item.productId,
-                              item.quantity - 1,
-                              item.variant,
-                              item.sabor
-                            )
+                            removeItem(item.productId, item.sabor)
                           }
-                          className="w-8 h-8 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-100"
+                          className="text-xs text-red-600 hover:text-celisan-red font-medium"
                         >
-                          −
-                        </button>
-                        <span className="w-8 text-center text-sm font-medium">
-                          {item.quantity}
-                        </span>
-                        <button
-                          type="button"
-                          onClick={() =>
-                            updateQuantity(
-                              item.productId,
-                              item.quantity + 1,
-                              item.variant,
-                              item.sabor
-                            )
-                          }
-                          className="w-8 h-8 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-100"
-                        >
-                          +
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() =>
-                            removeItem(item.productId, item.variant, item.sabor)
-                          }
-                          className="ml-1 text-red-600 hover:text-celisan-red text-sm"
-                          aria-label="Quitar"
-                        >
-                          ✕
+                          Eliminar
                         </button>
                       </div>
                     </div>
@@ -150,33 +155,20 @@ export default function Cart({ onClose }: CartProps) {
               </div>
 
               <div className="p-4 border-t border-gray-200 bg-cream space-y-3">
-                <div className="flex justify-between text-lg font-semibold">
-                  <span>Total</span>
-                  <span className="text-celisan-red">
+                <div className="flex justify-between items-baseline">
+                  <span className="text-lg font-semibold text-olive">
+                    Total general
+                  </span>
+                  <span className="text-2xl font-bold text-celisan-red">
                     ${total.toLocaleString("es-AR")}
                   </span>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Día de entrega
-                  </label>
-                  <select
-                    value={selectedDay}
-                    onChange={(e) =>
-                      setSelectedDay(e.target.value as "Martes" | "Viernes")
-                    }
-                    className="w-full rounded-xl border border-gray-300 px-3 py-2 text-gray-800 bg-white"
-                  >
-                    <option value="Martes">Martes</option>
-                    <option value="Viernes">Viernes</option>
-                  </select>
                 </div>
                 <button
                   type="button"
                   onClick={handleConfirm}
                   className="w-full py-3 rounded-xl bg-celisan-red text-white font-semibold hover:opacity-90 transition-opacity"
                 >
-                  Confirmar Pedido (WhatsApp)
+                  Confirmar Pedido por WhatsApp
                 </button>
                 <button
                   type="button"

@@ -1,94 +1,42 @@
-import Banner from "@/components/Banner";
+import Catalog from "@/components/Catalog";
 import Footer from "@/components/Footer";
-import Header from "@/components/Header";
-import ProductCard from "@/components/ProductCard";
-import { products, categoryLabels } from "@/lib/products";
-import type { ProductCategory } from "@/lib/products";
-import Image from "next/image";
+import Hero from "@/components/Hero";
+import { fetchProducts } from "@/lib/sheets";
+import { Suspense } from "react";
 
-const categories: ProductCategory[] = ["salados", "dulces", "congelados"];
+export default async function Home() {
+  const products = await fetchProducts();
 
-export default function Home() {
   return (
     <>
-      <Banner />
-      <Header />
-      <div className="w-full bg-cream px-3 sm:px-6 flex justify-center">
-        <div className="w-full max-w-6xl min-w-0">
-          {/* Móvil: dos tiras 750×215 apiladas */}
-          <div className="flex flex-col md:hidden">
-            <Image
-              src="/banner_responsive_celular1.png"
-              alt="Waffles salados sin gluten"
-              width={750}
-              height={215}
-              className="w-full h-auto max-w-full object-contain object-center block"
-              sizes="calc(100vw - 1.5rem)"
-              priority
-            />
-            <Image
-              src="/banner_responsive_celular2.png"
-              alt="Waffles dulces sin gluten"
-              width={750}
-              height={215}
-              className="w-full h-auto max-w-full object-contain object-center block"
-              sizes="calc(100vw - 1.5rem)"
-            />
-          </div>
-          {/* Tablet/desktop: banner panorámico */}
-          <div className="hidden md:block">
-            <Image
-              src="/banner.png"
-              alt="Celisan — Waffles artesanales sin gluten"
-              width={1920}
-              height={279}
-              className="w-full h-auto max-w-full object-contain object-center align-top"
-              sizes="(max-width: 1152px) 100vw, 72rem"
-            />
-          </div>
-        </div>
-      </div>
-      <main className="max-w-6xl mx-auto px-4 pt-14 sm:pt-16 pb-20 md:pb-32">
-        <section className="mb-16 rounded-2xl p-6 sm:p-8 text-center border border-gray-200 bg-white">
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-olive mb-2">
-            Waffles con Cobertura
-          </h2>
-          <p className="text-sm sm:text-base font-semibold text-gray-800">
-            Stock limitado - Martes y Viernes - Take away
-          </p>
-        </section>
+      <Hero />
 
-        {categories.map((cat) => {
-          const list = products.filter((p) => p.category === cat);
-          if (list.length === 0) return null;
-          return (
-            <section key={cat} className="mb-20">
-              {cat === "congelados" ? (
-                <h2 className="text-2xl sm:text-3xl font-bold mb-10 text-center tracking-tight text-olive">
-                  Waffles Congelados
-                </h2>
-              ) : (
-                <h2
-                  className={`text-3xl sm:text-4xl font-bold mb-10 border-b-2 pb-3 text-center tracking-tight uppercase ${
-                    cat === "dulces"
-                      ? "text-celisan-red border-celisan-red/20"
-                      : "text-olive border-olive/20"
-                  }`}
-                >
-                  {categoryLabels[cat]}
-                </h2>
-              )}
-              <div className="flex flex-wrap justify-center gap-8">
-                {list.map((product) => (
-                  <div key={product.id} className="w-full sm:w-[min(100%,20rem)] lg:w-[min(100%,18rem)]">
-                    <ProductCard product={product} />
-                  </div>
-                ))}
-              </div>
-            </section>
-          );
-        })}
+      <main className="bg-cream">
+        <section
+          id="productos"
+          className="scroll-mt-[4.25rem] max-w-7xl mx-auto px-4 sm:px-6 pt-12 sm:pt-16 pb-20 md:pb-28"
+        >
+          <div className="mb-10 text-center lg:text-left">
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-olive">
+              Nuestros Productos
+            </h2>
+            <p className="text-sm sm:text-base text-gray-600 mt-2 max-w-2xl">
+              Elegí una categoría y armá tu pedido sin gluten. Retirá en San
+              Francisco o coordiná por WhatsApp.
+            </p>
+          </div>
+          <Suspense
+            fallback={
+              <p className="text-center text-gray-500 py-16">
+                Cargando catálogo…
+              </p>
+            }
+          >
+            <Catalog products={products} />
+          </Suspense>
+        </section>
       </main>
+
       <Footer />
     </>
   );

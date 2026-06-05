@@ -1,0 +1,42 @@
+ID,Nombre,Categoría,Precio,Descripción,Imagen_URL,Stock
+ssg-lasagna,Lasagna con bolognesa,Línea Soy Sin Gluten,11600,,/logo-celisan.png,1
+ssg-sorrentinos,"Sorrentinos c/ salsa roja (jamón y queso / verduras)",Línea Soy Sin Gluten,10800,,/logo-celisan.png,1
+ssg-canelones,Canelones (de carne / acelga bolognesa),Línea Soy Sin Gluten,10800,,/logo-celisan.png,1
+ssg-bollitos,Bollitos de pan (50 gr),Línea Soy Sin Gluten,400,,/logo-celisan.png,1
+ssg-sand-bondiola,Sandwich de bondiola cerdo (chico),Línea Soy Sin Gluten,8600,,/logo-celisan.png,1
+ssg-sand-hamburguesa,Sandwich Hamburguesa (casera / queso),Línea Soy Sin Gluten,7200,,/logo-celisan.png,1
+ssg-sand-pollo,"Sandwich Pollo, verdeo (queso azul, cebolla)",Línea Soy Sin Gluten,7500,,/logo-celisan.png,1
+ssg-sand-vegetales,Sandwich de vegetales (asados / queso),Línea Soy Sin Gluten,6500,,/logo-celisan.png,1
+ssg-sand-jyq,Sandwich de jamón y queso,Línea Soy Sin Gluten,7200,,/logo-celisan.png,1
+ssg-tarta-jyq,1/2 Tarta de jamón y queso,Línea Soy Sin Gluten,11500,,/logo-celisan.png,1
+ssg-tarta-anco,"1/2 Tarta de anco, acelga y queso",Línea Soy Sin Gluten,12200,,/logo-celisan.png,1
+ssg-tarta-zapallito,"1/2 Tarta de zapallito, cebolla y queso",Línea Soy Sin Gluten,11500,,/logo-celisan.png,1
+ssg-tarta-pollo,1/2 Tarta de pollo y acelga,Línea Soy Sin Gluten,12200,,/logo-celisan.png,1
+ssg-pizza,Pizza lista x4 porciones,Línea Soy Sin Gluten,7900,,/logo-celisan.png,1
+ssg-emp-dulce,Empanadas (3 unidades) carne Dulce,Línea Soy Sin Gluten,7200,,/logo-celisan.png,1
+ssg-emp-salada,Empanadas (3 unidades) carne Salada,Línea Soy Sin Gluten,7200,,/logo-celisan.png,1
+ssg-emp-arabes,Empanadas (3 unidades) árabes,Línea Soy Sin Gluten,7200,,/logo-celisan.png,1
+ssg-tacos,Tacos de verdura (3 unidades),Línea Soy Sin Gluten,7900,,/logo-celisan.png,1
+ssg-prepizzas,Pre pizzas,Línea Soy Sin Gluten,2700,,/logo-celisan.png,1
+ssg-noquis,Ñoquis crudos x 250gr,Línea Soy Sin Gluten,5800,,/logo-celisan.png,1
+ssg-sorrentinos-crudos,Sorrentinos crudos X 8 unidades (jamón y queso / verduras),Línea Soy Sin Gluten,8600,,/logo-celisan.png,1
+ssg-hamb-legumbres,Hamburguesas de legumbres (4 unidades),Línea Soy Sin Gluten,4000,,/logo-celisan.png,1
+ssg-emp-crudas,Empanadas crudas (x 4 unidades),Línea Soy Sin Gluten,11500,,/logo-celisan.png,1
+ssg-medialunas,Medialunas x 50gr.,Línea Soy Sin Gluten,1900,,/logo-celisan.png,1
+ssg-mafalda,Mafalda x unidad,Línea Soy Sin Gluten,2400,,/logo-celisan.png,1
+ssg-pan-lactal,Tipo Pan Lactal x 700gr.,Línea Soy Sin Gluten,6000,,/logo-celisan.png,1
+ssg-pan-baguette,Pan baguette x 200gr.,Línea Soy Sin Gluten,1900,,/logo-celisan.png,1
+ssg-pan-hamburguesa,Pan hamburguesa 130gr.,Línea Soy Sin Gluten,1400,,/logo-celisan.png,1
+wc-x2,Armalos como quieras x2.,Waffles Congelados,5500,"Por 2 unidades.
+Medida: 20 x 10 cm",/congeladox2.png,1
+wc-x4,Armalos como quieras x4.,Waffles Congelados,9990,"Por 4 unidades.
+Medida: 20 x 20 cm",/congeladox4.png,1
+wcb-veggie,Waffle Salado Morado Veggie,Waffles con Cobertura,13990,Berenjena asada tomates y queso sobre waffle artesanal sin gluten.,/waffle-berenjena.png,1
+wcb-jyq,Waffle Salado con Jamón y Queso,Waffles con Cobertura,13990,Jamón y queso fundido en waffle recién hecho sin gluten.,/waffle-jyqueso.png,1
+wcb-banana,"Waffle con Banana, Dulce de leche y chocolate",Waffles con Cobertura,13990,Banana con dulce de leche e hilos de chocolate sobre waffle artesanal sin gluten.,/waffle-dulce.png,1
+wcb-frutos,Waffle con Frutos Rojos y crema chantilly,Waffles con Cobertura,15990,Mix de frutos rojos con crema chantilly sobre waffle artesanal sin gluten.,/waffle-frutos.png,1
+des-clasico-2,Desayuno Clásico 2 cuadraditos,Desayunos,25000,,/logo-celisan.png,1
+des-clasico-4,Desayuno Clásico 4 cuadraditos,Desayunos,44000,,/logo-celisan.png,1
+des-proteico-2,Desayuno Proteico 2 cuadraditos,Desayunos,25000,,/logo-celisan.png,1
+des-taza,Adicional taza + cuchara,Desayunos,15000,,/logo-celisan.png,1
+vc-jyq-oreo,Vianda Cumple JyQ / Oreo,Vianda Cumple,20000,,/logo-celisan.png,1
