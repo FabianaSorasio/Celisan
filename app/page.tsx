@@ -1,6 +1,6 @@
 import Catalog from "@/components/Catalog";
 import Footer from "@/components/Footer";
-import Hero from "@/components/Hero";
+import HeroSlider from "@/components/HeroSlider";
 import { fetchProducts } from "@/lib/sheets";
 import { Suspense } from "react";
 
@@ -9,7 +9,7 @@ export default async function Home() {
 
   return (
     <>
-      <Hero />
+      <HeroSlider />
 
       <main className="bg-cream">
         <section

@@ -12,9 +12,13 @@ const VALID_CATEGORIES = CATALOG_CATEGORIES.filter(
 const CATEGORY_ALIASES: Record<string, ProductCategory> = {
   "linea soy sin gluten": "Línea Soy Sin Gluten",
   "línea soy sin gluten": "Línea Soy Sin Gluten",
+  "menú listo": "Línea Soy Sin Gluten",
+  "menu listo": "Línea Soy Sin Gluten",
+  "panificados y pastas congeladas": "Panificados y Pastas congeladas",
   "waffles congelados": "Waffles Congelados",
   "waffles con cobertura": "Waffles con Cobertura",
   desayunos: "Desayunos",
+  "desayunos y viandas": "Desayunos",
   "vianda cumple": "Vianda Cumple",
 };
 
@@ -63,10 +67,15 @@ const WAFFLES_COBERTURA_ORDER = [
   "wcb-frutos",
 ] as const;
 
-export function sortWafflesConCobertura(products: Product[]): Product[] {
-  const rank = new Map(
-    WAFFLES_COBERTURA_ORDER.map((id, index) => [id, index])
-  );
+const WAFFLES_CONGELADOS_ORDER = [
+  "wc-may-x2",
+  "wc-may-x4",
+  "wc-min-x2",
+  "wc-min-x4",
+] as const;
+
+function sortByIdOrder(products: Product[], order: readonly string[]): Product[] {
+  const rank = new Map(order.map((id, index) => [id, index]));
   return [...products].sort((a, b) => {
     const aRank = rank.get(a.id);
     const bRank = rank.get(b.id);
@@ -75,6 +84,14 @@ export function sortWafflesConCobertura(products: Product[]): Product[] {
     if (bRank === undefined) return -1;
     return aRank - bRank;
   });
+}
+
+export function sortWafflesConCobertura(products: Product[]): Product[] {
+  return sortByIdOrder(products, WAFFLES_COBERTURA_ORDER);
+}
+
+export function sortWafflesCongelados(products: Product[]): Product[] {
+  return sortByIdOrder(products, WAFFLES_CONGELADOS_ORDER);
 }
 
 export function filterProductsByCategory(
@@ -86,6 +103,9 @@ export function filterProductsByCategory(
   const list = products.filter((p) => normalizeText(p.category) === target);
   if (category === "Waffles con Cobertura") {
     return sortWafflesConCobertura(list);
+  }
+  if (category === "Waffles Congelados") {
+    return sortWafflesCongelados(list);
   }
   return list;
 }
