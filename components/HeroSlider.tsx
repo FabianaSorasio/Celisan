@@ -19,19 +19,21 @@ interface Slide {
   subtitle: string;
   cta: string;
   action: SlideAction;
+  /** Enlace externo (ej. WhatsApp). Abre en pestaña nueva. */
+  ctaHref?: string;
 }
 
 const SLIDES: Slide[] = [
   {
     id: 0,
     image: "/waffle-dulce.png",
-    imageAlt: "Waffle de chocolate sin TACC",
+    imageAlt: "Waffles de chocolate congelados sin gluten",
     overlayClassName: "from-[#3d2314]/85 via-[#5c3a2a]/60 to-black/40",
-    title: "¡Llegaron los Waffles de Chocolate!",
+    title: "Waffles de chocolate congelados",
     subtitle:
-      "Crocantes, calentitos y bañados con el chocolate más tentador. 100% Sin TACC.",
-    cta: "Ver Menú Dulce",
-    action: "dulce",
+      "Para que los prepares vos mismo en casa, calentitos y listos en minutos. 100% libres de gluten.",
+    cta: "Ver catálogo",
+    action: "catalog",
   },
   {
     id: 1,
@@ -55,6 +57,19 @@ const SLIDES: Slide[] = [
       "Desayunos artesanales completos listos para regalar este Junio. Reservá el suyo con tiempo.",
     cta: "Reservar Desayuno",
     action: "desayunos",
+  },
+  {
+    id: 3,
+    image: "/hero-delivery.webp",
+    imageAlt: "Delivery Celisan — llevamos el sabor a tu puerta",
+    overlayClassName: "from-black/80 via-olive/55 to-black/35",
+    title: "¡Llevamos el sabor a tu puerta!",
+    subtitle:
+      "Consultá por nuestro servicio de delivery al 3564626508 para conocer los días, horarios y costos de envío en tu zona.",
+    cta: "Consultar por WhatsApp",
+    action: "catalog",
+    ctaHref:
+      "https://wa.me/5493564626508?text=Hola%20Celisan!%20Quería%20consultar%20los%20días,%20horarios%20y%20costos%20del%20servicio%20de%20delivery",
   },
 ];
 
@@ -102,6 +117,10 @@ export default function HeroSlider() {
         router.push(
           `/?categoria=${encodeURIComponent("Desayunos")}#productos`
         );
+        scrollToId("productos");
+        break;
+      case "catalog":
+        router.push("/#productos");
         scrollToId("productos");
         break;
       default:
@@ -153,13 +172,24 @@ export default function HeroSlider() {
                     <p className="mt-3 sm:mt-4 text-sm sm:text-base lg:text-lg text-white/90 leading-relaxed max-w-lg">
                       {slide.subtitle}
                     </p>
-                    <button
-                      type="button"
-                      onClick={() => handleCta(slide.action)}
-                      className="mt-6 sm:mt-8 inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-3.5 rounded-xl bg-celisan-red text-white font-semibold text-sm sm:text-base shadow-lg hover:opacity-90 active:scale-[0.98] transition-all"
-                    >
-                      {slide.cta}
-                    </button>
+                    {slide.ctaHref ? (
+                      <a
+                        href={slide.ctaHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-6 sm:mt-8 inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-3.5 rounded-xl bg-celisan-red text-white font-semibold text-sm sm:text-base shadow-lg hover:opacity-90 active:scale-[0.98] transition-all"
+                      >
+                        {slide.cta}
+                      </a>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => handleCta(slide.action)}
+                        className="mt-6 sm:mt-8 inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-3.5 rounded-xl bg-celisan-red text-white font-semibold text-sm sm:text-base shadow-lg hover:opacity-90 active:scale-[0.98] transition-all"
+                      >
+                        {slide.cta}
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
