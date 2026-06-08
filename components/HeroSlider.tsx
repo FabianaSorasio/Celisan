@@ -24,9 +24,22 @@ interface Slide {
 }
 
 const SLIDES: Slide[] = [
+  // 1 — antes slide 3: Día del Padre / Desayunos
   {
     id: 0,
-    image: "/waffle-dulce.png",
+    image: "/desayuno_clasico.png",
+    imageAlt: "Desayuno artesanal sin gluten para regalar",
+    overlayClassName: "from-black/75 via-black/45 to-olive/30",
+    title: "Sorprendé a Papá en su día",
+    subtitle:
+      "Desayunos artesanales completos listos para regalar este Junio. Reservá el suyo con tiempo.",
+    cta: "Reservar Desayuno",
+    action: "desayunos",
+  },
+  // 2 — antes slide 1: Chocolate
+  {
+    id: 1,
+    image: "/Browniedechocolate.png",
     imageAlt: "Waffles de chocolate congelados sin gluten",
     overlayClassName: "from-[#3d2314]/85 via-[#5c3a2a]/60 to-black/40",
     title: "Waffles de chocolate congelados",
@@ -35,37 +48,27 @@ const SLIDES: Slide[] = [
     cta: "Ver catálogo",
     action: "catalog",
   },
+  // 3 — antes slide 2: Soy Sin Gluten (imagen a sangre como el resto)
   {
-    id: 1,
-    image: "/logo-celisan.png",
-    imageAlt: "Celisan — Soy Sin Gluten",
-    imageClassName: "object-contain object-center scale-90 sm:scale-100 p-8 sm:p-12",
-    overlayClassName: "from-olive/90 via-olive/70 to-celisan-red/50",
-    title: "Sabor real, 100% Sin TACC",
+    id: 2,
+    image: "/pastas_soysingluten.png",
+    imageAlt: "Celisan — comidas congeladas sin gluten",
+    overlayClassName: "from-olive/85 via-olive/55 to-black/40",
+    title: "Sabor casero, 100% Sin TACC",
     subtitle:
-      "La seguridad que necesitás con la textura artesanal que te encanta.",
+      "Todo un abanico de posibilidades de comidas congeladas sin gluten.",
     cta: "Conocé más",
     action: "historia",
   },
-  {
-    id: 2,
-    image: "/waffle-jyqueso.png",
-    imageAlt: "Waffle salado jamón y queso",
-    overlayClassName: "from-black/75 via-black/45 to-olive/30",
-    title: "Sorprendé a Papá en su día",
-    subtitle:
-      "Desayunos artesanales completos listos para regalar este Junio. Reservá el suyo con tiempo.",
-    cta: "Reservar Desayuno",
-    action: "desayunos",
-  },
+  // 4 — antes slide 4: Delivery
   {
     id: 3,
-    image: "/hero-delivery.webp",
+    image: "/delivery_celisan.png",
     imageAlt: "Delivery Celisan — llevamos el sabor a tu puerta",
     overlayClassName: "from-black/80 via-olive/55 to-black/35",
     title: "¡Llevamos el sabor a tu puerta!",
     subtitle:
-      "Consultá por nuestro servicio de delivery al 3564626508 para conocer los días, horarios y costos de envío en tu zona.",
+      "Consultá por nuestro servicio de delivery para conocer los días, horarios y costos. Válido sólo en la ciudad de San Francisco.",
     cta: "Consultar por WhatsApp",
     action: "catalog",
     ctaHref:
@@ -155,7 +158,7 @@ export default function HeroSlider() {
                 alt={slide.imageAlt}
                 fill
                 priority={index === 0}
-                className={`object-cover ${slide.imageClassName ?? ""}`}
+                className="object-cover object-center"
                 sizes="100vw"
               />
               <div
