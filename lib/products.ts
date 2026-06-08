@@ -1,7 +1,7 @@
 export const CATALOG_CATEGORIES = [
   "Todas",
   "Línea Soy Sin Gluten",
-  "Panificados y Pastas congeladas",
+  "Panificados y Pastas congeladas Soy Sin Gluten",
   "Waffles Congelados",
   "Waffles con Cobertura",
   "Desayunos",
