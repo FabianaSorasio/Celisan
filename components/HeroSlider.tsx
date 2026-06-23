@@ -30,9 +30,8 @@ const SLIDES: Slide[] = [
     image: "/desayuno_clasico.png",
     imageAlt: "Desayuno artesanal sin gluten para regalar",
     overlayClassName: "from-black/75 via-black/45 to-olive/30",
-    title: "Sorprendé a Papá en su día",
-    subtitle:
-      "Desayunos artesanales completos listos para regalar este Junio. Reservá el suyo con tiempo.",
+    title: "Hacé de su día un momento inolvidable",
+    subtitle: "Desayunos artesanales completos y 100% sin TACC. El regalo perfecto para cumpleaños, aniversarios o simplemente para sorprender a quien más querés.",
     cta: "Reservar Desayuno",
     action: "desayunos",
   },

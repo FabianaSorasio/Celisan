@@ -20,7 +20,8 @@ export default function Footer() {
           <p className="text-lg text-gray-700 leading-relaxed mb-4">
             En 2019 iniciamos un camino: revender opciones sin TACC para la comunidad celíaca de San Francisco y zona. Hoy,
             mantenemos esa esencia intacta pero te traemos una invitación renovada y original: ¡descubrir la magia de nuestros
-            waffles artesanales hechos por nosotros mismos!
+            waffles artesanales hechos por nosotros mismos! Anexamos venta de viandas, panificados y pastas congeladas para abrir el abanico de posibilidades. 
+            Sumamos los desayunos de wafles para regalar y las viandas cumple infantiles como opciones en nuestros eventos y fechas especiales.      
           </p>
           <p className="text-lg text-gray-700 leading-relaxed">
             Celisan es sabor, cuidado y autenticidad en cada bocado. Detrás de cada waffle hay una receta propia, pensada
