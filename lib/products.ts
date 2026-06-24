@@ -1,9 +1,9 @@
 export const CATALOG_CATEGORIES = [
   "Todas",
-  "Línea Soy Sin Gluten",
-  "Panificados y Pastas congeladas Soy Sin Gluten",
   "Waffles Congelados",
   "Waffles con Cobertura",
+  "Viandas Soy Sin Gluten",
+  "Panificación y Pastas Soy Sin Gluten",
   "Desayunos",
   "Vianda Cumple",
 ] as const;
@@ -18,6 +18,8 @@ export interface Product {
   description: string;
   price: number;
   image: string;
+  /** Ruta opcional a un video del producto (mp4). Se usa para mostrar modal de video. */
+  video?: string;
   category: ProductCategory;
   stock: number;
 }
