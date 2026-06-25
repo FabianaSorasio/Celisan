@@ -48,6 +48,23 @@ function rowToProduct(cells: string[]): Product | null {
   };
 }
 
+/**
+ * Filtra productos que corresponden a pricing mayorista.
+ * Estos no deben aparecer en el catálogo público minorista.
+ */
+function removeMayoristaProducts(products: Product[]): Product[] {
+  return products.filter((p) => {
+    const nameLower = p.name.toLowerCase();
+    const idLower = p.id.toLowerCase();
+    return (
+      !nameLower.includes("mayorista") &&
+      !idLower.includes("-may-") &&
+      !nameLower.includes("x 6") &&
+      !nameLower.includes("x 12")
+    );
+  });
+}
+
 /** Parsea CSV exportado por Google Sheets (gviz). */
 export function parseSheetCsv(csv: string): Product[] {
   const rows: string[][] = [];
@@ -176,15 +193,18 @@ export async function fetchProducts(): Promise<Product[]> {
   const range = process.env.GOOGLE_SHEET_RANGE?.trim() || "Hoja 1!A1:G500";
 
   if (!sheetId) {
-    return catalogSeed;
+    return removeMayoristaProducts(catalogSeed);
   }
 
   try {
+    let products: Product[];
     if (apiKey) {
-      return await fetchFromSheetsApi(sheetId, apiKey, range);
+      products = await fetchFromSheetsApi(sheetId, apiKey, range);
+    } else {
+      products = await fetchFromCsvExport(sheetId);
     }
-    return await fetchFromCsvExport(sheetId);
+    return removeMayoristaProducts(products);
   } catch {
-    return catalogSeed;
+    return removeMayoristaProducts(catalogSeed);
   }
 }
