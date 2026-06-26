@@ -1,10 +1,10 @@
 import type { Product } from "@/lib/products";
 
-/** Ruta de imagen por id — subir el archivo con este nombre a /public/images/productos/ */
-const img = (id: string) => `/images/productos/${id}.png`;
+/** Ruta de imagen por id y subcarpeta */
+const img = (sub: string, id: string) => `/images/productos/${sub}/${id}.png`;
 
-/** Ruta de video por id — subir el archivo con este nombre a /public/images/productos/ */
-const vid = (id: string) => `/images/productos/${id}.mp4`;
+/** Ruta de video por id y subcarpeta */
+const vid = (sub: string, id: string) => `/images/productos/${sub}/${id}.mp4`;
 
 /**
  * Dataset de referencia del catálogo Celisan.
@@ -21,7 +21,7 @@ export const catalogSeed: Product[] = [
     category: "Waffles Congelados",
     price: 5500,
     description: "Por 2 unidades.\nMedida: 20 x 10 cm",
-    image: "/congeladox2.png",
+    image: img("congelados", "wc-vainilla-x2"),
     stock: 1,
   },
   {
@@ -30,7 +30,7 @@ export const catalogSeed: Product[] = [
     category: "Waffles Congelados",
     price: 9990,
     description: "Por 4 unidades.\nMedida: 20 x 20 cm",
-    image: "/congeladox4.png",
+    image: img("congelados", "wc-vainilla-x4"),
     stock: 1,
   },
   // Chocolate: solo dulce, sin selector de sabor
@@ -40,7 +40,7 @@ export const catalogSeed: Product[] = [
     category: "Waffles Congelados",
     price: 6000,
     description: "Por 2 unidades.\nMedida: 20 x 10 cm",
-    image: "/congeladox2.png",
+    image: img("congelados", "wc-choc"),
     stock: 1,
   },
   {
@@ -49,7 +49,7 @@ export const catalogSeed: Product[] = [
     category: "Waffles Congelados",
     price: 11000,
     description: "Por 4 unidades.\nMedida: 20 x 20 cm",
-    image: "/congeladox4.png",
+    image: img("congelados", "wc-choc"),
     stock: 1,
   },
 
@@ -61,7 +61,7 @@ export const catalogSeed: Product[] = [
     price: 13990,
     description:
       "Berenjena asada, tomates y queso sobre waffle artesanal sin gluten.",
-    image: "/waffle-berenjena.png",
+    image: "/images/productos/cobertura/waffle-berenjena.png",
     stock: 1,
   },
   {
@@ -70,7 +70,7 @@ export const catalogSeed: Product[] = [
     category: "Waffles con Cobertura",
     price: 13990,
     description: "Jamón y queso fundido en waffle recién hecho sin gluten.",
-    image: "/waffle-jyqueso.png",
+    image: "/images/productos/cobertura/waffle-jyqueso.png",
     stock: 1,
   },
   {
@@ -80,7 +80,7 @@ export const catalogSeed: Product[] = [
     price: 13990,
     description:
       "Banana con dulce de leche e hilos de chocolate sobre waffle artesanal sin gluten.",
-    image: "/waffle-dulce.png",
+    image: "/images/productos/cobertura/waffle-dulce.png",
     stock: 1,
   },
   {
@@ -90,7 +90,7 @@ export const catalogSeed: Product[] = [
     price: 15990,
     description:
       "Mix de frutos rojos con crema chantilly sobre waffle artesanal sin gluten.",
-    image: "/waffle-frutos.png",
+    image: "/images/productos/cobertura/waffle-frutos.png",
     stock: 1,
   },
 
@@ -101,7 +101,7 @@ export const catalogSeed: Product[] = [
     category: "Viandas Soy Sin Gluten",
     price: 11600,
     description: "",
-    image: img("ssg-lasagna"),
+    image: img("viandas", "ssg-lasagna"),
     stock: 1,
   },
   {
@@ -110,7 +110,7 @@ export const catalogSeed: Product[] = [
     category: "Viandas Soy Sin Gluten",
     price: 10800,
     description: "",
-    image: img("ssg-sorrentinos"),
+    image: img("viandas", "ssg-sorrentinos"),
     stock: 1,
   },
   {
@@ -119,7 +119,7 @@ export const catalogSeed: Product[] = [
     category: "Viandas Soy Sin Gluten",
     price: 10800,
     description: "",
-    image: img("ssg-sorrentinos"),
+    image: img("viandas", "ssg-sorrentinos"),
     stock: 1,
   },
   {
@@ -128,7 +128,7 @@ export const catalogSeed: Product[] = [
     category: "Viandas Soy Sin Gluten",
     price: 10800,
     description: "",
-    image: img("ssg-canelones"),
+    image: img("viandas", "ssg-canelones"),
     stock: 1,
   },
   {
@@ -137,7 +137,7 @@ export const catalogSeed: Product[] = [
     category: "Viandas Soy Sin Gluten",
     price: 8600,
     description: "",
-    image: img("ssg-sand-bondiola"),
+    image: img("viandas", "ssg-sand-bondiola"),
     stock: 1,
   },
   {
@@ -146,7 +146,7 @@ export const catalogSeed: Product[] = [
     category: "Viandas Soy Sin Gluten",
     price: 7200,
     description: "",
-    image: img("ssg-sand-hamburguesa"),
+    image: img("viandas", "ssg-sand-hamburguesa"),
     stock: 1,
   },
   {
@@ -155,7 +155,7 @@ export const catalogSeed: Product[] = [
     category: "Viandas Soy Sin Gluten",
     price: 7500,
     description: "",
-    image: img("ssg-sand-pollo"),
+    image: img("viandas", "ssg-sand-pollo"),
     stock: 1,
   },
   {
@@ -164,7 +164,7 @@ export const catalogSeed: Product[] = [
     category: "Viandas Soy Sin Gluten",
     price: 6500,
     description: "",
-    image: img("ssg-sand-vegetales"),
+    image: img("viandas", "ssg-sand-vegetales"),
     stock: 1,
   },
   {
@@ -173,7 +173,7 @@ export const catalogSeed: Product[] = [
     category: "Viandas Soy Sin Gluten",
     price: 7200,
     description: "",
-    image: img("ssg-sand-jyq"),
+    image: img("viandas", "ssg-sand-jyq"),
     stock: 1,
   },
   {
@@ -182,7 +182,7 @@ export const catalogSeed: Product[] = [
     category: "Viandas Soy Sin Gluten",
     price: 11500,
     description: "",
-    image: img("ssg-tarta-jyq"),
+    image: img("viandas", "ssg-tarta-jyq"),
     stock: 1,
   },
   {
@@ -191,7 +191,7 @@ export const catalogSeed: Product[] = [
     category: "Viandas Soy Sin Gluten",
     price: 12200,
     description: "",
-    image: img("ssg-tarta-anco"),
+    image: img("viandas", "ssg-tarta-anco"),
     stock: 1,
   },
   {
@@ -200,7 +200,7 @@ export const catalogSeed: Product[] = [
     category: "Viandas Soy Sin Gluten",
     price: 11500,
     description: "",
-    image: img("ssg-tarta-zapallito"),
+    image: img("viandas", "ssg-tarta-zapallito"),
     stock: 1,
   },
   {
@@ -209,7 +209,7 @@ export const catalogSeed: Product[] = [
     category: "Viandas Soy Sin Gluten",
     price: 12200,
     description: "",
-    image: img("ssg-tarta-pollo"),
+    image: img("viandas", "ssg-tarta-pollo"),
     stock: 1,
   },
   {
@@ -218,7 +218,7 @@ export const catalogSeed: Product[] = [
     category: "Viandas Soy Sin Gluten",
     price: 7900,
     description: "",
-    image: img("ssg-pizza"),
+    image: img("viandas", "ssg-pizza"),
     stock: 1,
   },
   {
@@ -227,7 +227,7 @@ export const catalogSeed: Product[] = [
     category: "Viandas Soy Sin Gluten",
     price: 7200,
     description: "",
-    image: img("ssg-emp-dulce"),
+    image: img("viandas", "ssg-emp-dulce"),
     stock: 1,
   },
   {
@@ -236,7 +236,7 @@ export const catalogSeed: Product[] = [
     category: "Viandas Soy Sin Gluten",
     price: 7200,
     description: "",
-    image: img("ssg-emp-salada"),
+    image: img("viandas", "ssg-emp-salada"),
     stock: 1,
   },
   {
@@ -245,7 +245,7 @@ export const catalogSeed: Product[] = [
     category: "Viandas Soy Sin Gluten",
     price: 7200,
     description: "",
-    image: img("ssg-emp-arabes"),
+    image: img("viandas", "ssg-emp-arabes"),
     stock: 1,
   },
   {
@@ -254,7 +254,7 @@ export const catalogSeed: Product[] = [
     category: "Viandas Soy Sin Gluten",
     price: 7900,
     description: "",
-    image: img("ssg-tacos"),
+    image: img("viandas", "ssg-tacos"),
     stock: 1,
   },
 
@@ -265,7 +265,7 @@ export const catalogSeed: Product[] = [
     category: "Panificación y Pastas Soy Sin Gluten",
     price: 2900,
     description: "",
-    image: img("ppc-prepizzas"),
+    image: img("panificacion", "ppc-prepizzas"),
     stock: 1,
   },
   {
@@ -274,7 +274,7 @@ export const catalogSeed: Product[] = [
     category: "Panificación y Pastas Soy Sin Gluten",
     price: 5800,
     description: "",
-    image: img("ppc-noquis"),
+    image: img("panificacion", "ppc-noquis"),
     stock: 1,
   },
   {
@@ -283,7 +283,7 @@ export const catalogSeed: Product[] = [
     category: "Panificación y Pastas Soy Sin Gluten",
     price: 8600,
     description: "",
-    image: img("ppc-sorrentinos-crudos"),
+    image: img("panificacion", "ppc-sorrentinos-crudos"),
     stock: 1,
   },
   {
@@ -292,7 +292,7 @@ export const catalogSeed: Product[] = [
     category: "Panificación y Pastas Soy Sin Gluten",
     price: 8600,
     description: "",
-    image: img("ppc-sorrentinos-crudos"),
+    image: img("panificacion", "ppc-sorrentinos-crudos"),
     stock: 1,
   },
   {
@@ -301,7 +301,7 @@ export const catalogSeed: Product[] = [
     category: "Panificación y Pastas Soy Sin Gluten",
     price: 4000,
     description: "",
-    image: img("ppc-hamb-legumbres"),
+    image: img("panificacion", "ppc-hamb-legumbres"),
     stock: 1,
   },
   {
@@ -310,8 +310,9 @@ export const catalogSeed: Product[] = [
     category: "Panificación y Pastas Soy Sin Gluten",
     price: 11500,
     description: "",
-    image: img("ppc-emp-crudas"),
+    image: img("panificacion", "ppc-emp-crudas"),
     stock: 1,
+    available: false, // oculto temporalmente — cambiar a true para mostrar
   },
   {
     id: "ppc-medialunas",
@@ -319,7 +320,7 @@ export const catalogSeed: Product[] = [
     category: "Panificación y Pastas Soy Sin Gluten",
     price: 2000,
     description: "",
-    image: img("ppc-medialunas"),
+    image: img("panificacion", "ppc-medialunas"),
     stock: 1,
   },
   {
@@ -328,7 +329,11 @@ export const catalogSeed: Product[] = [
     category: "Panificación y Pastas Soy Sin Gluten",
     price: 2600,
     description: "",
-    image: img("ppc-mafalda"),
+    image: img("panificacion", "ppc-mafalda-1"),
+    images: [
+      img("panificacion", "ppc-mafalda-1"),
+      img("panificacion", "ppc-mafalda-2"),
+    ],
     stock: 1,
   },
   {
@@ -337,7 +342,7 @@ export const catalogSeed: Product[] = [
     category: "Panificación y Pastas Soy Sin Gluten",
     price: 6500,
     description: "",
-    image: img("ppc-pan-lactal"),
+    image: img("panificacion", "ppc-pan-lactal"),
     stock: 1,
   },
   {
@@ -346,7 +351,7 @@ export const catalogSeed: Product[] = [
     category: "Panificación y Pastas Soy Sin Gluten",
     price: 2000,
     description: "",
-    image: img("ppc-pan-baguette"),
+    image: img("panificacion", "ppc-pan-baguette"),
     stock: 1,
   },
   {
@@ -355,7 +360,7 @@ export const catalogSeed: Product[] = [
     category: "Panificación y Pastas Soy Sin Gluten",
     price: 4200,
     description: "",
-    image: img("ppc-pan-campo"),
+    image: img("panificacion", "ppc-pan-campo"),
     stock: 1,
   },
   {
@@ -364,7 +369,7 @@ export const catalogSeed: Product[] = [
     category: "Panificación y Pastas Soy Sin Gluten",
     price: 2500,
     description: "",
-    image: img("ppc-pan-panchos"),
+    image: img("panificacion", "ppc-pan-panchos"),
     stock: 1,
   },
   {
@@ -373,7 +378,7 @@ export const catalogSeed: Product[] = [
     category: "Panificación y Pastas Soy Sin Gluten",
     price: 1500,
     description: "",
-    image: img("ppc-pan-hamburguesa"),
+    image: img("panificacion", "ppc-pan-hamburguesa"),
     stock: 1,
   },
 
@@ -384,8 +389,8 @@ export const catalogSeed: Product[] = [
     category: "Desayunos",
     price: 28000,
     description: "Porción 1 persona",
-    image: img("des-clasico-2"),
-    video: vid("des-clasico-2"),
+    image: img("desayunos", "des-clasico-2"),
+    video: vid("desayunos", "des-clasico-2"),
     stock: 1,
   },
   {
@@ -394,8 +399,8 @@ export const catalogSeed: Product[] = [
     category: "Desayunos",
     price: 48000,
     description: "Porción para compartir con otro",
-    image: img("des-clasico-4"),
-    video: vid("des-clasico-4"),
+    image: img("desayunos", "des-clasico-4"),
+    video: vid("desayunos", "des-clasico-4"),
     stock: 1,
   },
   {
@@ -404,8 +409,8 @@ export const catalogSeed: Product[] = [
     category: "Desayunos",
     price: 28000,
     description: "Porción para una persona",
-    image: img("des-proteico-2"),
-    video: vid("des-proteico-2"),
+    image: img("desayunos", "des-proteico-2"),
+    video: vid("desayunos", "des-proteico-2"),
     stock: 1,
   },
   {
@@ -414,7 +419,7 @@ export const catalogSeed: Product[] = [
     category: "Desayunos",
     price: 15000,
     description: "",
-    image: img("des-taza"),
+    image: img("desayunos", "des-taza"),
     stock: 1,
   },
 
@@ -426,8 +431,8 @@ export const catalogSeed: Product[] = [
     price: 24000,
     description:
       "Contiene: cuadradito salado de jyq, cuadradito dulce de óreo con dulce de leche y copitos de chocolate, bolsita de pochoclos salados y juguito de naranja sin gluten",
-    image: img("vc-jyq-oreo"),
-    video: "/images/productos/vianda-infantil.mp4",
+    image: img("viandacumple", "vc-jyq-oreo"),
+    video: "/images/productos/viandacumple/vianda-infantil.mp4",
     stock: 1,
   },
 ];

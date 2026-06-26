@@ -115,11 +115,14 @@ export function filterProductsByCategory(
   products: Product[],
   category: CatalogCategoryFilter
 ): Product[] {
-  if (category === "Todas") return products;
+  // Siempre ocultar productos con available === false
+  const visible = products.filter((p) => p.available !== false);
+
+  if (category === "Todas") return visible;
 
   const target = normalizeText(category);
 
-  const list = products.filter((p) => {
+  const list = visible.filter((p) => {
     // Bloquear waffles congelados en categorías que no les corresponden
     if (WAFFLES_CONGELADOS_IDS.has(p.id) && category !== "Waffles Congelados") {
       return false;

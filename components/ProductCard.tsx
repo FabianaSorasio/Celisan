@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { Product } from "@/lib/products";
 import { useCart } from "@/components/CartProvider";
 import VideoModal from "@/components/VideoModal";
+import ImageModal from "@/components/ImageModal";
 
 interface ProductCardProps {
   product: Product;
@@ -22,7 +23,15 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   const [sabor, setSabor] = useState<Sabor>("Dulces");
   const [videoOpen, setVideoOpen] = useState(false);
+  const [imageOpen, setImageOpen] = useState(false);
   const outOfStock = product.stock <= 0;
+
+  // Carrusel — activo sólo cuando hay más de 1 imagen en el array
+  const gallery = product.images && product.images.length > 1 ? product.images : null;
+  const [slide, setSlide] = useState(0);
+  const currentImage = gallery ? gallery[slide] : product.image;
+  const prevSlide = () => setSlide((s) => (s - 1 + (gallery?.length ?? 1)) % (gallery?.length ?? 1));
+  const nextSlide = () => setSlide((s) => (s + 1) % (gallery?.length ?? 1));
 
   const highlightedTitle = product.name.match(/(.*)\s(x[24]\.?)$/i);
   const detailLines = product.description
@@ -40,41 +49,100 @@ export default function ProductCard({ product }: ProductCardProps) {
       >
         {/* ── Imagen ──────────────────────────────────────────────── */}
         <div className="aspect-[4/3] relative bg-gray-100 overflow-hidden">
-          <img
-            src={product.image}
-            alt={product.name}
-            className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-            loading="lazy"
-            decoding="async"
-          />
 
-          {/* Botón "Ver video" — solo si el producto tiene campo video */}
-          {product.video && (
+          {/* ── Imagen / Carrusel ─────────────────────────────────── */}
+          <button
+            type="button"
+            className="absolute inset-0 w-full h-full focus:outline-none cursor-zoom-in"
+            onClick={() => {
+              if (product.video) setVideoOpen(true);
+              else setImageOpen(true);
+            }}
+            aria-label={product.video ? `Ver video de ${product.name}` : `Ampliar imagen de ${product.name}`}
+          >
+            <img
+              key={currentImage}
+              src={currentImage}
+              alt={product.name}
+              className="absolute inset-0 h-full w-full object-cover transition-all duration-300 group-hover:scale-105"
+              loading="lazy"
+              decoding="async"
+            />
+          </button>
+
+          {/* ── Controles del carrusel ────────────────────────────── */}
+          {gallery && (
+            <>
+              {/* Flecha izquierda */}
+              <button
+                type="button"
+                onClick={(e) => { e.stopPropagation(); prevSlide(); }}
+                className="absolute left-2 top-1/2 -translate-y-1/2 flex items-center justify-center w-8 h-8 rounded-full bg-black/50 hover:bg-black/75 text-white transition-colors z-10"
+                aria-label="Foto anterior"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+              </button>
+
+              {/* Flecha derecha */}
+              <button
+                type="button"
+                onClick={(e) => { e.stopPropagation(); nextSlide(); }}
+                className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center justify-center w-8 h-8 rounded-full bg-black/50 hover:bg-black/75 text-white transition-colors z-10"
+                aria-label="Foto siguiente"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                </svg>
+              </button>
+
+              {/* Dots */}
+              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+                {gallery.map((_, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    onClick={(e) => { e.stopPropagation(); setSlide(i); }}
+                    className={`w-2 h-2 rounded-full transition-all ${i === slide ? "bg-white scale-125" : "bg-white/50 hover:bg-white/80"}`}
+                    aria-label={`Foto ${i + 1}`}
+                  />
+                ))}
+              </div>
+
+              {/* Ícono zoom arriba a la derecha */}
+              <span className="absolute top-2 right-2 flex items-center justify-center w-7 h-7 rounded-full bg-black/40 text-white opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 101.414-1.414L13.89 10.6A6 6 0 012 8z" clipRule="evenodd" />
+                </svg>
+              </span>
+            </>
+          )}
+
+          {/* ── Sin carrusel: íconos de lupa / video ─────────────── */}
+          {!gallery && !product.video && (
+            <span className="absolute bottom-2 right-2 flex items-center justify-center w-7 h-7 rounded-full bg-black/40 text-white opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 101.414-1.414L13.89 10.6A6 6 0 012 8z" clipRule="evenodd" />
+              </svg>
+            </span>
+          )}
+          {!gallery && product.video && (
             <button
               type="button"
               onClick={() => setVideoOpen(true)}
               className="absolute bottom-2 right-2 flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/60 text-white text-xs font-semibold hover:bg-black/80 active:scale-95 transition-all backdrop-blur-sm z-10"
               aria-label={`Ver video de ${product.name}`}
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-3.5 w-3.5"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                  clipRule="evenodd"
-                />
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
               </svg>
               Ver video
             </button>
           )}
 
           {outOfStock && (
-            <span className="absolute top-3 right-3 px-2 py-1 rounded-lg bg-gray-900/80 text-white text-xs font-semibold">
+            <span className="absolute top-3 right-3 px-2 py-1 rounded-lg bg-gray-900/80 text-white text-xs font-semibold pointer-events-none">
               Sin stock
             </span>
           )}
@@ -173,12 +241,21 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
       </article>
 
-      {/* Modal de video — se renderiza fuera del article para evitar overflow:hidden */}
+      {/* Modal de video — fuera del article para evitar overflow:hidden */}
       {videoOpen && product.video && (
         <VideoModal
           src={product.video}
           title={product.name}
           onClose={() => setVideoOpen(false)}
+        />
+      )}
+
+      {/* Lightbox de imagen — muestra la foto actual (carrusel o imagen única) */}
+      {imageOpen && !product.video && (
+        <ImageModal
+          src={currentImage}
+          alt={product.name}
+          onClose={() => setImageOpen(false)}
         />
       )}
     </>
