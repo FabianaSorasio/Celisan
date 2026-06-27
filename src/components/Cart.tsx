@@ -77,14 +77,14 @@ export default function Cart({ onClose }: CartProps) {
         <div className="absolute inset-0 bg-black/30" aria-hidden onClick={() => { setPedidoEnviado(false); onClose(); }} />
         <div className="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl p-6 text-center">
           <div className="text-4xl mb-3">🎉</div>
-          <div className="text-lg font-bold text-celisan-red">¡Pedido enviado!</div>
+          <div className="text-lg font-bold text-green-700">¡Pedido enviado!</div>
           <p className="text-sm text-gray-600 mt-2">
             Se abrió WhatsApp con el detalle. Completá el envío desde la app.
           </p>
           <button
             type="button"
             onClick={() => { setPedidoEnviado(false); onClose(); }}
-            className="mt-5 w-full py-2.5 rounded-xl bg-celisan-red text-white font-semibold hover:opacity-90 transition-opacity"
+            className="mt-5 w-full py-2.5 rounded-xl bg-green-600 text-white font-semibold hover:bg-green-700 transition-colors"
           >
             OK
           </button>
@@ -101,8 +101,8 @@ export default function Cart({ onClose }: CartProps) {
       {/* Panel */}
       <div className="relative w-full max-w-sm h-full bg-white flex flex-col shadow-2xl">
 
-        {/* Header marca */}
-        <div className="flex items-center justify-between px-4 py-3.5 bg-celisan-red">
+        {/* Header verde */}
+        <div className="flex items-center justify-between px-4 py-3.5 bg-green-600">
           <div className="flex items-center gap-2 text-white font-bold text-lg">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -131,7 +131,7 @@ export default function Cart({ onClose }: CartProps) {
                       {item.sabor && <span className="text-gray-500 font-normal"> ({item.sabor})</span>}
                     </p>
                     <p className="text-xs text-gray-400 mt-0.5">${item.price.toLocaleString("es-AR")} c/u</p>
-                    <p className="text-sm font-bold text-celisan-red mt-1">${itemSubtotal(item).toLocaleString("es-AR")}</p>
+                    <p className="text-sm font-bold text-green-700 mt-1">${itemSubtotal(item).toLocaleString("es-AR")}</p>
                   </div>
                   <div className="flex flex-col items-end justify-between gap-1">
                     <div className="flex items-center gap-1">
@@ -161,14 +161,14 @@ export default function Cart({ onClose }: CartProps) {
                     placeholder="Nombre y apellido"
                     value={nombre}
                     onChange={(e) => setNombre(e.target.value)}
-                    className="w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-celisan-red/30 focus:border-celisan-red placeholder-gray-400"
+                    className="w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-green-500/30 focus:border-green-500 placeholder-gray-400"
                   />
                   <input
                     type="tel"
                     placeholder="Teléfono / WhatsApp"
                     value={telefono}
                     onChange={(e) => setTelefono(e.target.value)}
-                    className="w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-celisan-red/30 focus:border-celisan-red placeholder-gray-400"
+                    className="w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-green-500/30 focus:border-green-500 placeholder-gray-400"
                   />
                 </div>
               </div>
@@ -185,14 +185,14 @@ export default function Cart({ onClose }: CartProps) {
                     <button
                       type="button"
                       onClick={() => setEntrega("retiro")}
-                      className={`flex-1 py-2 text-sm font-semibold transition-colors ${entrega === "retiro" ? "bg-celisan-red text-white" : "bg-white text-gray-500 hover:bg-gray-50"}`}
+                      className={`flex-1 py-2 text-sm font-semibold transition-colors ${entrega === "retiro" ? "bg-green-600 text-white" : "bg-white text-gray-500 hover:bg-gray-50"}`}
                     >
                       Retiro en local
                     </button>
                     <button
                       type="button"
                       onClick={() => setEntrega("delivery")}
-                      className={`flex-1 py-2 text-sm font-semibold transition-colors border-l border-gray-200 ${entrega === "delivery" ? "bg-celisan-red text-white" : "bg-white text-gray-500 hover:bg-gray-50"}`}
+                      className={`flex-1 py-2 text-sm font-semibold transition-colors border-l border-gray-200 ${entrega === "delivery" ? "bg-green-600 text-white" : "bg-white text-gray-500 hover:bg-gray-50"}`}
                     >
                       🛵 Delivery
                     </button>
@@ -206,14 +206,14 @@ export default function Cart({ onClose }: CartProps) {
                           placeholder="Calle"
                           value={calle}
                           onChange={(e) => setCalle(e.target.value)}
-                          className="flex-1 px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-celisan-red/30 focus:border-celisan-red placeholder-gray-400"
+                          className="flex-1 px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-green-500/30 focus:border-green-500 placeholder-gray-400"
                         />
                         <input
                           type="text"
                           placeholder="Altura"
                           value={altura}
                           onChange={(e) => setAltura(e.target.value)}
-                          className="w-24 px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-celisan-red/30 focus:border-celisan-red placeholder-gray-400"
+                          className="w-24 px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-green-500/30 focus:border-green-500 placeholder-gray-400"
                         />
                       </div>
                       <input
@@ -221,14 +221,14 @@ export default function Cart({ onClose }: CartProps) {
                         placeholder="Barrio, piso, casa, referencias..."
                         value={detalle}
                         onChange={(e) => setDetalle(e.target.value)}
-                        className="w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-celisan-red/30 focus:border-celisan-red placeholder-gray-400"
+                        className="w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-green-500/30 focus:border-green-500 placeholder-gray-400"
                       />
                       <p className="text-xs text-gray-400 px-1">
                         📍 Delivery solo en <strong>San Francisco (Córdoba)</strong>
                       </p>
 
                       {/* Info costo de envío */}
-                      <div className={`rounded-lg px-3 py-2 text-xs font-medium ${deliveryCost === 0 ? "bg-celisan-red/10 text-celisan-red border border-celisan-red/20" : "bg-amber-50 text-amber-700 border border-amber-200"}`}>
+                      <div className={`rounded-lg px-3 py-2 text-xs font-medium ${deliveryCost === 0 ? "bg-green-50 text-green-700 border border-green-200" : "bg-amber-50 text-amber-700 border border-amber-200"}`}>
                         {deliveryCost === 0
                           ? "🎉 ¡Envío gratis por compra mayor a $30.000!"
                           : `🛵 Costo de envío: $${DELIVERY_COSTO.toLocaleString("es-AR")} — pedidos desde $${DELIVERY_GRATIS_DESDE.toLocaleString("es-AR")} son gratis`}
@@ -249,14 +249,14 @@ export default function Cart({ onClose }: CartProps) {
                     <button
                       type="button"
                       onClick={() => setPago("efectivo")}
-                      className={`flex-1 py-2 text-sm font-semibold transition-colors ${pago === "efectivo" ? "bg-celisan-red text-white" : "bg-white text-gray-500 hover:bg-gray-50"}`}
+                      className={`flex-1 py-2 text-sm font-semibold transition-colors ${pago === "efectivo" ? "bg-green-600 text-white" : "bg-white text-gray-500 hover:bg-gray-50"}`}
                     >
                       💵 Efectivo
                     </button>
                     <button
                       type="button"
                       onClick={() => setPago("transferencia")}
-                      className={`flex-1 py-2 text-sm font-semibold transition-colors border-l border-gray-200 ${pago === "transferencia" ? "bg-celisan-red text-white" : "bg-white text-gray-500 hover:bg-gray-50"}`}
+                      className={`flex-1 py-2 text-sm font-semibold transition-colors border-l border-gray-200 ${pago === "transferencia" ? "bg-green-600 text-white" : "bg-white text-gray-500 hover:bg-gray-50"}`}
                     >
                       🏦 Transferencia
                     </button>
@@ -288,21 +288,21 @@ export default function Cart({ onClose }: CartProps) {
               {entrega === "delivery" && (
                 <div className="flex justify-between text-gray-500">
                   <span>Envío</span>
-                  <span className={deliveryCost === 0 ? "text-celisan-red font-medium" : ""}>
+                  <span className={deliveryCost === 0 ? "text-green-600 font-medium" : ""}>
                     {deliveryCost === 0 ? "Gratis 🎉" : `$${deliveryCost.toLocaleString("es-AR")}`}
                   </span>
                 </div>
               )}
               <div className="flex justify-between font-bold text-base text-gray-800 pt-1 border-t border-gray-100">
                 <span>Total</span>
-                <span className="text-celisan-red">${total.toLocaleString("es-AR")}</span>
+                <span className="text-green-700">${total.toLocaleString("es-AR")}</span>
               </div>
             </div>
 
             <button
               type="button"
               onClick={handleConfirm}
-              className="w-full py-3.5 rounded-xl bg-celisan-red hover:opacity-90 text-white font-bold text-sm transition-opacity flex items-center justify-center gap-2 shadow-sm"
+              className="w-full py-3.5 rounded-xl bg-green-600 hover:bg-green-700 text-white font-bold text-sm transition-colors flex items-center justify-center gap-2 shadow-sm"
             >
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="h-5 w-5 fill-white">
                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>

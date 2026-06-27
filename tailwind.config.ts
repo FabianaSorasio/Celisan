@@ -10,9 +10,9 @@ const config: Config = {
     extend: {
       colors: {
         cream: "#FFFDF5",
-        "celisan-red": "#B52C2C",
-        "olive": "#556B2F",
-        "olive-light": "#6B8E23",
+        "celisan-red": "#722F37",
+        "olive": "#808000",
+        "olive-light": "#9A9A00",
       },
       boxShadow: {
         "antigravity": "0 25px 50px -12px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.03)",
