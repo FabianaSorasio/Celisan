@@ -16,17 +16,26 @@ export default function Footer() {
           id="historia"
           className="max-w-3xl mx-auto text-center mb-12 scroll-mt-[4.25rem]"
         >
-          <h2 className="text-3xl font-bold text-olive mb-6 italic">Nuestra Historia</h2>
+          <h2 className="text-2xl font-bold text-olive mb-6">Nació en 2019. Volvimos con todo.</h2>
           <p className="text-lg text-gray-700 leading-relaxed mb-4">
-            En 2019 iniciamos un camino: revender opciones sin TACC para la comunidad celíaca de San Francisco y zona. Hoy,
-            mantenemos esa esencia intacta pero te traemos una invitación renovada y original: ¡descubrir la magia de nuestros
-            waffles artesanales hechos por nosotros mismos! Anexamos venta de viandas, panificados y pastas congeladas para abrir el abanico de posibilidades. 
-            Sumamos los desayunos de wafles para regalar y las viandas cumple infantiles como opciones en nuestros eventos y fechas especiales.      
+            En 2019 iniciamos un hermoso camino: acercar las mejores opciones sin gluten para la comunidad celíaca de San Francisco y la zona. 🌽❤️
+          </p>
+          <p className="text-lg text-gray-700 leading-relaxed mb-4">
+            En 2026 volvimos, renovamos todo y seguimos mejorando día a día, escuchando lo que preferís y evolucionando junto a tus gustos a cada paso. 👣✨ Por eso, manteniendo esa esencia intacta, hoy te traemos una invitación totalmente renovada y original: ¡descubrir la magia de nuestros waffles artesanales, hechos por nosotros mismos! 👩‍🍳👨‍🍳🧇✨
+          </p>
+          <p className="text-lg text-gray-700 leading-relaxed mb-4">
+            Para abrir el abanico de posibilidades y adaptarnos a tu rutina, sumamos a nuestra propuesta la venta de:
+          </p>
+          <ul className="text-lg text-gray-700 text-left inline-block mb-4 space-y-1">
+            <li>🥡 Viandas congeladas prácticas y riquísimas.</li>
+            <li>🍞 Panificados tentadores.</li>
+            <li>🍝 Pastas congeladas listas para disfrutar.</li>
+          </ul>
+          <p className="text-lg text-gray-700 leading-relaxed mb-4">
+            ¡Y eso no es todo! Nos encanta ser parte de tus festejos, por eso incorporamos nuestros desayunos de waffles para regalar y viandas para cumpleaños infantiles, ideales para llenar de sabor tus eventos y fechas especiales. 🎁🎈🎂
           </p>
           <p className="text-lg text-gray-700 leading-relaxed">
-            Celisan es sabor, cuidado y autenticidad en cada bocado. Detrás de cada waffle hay una receta propia, pensada
-            para convertir cualquier momento en una celebración, sin límites. Dulces o salados, son el placer seguro que
-            estabas esperando.
+            Celisan es sabor, cuidado y autenticidad en cada bocado. Detrás de cada waffle hay una receta propia, pensada con mucho amor para convertir cualquier momento en una celebración, sin límites. Dulces o salados... ¡son el placer seguro que estabas esperando! 🍫🍓🧀
           </p>
         </div>
 

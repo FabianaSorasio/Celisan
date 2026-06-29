@@ -151,9 +151,10 @@
     "image": "/images/productos/uploads/1782769947965-canelones-baja.png",
     "stock": 1,
     "available": true,
-    "imageX": 50,
-    "imageY": 50,
-    "imageZoom": 1
+    "imageX": 46,
+    "imageY": 44,
+    "imageZoom": 1,
+    "video": "/images/productos/uploads/1782774456521-canelones.mp4"
   },
   {
     "id": "ssg-sand-bondiola",
@@ -658,7 +659,7 @@
     "description": "",
     "price": 8600,
     "image": "",
-    "category": "Waffles Congelados",
+    "category": "Panificación y Pastas Soy Sin Gluten",
     "stock": 1,
     "available": true,
     "imageX": 50,
