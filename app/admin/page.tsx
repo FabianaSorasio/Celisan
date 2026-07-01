@@ -193,6 +193,40 @@ export default function AdminPage() {
     }
   };
 
+  // ── Reordenar productos ───────────────────────────────────────────────────
+
+  const handleMoveProduct = useCallback(async (id: string, direction: "up" | "down") => {
+    const idx = products.findIndex((p) => p.id === id);
+    if (idx === -1) return;
+    const category = products[idx].category;
+
+    // Buscar el producto adyacente de la misma categoría en el array completo
+    const sameCategory = products
+      .map((p, i) => ({ p, i }))
+      .filter(({ p }) => p.category === category);
+    const posInCat = sameCategory.findIndex(({ i }) => i === idx);
+    const targetPos = direction === "up" ? posInCat - 1 : posInCat + 1;
+    if (targetPos < 0 || targetPos >= sameCategory.length) return;
+
+    const targetIdx = sameCategory[targetPos].i;
+    const newProducts = [...products];
+    [newProducts[idx], newProducts[targetIdx]] = [newProducts[targetIdx], newProducts[idx]];
+    setProducts(newProducts);
+
+    try {
+      const res = await fetch("/api/admin/products", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newProducts),
+      });
+      if (!res.ok) throw new Error("Error al guardar orden");
+      showToast("Orden actualizado ✓");
+    } catch {
+      showToast("Error al guardar orden", false);
+      fetchProducts();
+    }
+  }, [products, showToast, fetchProducts]);
+
   // ── Toggle visibilidad ────────────────────────────────────────────────────
 
   const handleToggleVisible = async (product: Product) => {
@@ -376,15 +410,23 @@ export default function AdminPage() {
           <p className="text-center text-gray-400 py-20">No hay productos</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-            {displayed.map((product) => (
-              <AdminCard
-                key={product.id}
-                product={product}
-                onEdit={() => { setIsNew(false); setEditProduct(productToForm(product)); }}
-                onToggle={() => handleToggleVisible(product)}
-                onDelete={() => setConfirmDelete(product.id)}
-              />
-            ))}
+            {displayed.map((product) => {
+              const sameInDisplayed = displayed.filter((p) => p.category === product.category);
+              const posInCat = sameInDisplayed.findIndex((p) => p.id === product.id);
+              return (
+                <AdminCard
+                  key={product.id}
+                  product={product}
+                  onEdit={() => { setIsNew(false); setEditProduct(productToForm(product)); }}
+                  onToggle={() => handleToggleVisible(product)}
+                  onDelete={() => setConfirmDelete(product.id)}
+                  onMoveUp={() => handleMoveProduct(product.id, "up")}
+                  onMoveDown={() => handleMoveProduct(product.id, "down")}
+                  isFirst={posInCat === 0}
+                  isLast={posInCat === sameInDisplayed.length - 1}
+                />
+              );
+            })}
           </div>
         )}
       </div>
@@ -431,11 +473,19 @@ function AdminCard({
   onEdit,
   onToggle,
   onDelete,
+  onMoveUp,
+  onMoveDown,
+  isFirst,
+  isLast,
 }: {
   product: Product;
   onEdit: () => void;
   onToggle: () => void;
   onDelete: () => void;
+  onMoveUp: () => void;
+  onMoveDown: () => void;
+  isFirst: boolean;
+  isLast: boolean;
 }) {
   const isHidden = product.available === false;
   const hasVariantes = !!product.variantes?.length;
@@ -502,6 +552,24 @@ function AdminCard({
           </button>
           <button onClick={onDelete} className="py-1.5 px-2.5 rounded-lg bg-gray-100 text-gray-500 hover:bg-red-50 hover:text-red-500 text-xs">
             🗑
+          </button>
+        </div>
+        <div className="flex gap-1.5 mt-1.5">
+          <button
+            onClick={onMoveUp}
+            disabled={isFirst}
+            className="flex-1 py-1.5 rounded-lg bg-gray-50 text-gray-500 text-xs font-semibold hover:bg-gray-100 disabled:opacity-25 disabled:cursor-not-allowed transition-colors"
+            title="Mover arriba en la categoría"
+          >
+            ↑ Subir
+          </button>
+          <button
+            onClick={onMoveDown}
+            disabled={isLast}
+            className="flex-1 py-1.5 rounded-lg bg-gray-50 text-gray-500 text-xs font-semibold hover:bg-gray-100 disabled:opacity-25 disabled:cursor-not-allowed transition-colors"
+            title="Mover abajo en la categoría"
+          >
+            ↓ Bajar
           </button>
         </div>
       </div>
