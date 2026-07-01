@@ -29,7 +29,7 @@ export async function POST(req: Request) {
   }
 
   const isVideo = allowedVideos.includes(ext);
-  const maxBytes = isVideo ? 50 * 1024 * 1024 : 8 * 1024 * 1024; // 50MB video, 8MB imagen
+  const maxBytes = isVideo ? 50 * 1024 * 1024 : 20 * 1024 * 1024; // 50MB video, 20MB imagen
   if (file.size > maxBytes) {
     const maxMb = Math.round(maxBytes / (1024 * 1024));
     return NextResponse.json(

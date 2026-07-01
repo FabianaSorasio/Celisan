@@ -111,15 +111,20 @@
     "category": "Viandas Soy Sin Gluten",
     "price": 11600,
     "description": "",
-    "image": "/images/productos/viandas/ssg-lasagna.png",
+    "image": "/images/productos/uploads/1782910097192-lasagna-ia_alta.webp",
     "stock": 0,
     "available": true,
-    "imageX": 50,
-    "imageY": 50,
-    "imageZoom": 1,
+    "imageX": 47,
+    "imageY": 36,
+    "imageZoom": 1.05,
     "stockDulces": 0,
     "stockSalados": 0,
-    "sinSelectorSabor": false
+    "sinSelectorSabor": false,
+    "variantes": [],
+    "images": [
+      "/images/productos/uploads/1782910097192-lasagna-ia_alta.webp",
+      "/images/productos/uploads/1782910077006-lasagna.png"
+    ]
   },
   {
     "id": "ssg-sorrentinos-jyq",
@@ -153,19 +158,25 @@
     "category": "Viandas Soy Sin Gluten",
     "price": 10800,
     "description": "",
-    "image": "/images/productos/viandas/ssg-canelones.png",
+    "image": "/images/productos/uploads/1782910990425-canelones-ia_alta.webp",
     "stock": 0,
     "available": true,
-    "imageX": 50,
-    "imageY": 50,
-    "imageZoom": 1,
+    "imageX": 48,
+    "imageY": 52,
+    "imageZoom": 1.2,
     "stockDulces": 0,
     "stockSalados": 0,
-    "sinSelectorSabor": false
+    "sinSelectorSabor": false,
+    "variantes": [],
+    "images": [
+      "/images/productos/uploads/1782910990425-canelones-ia_alta.webp",
+      "/images/productos/uploads/1782911074372-ssg-canelones.png"
+    ],
+    "video": "/images/productos/uploads/1782911119131-1782774456521-canelones.mp4"
   },
   {
     "id": "ssg-sand-bondiola",
-    "name": "Sandwich de bondiola cerdo con verduras y queso",
+    "name": "Sandwich de bondiola de cerdo con verduras y queso",
     "category": "Viandas Soy Sin Gluten",
     "price": 8600,
     "description": "",
@@ -177,7 +188,8 @@
     "imageZoom": 1,
     "stockDulces": 0,
     "stockSalados": 0,
-    "sinSelectorSabor": false
+    "sinSelectorSabor": false,
+    "variantes": []
   },
   {
     "id": "ssg-sand-hamburguesa",
@@ -237,7 +249,7 @@
     "category": "Viandas Soy Sin Gluten",
     "price": 11500,
     "description": "",
-    "image": "/images/productos/uploads/1782572539086-whatsapp-image-2026-05-27-at-19.18.31.jpeg",
+    "image": "/images/productos/uploads/1782911167847-1782763588384-whatsapp-image-2026-05-27-at-19.18.31.jpeg",
     "stock": 4,
     "available": true,
     "imageX": 42,
@@ -245,7 +257,12 @@
     "imageZoom": 1,
     "stockDulces": 0,
     "stockSalados": 0,
-    "sinSelectorSabor": false
+    "sinSelectorSabor": false,
+    "variantes": [],
+    "images": [
+      "/images/productos/uploads/1782911167847-1782763588384-whatsapp-image-2026-05-27-at-19.18.31.jpeg",
+      "/images/productos/uploads/1782911159148-1782763564753-tarta-jam-n-y-queso.png"
+    ]
   },
   {
     "id": "ssg-tarta-anco",
@@ -279,7 +296,7 @@
     "category": "Viandas Soy Sin Gluten",
     "price": 12200,
     "description": "",
-    "image": "/images/productos/viandas/ssg-tarta-anco.png",
+    "image": "/images/productos/uploads/1782911212099-1782769173496-corte-tarta-pollo-y-acelga.jpeg",
     "stock": 1,
     "available": true,
     "imageX": 50,
@@ -287,7 +304,13 @@
     "imageZoom": 1,
     "stockDulces": 0,
     "stockSalados": 0,
-    "sinSelectorSabor": false
+    "sinSelectorSabor": false,
+    "variantes": [],
+    "images": [
+      "/images/productos/uploads/1782911212099-1782769173496-corte-tarta-pollo-y-acelga.jpeg",
+      "/images/productos/uploads/1782911203059-1782763588384-whatsapp-image-2026-05-27-at-19.18.31.jpeg",
+      "/images/productos/uploads/1782911206764-1782763777382-tarta-de-otra-cosa.png"
+    ]
   },
   {
     "id": "ssg-pizza",
@@ -295,7 +318,7 @@
     "category": "Viandas Soy Sin Gluten",
     "price": 7900,
     "description": "",
-    "image": "/images/productos/viandas/ssg-pizza.png",
+    "image": "/images/productos/uploads/1782911446991-1782766716928-pizza_baja.png",
     "stock": 2,
     "available": true,
     "imageX": 50,
@@ -303,7 +326,12 @@
     "imageZoom": 1,
     "stockDulces": 0,
     "stockSalados": 0,
-    "sinSelectorSabor": false
+    "sinSelectorSabor": false,
+    "variantes": [],
+    "images": [
+      "/images/productos/uploads/1782911446991-1782766716928-pizza_baja.png",
+      "/images/productos/uploads/1782911453023-1782766756146-pizza-lista.png"
+    ]
   },
   {
     "id": "ssg-emp-dulce",
@@ -311,7 +339,7 @@
     "category": "Viandas Soy Sin Gluten",
     "price": 7200,
     "description": "",
-    "image": "/images/productos/viandas/ssg-emp-dulce.png",
+    "image": "/images/productos/uploads/1782911480562-1782767876754-empanadas-carne-corte.png",
     "stock": 2,
     "available": true,
     "imageX": 50,
@@ -319,7 +347,13 @@
     "imageZoom": 1,
     "stockDulces": 0,
     "stockSalados": 0,
-    "sinSelectorSabor": false
+    "sinSelectorSabor": false,
+    "variantes": [],
+    "images": [
+      "/images/productos/uploads/1782911480562-1782767876754-empanadas-carne-corte.png",
+      "/images/productos/uploads/1782911570962-1782767690640-empanadas-carne.jpg",
+      "/images/productos/uploads/1782911515514-1782767807709-ssg-emp-dulce.png"
+    ]
   },
   {
     "id": "ssg-emp-salada",
@@ -327,12 +361,21 @@
     "category": "Viandas Soy Sin Gluten",
     "price": 7200,
     "description": "",
-    "image": "/images/productos/viandas/ssg-emp-salada.png",
+    "image": "/images/productos/uploads/1782911536697-1782767876754-empanadas-carne-corte.png",
     "stock": 1,
     "available": true,
     "imageX": 50,
     "imageY": 50,
-    "imageZoom": 1
+    "imageZoom": 1,
+    "stockDulces": 0,
+    "stockSalados": 0,
+    "sinSelectorSabor": false,
+    "variantes": [],
+    "images": [
+      "/images/productos/uploads/1782911536697-1782767876754-empanadas-carne-corte.png",
+      "/images/productos/uploads/1782911554670-1782767871846-empandas-jyq.png",
+      "/images/productos/uploads/1782911542181-1782767846000-ssg-emp-salada.png"
+    ]
   },
   {
     "id": "ssg-emp-arabes",
@@ -340,10 +383,10 @@
     "category": "Viandas Soy Sin Gluten",
     "price": 7200,
     "description": "",
-    "image": "/images/productos/viandas/ssg-emp-arabes.png",
+    "image": "/images/productos/viandas/ssg-emp-arabes-2.png",
     "images": [
-      "/images/productos/viandas/ssg-emp-arabes.png",
-      "/images/productos/viandas/ssg-emp-arabes-2.png"
+      "/images/productos/viandas/ssg-emp-arabes-2.png",
+      "/images/productos/viandas/ssg-emp-arabes.png"
     ],
     "stock": 6,
     "available": true,
@@ -352,7 +395,8 @@
     "imageZoom": 1,
     "stockDulces": 0,
     "stockSalados": 0,
-    "sinSelectorSabor": false
+    "sinSelectorSabor": false,
+    "variantes": []
   },
   {
     "id": "ssg-tacos",
@@ -373,12 +417,20 @@
     "category": "Panificados y Pastas congeladas Soy Sin Gluten",
     "price": 2900,
     "description": "",
-    "image": "/images/productos/panificacion y pastas/ppc-prepizzas.png",
+    "image": "/images/productos/uploads/1782911772285-1782768250449-img_20230111_210940150.jpg.jpeg",
     "stock": 1,
     "available": true,
     "imageX": 50,
     "imageY": 50,
-    "imageZoom": 1
+    "imageZoom": 1,
+    "stockDulces": 0,
+    "stockSalados": 0,
+    "sinSelectorSabor": false,
+    "variantes": [],
+    "images": [
+      "/images/productos/uploads/1782911772285-1782768250449-img_20230111_210940150.jpg.jpeg",
+      "/images/productos/uploads/1782911776123-1782768284493-ppc-prepizzas.png"
+    ]
   },
   {
     "id": "ppc-noquis",
@@ -386,16 +438,20 @@
     "category": "Panificados y Pastas congeladas Soy Sin Gluten",
     "price": 5800,
     "description": "",
-    "image": "/images/productos/panificacion y pastas/ppc-noquis-1.png",
+    "image": "/images/productos/panificacion y pastas/ppc-noquis-2.png",
     "images": [
-      "/images/productos/panificacion y pastas/ppc-noquis-1.png",
-      "/images/productos/panificacion y pastas/ppc-noquis-2.png"
+      "/images/productos/panificacion y pastas/ppc-noquis-2.png",
+      "/images/productos/panificacion y pastas/ppc-noquis-1.png"
     ],
     "stock": 1,
     "available": true,
-    "imageX": 50,
-    "imageY": 50,
-    "imageZoom": 1
+    "imageX": 46,
+    "imageY": 47,
+    "imageZoom": 1,
+    "stockDulces": 0,
+    "stockSalados": 0,
+    "sinSelectorSabor": false,
+    "variantes": []
   },
   {
     "id": "ppc-sorrentinos-jyq",
@@ -403,16 +459,20 @@
     "category": "Panificados y Pastas congeladas Soy Sin Gluten",
     "price": 8600,
     "description": "",
-    "image": "/images/productos/panificacion y pastas/ppc-sorrentinos-jyq-1.png",
+    "image": "/images/productos/panificacion y pastas/ppc-sorrentinos-jyq-2.png",
     "images": [
-      "/images/productos/panificacion y pastas/ppc-sorrentinos-jyq-1.png",
-      "/images/productos/panificacion y pastas/ppc-sorrentinos-jyq-2.png"
+      "/images/productos/panificacion y pastas/ppc-sorrentinos-jyq-2.png",
+      "/images/productos/panificacion y pastas/ppc-sorrentinos-jyq-1.png"
     ],
     "stock": 1,
     "available": true,
     "imageX": 50,
     "imageY": 50,
-    "imageZoom": 1
+    "imageZoom": 1,
+    "stockDulces": 0,
+    "stockSalados": 0,
+    "sinSelectorSabor": false,
+    "variantes": []
   },
   {
     "id": "ppc-sorrentinos-verdura",
@@ -420,16 +480,20 @@
     "category": "Panificados y Pastas congeladas Soy Sin Gluten",
     "price": 8600,
     "description": "",
-    "image": "/images/productos/panificacion y pastas/ppc-sorrentinos-verd-1.png",
+    "image": "/images/productos/panificacion y pastas/ppc-sorrentinos-verd-2.png",
     "images": [
-      "/images/productos/panificacion y pastas/ppc-sorrentinos-verd-1.png",
-      "/images/productos/panificacion y pastas/ppc-sorrentinos-verd-2.png"
+      "/images/productos/panificacion y pastas/ppc-sorrentinos-verd-2.png",
+      "/images/productos/panificacion y pastas/ppc-sorrentinos-verd-1.png"
     ],
     "stock": 1,
     "available": true,
     "imageX": 50,
     "imageY": 50,
-    "imageZoom": 1
+    "imageZoom": 1,
+    "stockDulces": 0,
+    "stockSalados": 0,
+    "sinSelectorSabor": false,
+    "variantes": []
   },
   {
     "id": "ppc-hamb-legumbres",
@@ -481,12 +545,20 @@
     "category": "Panificados y Pastas congeladas Soy Sin Gluten",
     "price": 2000,
     "description": "",
-    "image": "/images/productos/panificacion y pastas/ppc-medialunas.png",
+    "image": "/images/productos/uploads/1782911614725-1782768626844-gemini_generated_image_8kxzse8kxzse8kxz.png",
     "stock": 1,
     "available": true,
     "imageX": 50,
     "imageY": 50,
-    "imageZoom": 1
+    "imageZoom": 1,
+    "stockDulces": 0,
+    "stockSalados": 0,
+    "sinSelectorSabor": false,
+    "variantes": [],
+    "images": [
+      "/images/productos/uploads/1782911614725-1782768626844-gemini_generated_image_8kxzse8kxzse8kxz.png",
+      "/images/productos/uploads/1782911644643-medialuna.png"
+    ]
   },
   {
     "id": "ppc-mafalda",
@@ -511,12 +583,20 @@
     "category": "Panificados y Pastas congeladas Soy Sin Gluten",
     "price": 6500,
     "description": "",
-    "image": "/images/productos/panificacion y pastas/ppc-pan-lactal.png",
+    "image": "/images/productos/uploads/1782911679368-1782768169189-whatsapp-image-2026-05-21-at-09.54.19-3-.jpeg",
     "stock": 1,
     "available": true,
-    "imageX": 50,
-    "imageY": 50,
-    "imageZoom": 1
+    "imageX": 49,
+    "imageY": 39,
+    "imageZoom": 1,
+    "stockDulces": 0,
+    "stockSalados": 0,
+    "sinSelectorSabor": false,
+    "variantes": [],
+    "images": [
+      "/images/productos/uploads/1782911679368-1782768169189-whatsapp-image-2026-05-21-at-09.54.19-3-.jpeg",
+      "/images/productos/uploads/1782911674153-1782768176274-whatsapp-image-2026-05-21-at-09.54.19.jpeg"
+    ]
   },
   {
     "id": "ppc-pan-baguette",
@@ -524,12 +604,20 @@
     "category": "Panificados y Pastas congeladas Soy Sin Gluten",
     "price": 2000,
     "description": "",
-    "image": "/images/productos/panificacion y pastas/ppc-pan-baguette.png",
+    "image": "/images/productos/uploads/1782911728606-1782769982017-pan-baguette-baja.jpeg",
     "stock": 1,
     "available": true,
     "imageX": 50,
     "imageY": 50,
-    "imageZoom": 1
+    "imageZoom": 1,
+    "stockDulces": 0,
+    "stockSalados": 0,
+    "sinSelectorSabor": false,
+    "variantes": [],
+    "images": [
+      "/images/productos/uploads/1782911728606-1782769982017-pan-baguette-baja.jpeg",
+      "/images/productos/uploads/1782911733574-1782770034726-pan-baguette-paquete-baja.jpeg"
+    ]
   },
   {
     "id": "ppc-pan-campo",
@@ -575,42 +663,54 @@
     "name": "Desayuno Clásico 2 cuadraditos",
     "category": "Desayunos",
     "price": 28000,
-    "description": "Porción 1 persona",
+    "description": "Contiene: \n1 cuadradito waffle salado  de jamón y queso.\n1 cuadradito salados o dulces.\nQueso crema\nMermelada\nDulce de leche\nJugo de Naranja\nSaquitos de café\nLeche en polvo\nSaquitos de té \nSaquitos de mate cocido\nEdulcorante\nAzúcar",
     "image": "/images/productos/desayunos/des-clasico-2.png",
     "video": "/images/productos/desayunos/des-clasico-2.mp4",
     "stock": 1,
     "available": true,
     "imageX": 50,
     "imageY": 50,
-    "imageZoom": 1
+    "imageZoom": 1,
+    "stockDulces": 0,
+    "stockSalados": 0,
+    "sinSelectorSabor": false,
+    "variantes": []
   },
   {
     "id": "des-clasico-4",
     "name": "Desayuno Clásico 4 cuadraditos",
     "category": "Desayunos",
     "price": 48000,
-    "description": "Porción para compartir con otro",
+    "description": "Porción para compartir con otro:\n2 cuadraditos waffle salado  de jamón y queso.\n2 cuadraditos salados o dulces.\nQueso crema\nMermelada\nDulce de leche\nJugo de Naranja\nSaquitos de café\nLeche en polvo\nSaquitos de té \nSaquitos de mate cocido\nEdulcorante\nAzúcar",
     "image": "/images/productos/desayunos/des-clasico-4.png",
     "video": "/images/productos/desayunos/des-clasico-4.mp4",
     "stock": 1,
     "available": true,
     "imageX": 50,
     "imageY": 50,
-    "imageZoom": 1
+    "imageZoom": 1,
+    "stockDulces": 0,
+    "stockSalados": 0,
+    "sinSelectorSabor": false,
+    "variantes": []
   },
   {
     "id": "des-proteico-2",
     "name": "Desayuno Proteico 2 cuadraditos",
     "category": "Desayunos",
     "price": 28000,
-    "description": "Porción para una persona",
+    "description": "Porción para una persona:\n2 cuadraditos waffle salado de 10x10 cm  Queso crema\nRevuelto de huevo con queso derretido.\nPalta con semillas.\nJugo de Naranja\nSaquito de café\nLeche en polvo\nSaquito de té \nSaquito de mate cocido\nEdulcorante\nAzúcar",
     "image": "/images/productos/desayunos/des-proteico-2.png",
     "video": "/images/productos/desayunos/des-proteico-2.mp4",
     "stock": 1,
     "available": true,
     "imageX": 50,
     "imageY": 50,
-    "imageZoom": 1
+    "imageZoom": 1,
+    "stockDulces": 0,
+    "stockSalados": 0,
+    "sinSelectorSabor": false,
+    "variantes": []
   },
   {
     "id": "des-taza",
@@ -640,7 +740,11 @@
     "stock": 1,
     "available": true,
     "imageX": 50,
-    "imageY": 50,
-    "imageZoom": 1
+    "imageY": 48,
+    "imageZoom": 1,
+    "stockDulces": 0,
+    "stockSalados": 0,
+    "sinSelectorSabor": false,
+    "variantes": []
   }
 ]
