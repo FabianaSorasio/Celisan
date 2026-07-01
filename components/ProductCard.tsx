@@ -4,6 +4,12 @@ import { useState } from "react";
 import type { Product } from "@/lib/products";
 import { useCart } from "@/components/CartProvider";
 
+function StockBadge({ stock }: { stock: number }) {
+  if (stock <= 0) return <span className="text-[10px] font-normal text-gray-400 mt-0.5 block">Sin stock</span>;
+  if (stock === 1) return <span className="text-[10px] font-bold text-orange-500 mt-0.5 block">¡Queda uno solo!</span>;
+  return <span className="text-[10px] font-bold text-green-600 mt-0.5 block">¡Hay stock!</span>;
+}
+
 interface ProductCardProps {
   product: Product;
 }
@@ -13,6 +19,7 @@ type Sabor = "Dulces" | "Salados";
 export default function ProductCard({ product }: ProductCardProps) {
   const { addItem } = useCart();
   const isCongelado = product.category === "Waffles Congelados";
+  const isCongeladoConSelector = isCongelado && !product.sinSelectorSabor;
   const hasVariantes = !!product.variantes?.length;
 
   const firstInStock = product.variantes?.find((v) => v.stock > 0);
@@ -21,14 +28,16 @@ export default function ProductCard({ product }: ProductCardProps) {
     firstInStock?.nombre ?? product.variantes?.[0]?.nombre ?? ""
   );
 
-  const selectedVarianteObj = product.variantes?.find(
-    (v) => v.nombre === variante
-  );
-  const varianteSinStock = selectedVarianteObj
-    ? selectedVarianteObj.stock <= 0
-    : false;
+  const selectedVarianteObj = product.variantes?.find((v) => v.nombre === variante);
 
-  const outOfStock = hasVariantes ? varianteSinStock : product.stock <= 0;
+  // Si el producto tiene stock por sabor, usarlo; si no, usar stock general
+  const dulcesSinStock = product.stockDulces === 0;
+  const saladosSinStock = product.stockSalados === 0;
+  const outOfStock = hasVariantes
+    ? (selectedVarianteObj ? selectedVarianteObj.stock <= 0 : true)
+    : isCongeladoConSelector
+    ? (sabor === "Dulces" ? dulcesSinStock : saladosSinStock)
+    : product.stock <= 0;
 
   const highlightedTitle = product.name.match(/(.*)\s(x[24]\.?)$/i);
   const detailLines = product.description
@@ -66,7 +75,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             </span>
           </>
         )}
-        {!hasVariantes && product.stock <= 0 && (
+        {outOfStock && (
           <span className="absolute top-3 right-3 px-2 py-1 rounded-lg bg-gray-900/80 text-white text-xs font-semibold">
             Sin stock
           </span>
@@ -108,46 +117,11 @@ export default function ProductCard({ product }: ProductCardProps) {
           <div className="mb-3 h-1" aria-hidden />
         )}
 
-        {/* Selector Waffles Congelados (Dulces / Salados) */}
-        {isCongelado && (
-          <div className="mb-5">
-            <p className="text-xs font-semibold text-gray-700 mb-2">
-              Elegí sabor
-            </p>
-            <div className="flex bg-gray-100 rounded-xl p-1 border border-gray-200 shadow-inner">
-              <button
-                type="button"
-                onClick={() => setSabor("Dulces")}
-                className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all duration-300 ${
-                  sabor === "Dulces"
-                    ? "bg-[#C62828] text-white shadow-md"
-                    : "text-gray-500 hover:text-gray-700"
-                }`}
-              >
-                Dulces
-              </button>
-              <button
-                type="button"
-                onClick={() => setSabor("Salados")}
-                className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all duration-300 ${
-                  sabor === "Salados"
-                    ? "bg-[#55572F] text-white shadow-md"
-                    : "text-gray-500 hover:text-gray-700"
-                }`}
-              >
-                Salados
-              </button>
-            </div>
-          </div>
-        )}
-
         {/* Selector de variantes (ej: Hamburguesas de legumbres) */}
         {hasVariantes && (
           <div className="mb-4">
-            <p className="text-xs font-semibold text-gray-700 mb-2">
-              Elegí variante
-            </p>
-            <div className="grid grid-cols-2 gap-1.5">
+            <p className="text-xs font-semibold text-gray-700 mb-2">Elegí variante</p>
+            <div className="grid grid-cols-2 gap-2">
               {product.variantes!.map((v) => {
                 const isSelected = variante === v.nombre;
                 const sinStock = v.stock <= 0;
@@ -157,32 +131,55 @@ export default function ProductCard({ product }: ProductCardProps) {
                     type="button"
                     disabled={sinStock}
                     onClick={() => setVariante(v.nombre)}
-                    className={`relative flex flex-col items-center justify-center py-2 px-1 rounded-xl text-xs font-bold border transition-all duration-200
-                      ${
-                        sinStock
-                          ? "bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed opacity-60"
-                          : isSelected
-                          ? "bg-olive text-cream border-olive shadow-md"
-                          : "bg-white text-gray-700 border-gray-200 hover:border-olive hover:text-olive"
+                    className={`flex flex-col items-center justify-center py-2.5 px-2 rounded-xl text-xs font-bold border-2 transition-all duration-200
+                      ${sinStock
+                        ? "bg-gray-50 text-gray-300 border-gray-200 cursor-not-allowed"
+                        : isSelected
+                        ? "bg-olive text-cream border-olive shadow-md scale-[1.03]"
+                        : "bg-white text-gray-700 border-gray-200 hover:border-olive hover:text-olive"
                       }`}
                   >
-                    <span>{v.nombre}</span>
-                    {sinStock ? (
-                      <span className="text-[10px] font-normal text-gray-400 mt-0.5">
-                        Sin stock
-                      </span>
-                    ) : (
-                      <span
-                        className={`text-[10px] font-normal mt-0.5 ${
-                          isSelected ? "text-cream/80" : "text-olive"
-                        }`}
-                      >
-                        ¡Hay stock!
-                      </span>
-                    )}
+                    <span className="text-sm">{v.nombre}</span>
+                    <StockBadge stock={v.stock} />
                   </button>
                 );
               })}
+            </div>
+          </div>
+        )}
+
+        {isCongeladoConSelector && (
+          <div className="mb-5">
+            <p className="text-xs font-semibold text-gray-700 mb-2">
+              Elegí sabor
+            </p>
+            <div className="flex bg-gray-100 rounded-xl p-1 border border-gray-200 shadow-inner">
+              <button
+                type="button"
+                disabled={dulcesSinStock}
+                onClick={() => setSabor("Dulces")}
+                className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed ${
+                  sabor === "Dulces"
+                    ? "bg-[#C62828] text-white shadow-md"
+                    : "text-gray-500 hover:text-gray-700"
+                }`}
+              >
+                Dulces
+                {dulcesSinStock && <span className="block text-[9px] font-normal leading-tight">Sin stock</span>}
+              </button>
+              <button
+                type="button"
+                disabled={saladosSinStock}
+                onClick={() => setSabor("Salados")}
+                className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed ${
+                  sabor === "Salados"
+                    ? "bg-[#55572F] text-white shadow-md"
+                    : "text-gray-500 hover:text-gray-700"
+                }`}
+              >
+                Salados
+                {saladosSinStock && <span className="block text-[9px] font-normal leading-tight">Sin stock</span>}
+              </button>
             </div>
           </div>
         )}
@@ -199,8 +196,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                 productId: product.id,
                 name: product.name,
                 price: product.price,
-                ...(isCongelado ? { sabor } : {}),
-                ...(hasVariantes ? { sabor: variante } : {}),
+                ...(hasVariantes ? { sabor: variante } : isCongelado ? { sabor } : {}),
               })
             }
             className="px-5 py-2.5 rounded-xl bg-olive text-cream text-sm font-semibold hover:bg-olive-light transition-all active:scale-95 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-olive"

@@ -19,6 +19,8 @@ function slugify(text: string): string {
 
 // ── Tipos locales ─────────────────────────────────────────────────────────────
 
+type VarianteForm = { nombre: string; stock: number };
+
 type EditForm = {
   id: string;
   name: string;
@@ -26,6 +28,10 @@ type EditForm = {
   description: string;
   price: number;
   stock: number;
+  stockDulces: number;
+  stockSalados: number;
+  sinSelectorSabor: boolean;
+  variantes: VarianteForm[];
   available: boolean;
   image: string;
   images: string[];
@@ -42,6 +48,10 @@ const DEFAULT_FORM: EditForm = {
   description: "",
   price: 0,
   stock: 0,
+  stockDulces: 0,
+  stockSalados: 0,
+  sinSelectorSabor: false,
+  variantes: [],
   available: true,
   image: "",
   images: [],
@@ -59,6 +69,10 @@ function productToForm(p: Product): EditForm {
     description: p.description,
     price: p.price,
     stock: p.stock,
+    stockDulces: p.stockDulces ?? 0,
+    stockSalados: p.stockSalados ?? 0,
+    sinSelectorSabor: p.sinSelectorSabor ?? false,
+    variantes: p.variantes ?? [],
     available: p.available !== false,
     image: p.image,
     images: p.images ?? [],
@@ -424,7 +438,13 @@ function AdminCard({
   onDelete: () => void;
 }) {
   const isHidden = product.available === false;
-  const noStock = product.stock <= 0;
+  const hasVariantes = !!product.variantes?.length;
+  const isCongeladoConSelector = product.category === "Waffles Congelados" && !product.sinSelectorSabor;
+  const noStock = hasVariantes
+    ? product.variantes!.every((v) => v.stock <= 0)
+    : isCongeladoConSelector
+    ? (product.stockDulces ?? 0) <= 0 && (product.stockSalados ?? 0) <= 0
+    : product.stock <= 0;
 
   return (
     <div className={`bg-white rounded-xl border ${isHidden ? "border-gray-200 opacity-60" : "border-gray-100"} overflow-hidden shadow-sm flex flex-col`}>
@@ -450,9 +470,28 @@ function AdminCard({
         <p className="text-sm font-semibold text-gray-800 leading-snug line-clamp-2 mb-1">{product.name}</p>
         <div className="flex items-center justify-between mt-auto mb-3">
           <span className="text-celisan-red font-bold text-sm">${product.price.toLocaleString("es-AR")}</span>
-          <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${noStock ? "bg-red-50 text-red-600" : "bg-green-50 text-green-700"}`}>
-            Stock: {product.stock}
-          </span>
+          {hasVariantes ? (
+            <div className="flex flex-wrap gap-1 justify-end">
+              {product.variantes!.map((v) => (
+                <span key={v.nombre} className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-full ${v.stock <= 0 ? "bg-red-50 text-red-600" : v.stock === 1 ? "bg-orange-50 text-orange-600" : "bg-green-50 text-green-700"}`}>
+                  {v.nombre.slice(0, 3)}: {v.stock}
+                </span>
+              ))}
+            </div>
+          ) : isCongeladoConSelector ? (
+            <div className="flex gap-1">
+              <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${(product.stockDulces ?? 0) <= 0 ? "bg-red-50 text-red-600" : "bg-green-50 text-green-700"}`}>
+                🍫 {product.stockDulces ?? 0}
+              </span>
+              <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${(product.stockSalados ?? 0) <= 0 ? "bg-red-50 text-red-600" : "bg-green-50 text-green-700"}`}>
+                🧂 {product.stockSalados ?? 0}
+              </span>
+            </div>
+          ) : (
+            <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${noStock ? "bg-red-50 text-red-600" : "bg-green-50 text-green-700"}`}>
+              Stock: {product.stock}
+            </span>
+          )}
         </div>
         <div className="flex gap-1.5">
           <button onClick={onToggle} className={`flex-1 py-1.5 rounded-lg text-xs font-semibold transition-colors ${isHidden ? "bg-green-100 text-green-700 hover:bg-green-200" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}>
@@ -496,6 +535,7 @@ function EditModal({
   onVideoUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
   const [tab, setTab] = useState<"info" | "imagen" | "galeria">("info");
+  const isCongeladoConSelector = form.category === "Waffles Congelados" && !form.sinSelectorSabor;
 
   const set = (key: keyof EditForm, value: EditForm[keyof EditForm]) =>
     onChange({ ...form, [key]: value });
@@ -585,17 +625,69 @@ function EditModal({
                   className="w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-celisan-red/30 focus:border-celisan-red"
                 />
               </div>
-              <div className="flex-1">
-                <label className="block text-xs font-semibold text-gray-600 mb-1.5">Stock (unidades)</label>
-                <input
-                  type="number"
-                  value={form.stock}
-                  onChange={(e) => set("stock", Number(e.target.value))}
-                  min={0}
-                  className="w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-celisan-red/30 focus:border-celisan-red"
-                />
-              </div>
+              {!isCongeladoConSelector && (
+                <div className="flex-1">
+                  <label className="block text-xs font-semibold text-gray-600 mb-1.5">Stock (unidades)</label>
+                  <input
+                    type="number"
+                    value={form.stock}
+                    onChange={(e) => set("stock", Number(e.target.value))}
+                    min={0}
+                    className="w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-celisan-red/30 focus:border-celisan-red"
+                  />
+                </div>
+              )}
             </div>
+            {isCongeladoConSelector && (
+              <div className="flex gap-3">
+                <div className="flex-1">
+                  <label className="block text-xs font-semibold text-gray-600 mb-1.5">🍫 Stock Dulces</label>
+                  <input
+                    type="number"
+                    value={form.stockDulces}
+                    onChange={(e) => set("stockDulces", Number(e.target.value))}
+                    min={0}
+                    className="w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-celisan-red/30 focus:border-celisan-red"
+                  />
+                </div>
+                <div className="flex-1">
+                  <label className="block text-xs font-semibold text-gray-600 mb-1.5">🧂 Stock Salados</label>
+                  <input
+                    type="number"
+                    value={form.stockSalados}
+                    onChange={(e) => set("stockSalados", Number(e.target.value))}
+                    min={0}
+                    className="w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-celisan-red/30 focus:border-celisan-red"
+                  />
+                </div>
+              </div>
+            )}
+            {form.variantes.length > 0 && (
+              <div className="p-4 bg-olive/5 rounded-xl border border-olive/20">
+                <label className="block text-xs font-semibold text-gray-700 mb-3">📦 Stock por variante</label>
+                <div className="space-y-2">
+                  {form.variantes.map((v, i) => (
+                    <div key={v.nombre} className="flex items-center gap-3">
+                      <span className="text-sm font-semibold text-gray-700 w-24 shrink-0">{v.nombre}</span>
+                      <input
+                        type="number"
+                        value={v.stock}
+                        min={0}
+                        onChange={(e) => {
+                          const next = [...form.variantes];
+                          next[i] = { ...next[i], stock: Number(e.target.value) };
+                          set("variantes", next);
+                        }}
+                        className="flex-1 px-3 py-2 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-celisan-red/30 focus:border-celisan-red"
+                      />
+                      <span className={`text-xs font-bold w-20 text-right ${v.stock <= 0 ? "text-red-500" : v.stock === 1 ? "text-orange-500" : "text-green-600"}`}>
+                        {v.stock <= 0 ? "Sin stock" : v.stock === 1 ? "¡Queda 1!" : "¡Hay stock!"}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
             <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
               <div>
                 <p className="text-sm font-semibold text-gray-700">Visible en el catálogo</p>
