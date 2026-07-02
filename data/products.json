@@ -249,7 +249,7 @@
     "category": "Viandas Soy Sin Gluten",
     "price": 11500,
     "description": "",
-    "image": "/images/productos/uploads/1782911167847-1782763588384-whatsapp-image-2026-05-27-at-19.18.31.jpeg",
+    "image": "/images/productos/uploads/1783034786100-gemini_generated_image_51fx0k51fx0k51fx.png",
     "stock": 4,
     "available": true,
     "imageX": 42,
@@ -260,6 +260,7 @@
     "sinSelectorSabor": false,
     "variantes": [],
     "images": [
+      "/images/productos/uploads/1783034786100-gemini_generated_image_51fx0k51fx0k51fx.png",
       "/images/productos/uploads/1782911167847-1782763588384-whatsapp-image-2026-05-27-at-19.18.31.jpeg",
       "/images/productos/uploads/1782911159148-1782763564753-tarta-jam-n-y-queso.png"
     ]
@@ -405,11 +406,15 @@
     "price": 7900,
     "description": "",
     "image": "/images/productos/viandas/ssg-tacos.png",
-    "stock": 1,
+    "stock": 0,
     "available": true,
     "imageX": 50,
     "imageY": 50,
-    "imageZoom": 1
+    "imageZoom": 1,
+    "stockDulces": 0,
+    "stockSalados": 0,
+    "sinSelectorSabor": false,
+    "variantes": []
   },
   {
     "id": "ppc-prepizzas",
@@ -443,7 +448,7 @@
       "/images/productos/panificacion y pastas/ppc-noquis-2.png",
       "/images/productos/panificacion y pastas/ppc-noquis-1.png"
     ],
-    "stock": 1,
+    "stock": 5,
     "available": true,
     "imageX": 46,
     "imageY": 47,
@@ -464,7 +469,7 @@
       "/images/productos/panificacion y pastas/ppc-sorrentinos-jyq-2.png",
       "/images/productos/panificacion y pastas/ppc-sorrentinos-jyq-1.png"
     ],
-    "stock": 1,
+    "stock": 5,
     "available": true,
     "imageX": 50,
     "imageY": 50,
@@ -475,8 +480,21 @@
     "variantes": []
   },
   {
+    "id": "prod-1782930488148",
+    "name": "Sorrentinos de pollo y anquito x 8 unidades",
+    "description": "",
+    "price": 0,
+    "image": "",
+    "category": "Panificados y Pastas congeladas Soy Sin Gluten",
+    "stock": 0,
+    "available": true,
+    "imageX": 50,
+    "imageY": 50,
+    "imageZoom": 1
+  },
+  {
     "id": "ppc-sorrentinos-verdura",
-    "name": "Sorrentinos crudos de verdura x 8 unidades",
+    "name": "Sorrentinos crudos de pollo y acelga x 8 unidades",
     "category": "Panificados y Pastas congeladas Soy Sin Gluten",
     "price": 8600,
     "description": "",
@@ -485,7 +503,7 @@
       "/images/productos/panificacion y pastas/ppc-sorrentinos-verd-2.png",
       "/images/productos/panificacion y pastas/ppc-sorrentinos-verd-1.png"
     ],
-    "stock": 1,
+    "stock": 2,
     "available": true,
     "imageX": 50,
     "imageY": 50,
@@ -500,7 +518,7 @@
     "name": "Hamburguesas de legumbres x 4 unidades",
     "category": "Panificados y Pastas congeladas Soy Sin Gluten",
     "price": 4000,
-    "description": "",
+    "description": "Presentación: 4 unidades por paquete.\n",
     "image": "/images/productos/panificacion y pastas/ppc-hamb-legumbres.png",
     "stock": 1,
     "available": true,
@@ -510,21 +528,24 @@
     "variantes": [
       {
         "nombre": "Lentejas",
-        "stock": 1
+        "stock": 0
       },
       {
         "nombre": "Arvejas",
-        "stock": 1
+        "stock": 0
       },
       {
         "nombre": "Garbanzo",
-        "stock": 1
+        "stock": 0
       },
       {
         "nombre": "Soja",
-        "stock": 1
+        "stock": 0
       }
-    ]
+    ],
+    "stockDulces": 0,
+    "stockSalados": 0,
+    "sinSelectorSabor": false
   },
   {
     "id": "ppc-emp-crudas",
@@ -546,7 +567,7 @@
     "price": 2000,
     "description": "",
     "image": "/images/productos/uploads/1782911614725-1782768626844-gemini_generated_image_8kxzse8kxzse8kxz.png",
-    "stock": 1,
+    "stock": 0,
     "available": true,
     "imageX": 50,
     "imageY": 50,
@@ -605,7 +626,7 @@
     "price": 2000,
     "description": "",
     "image": "/images/productos/uploads/1782911728606-1782769982017-pan-baguette-baja.jpeg",
-    "stock": 1,
+    "stock": 0,
     "available": true,
     "imageX": 50,
     "imageY": 50,
@@ -626,37 +647,35 @@
     "price": 4200,
     "description": "",
     "image": "/images/productos/panificacion y pastas/ppc-pan-integral.png",
-    "stock": 1,
+    "stock": 0,
     "available": true,
     "imageX": 50,
     "imageY": 50,
-    "imageZoom": 1
+    "imageZoom": 1,
+    "stockDulces": 0,
+    "stockSalados": 0,
+    "sinSelectorSabor": false,
+    "variantes": []
   },
   {
-    "id": "ppc-pan-panchos",
-    "name": "Pan de panchos x 2 unidades",
+    "id": "prod-1782930713356",
+    "name": "Masita de frutilla",
+    "description": "Presentación: 1 unidad",
+    "price": 1600,
+    "image": "/images/productos/uploads/1782930742313-whatsapp-image-2026-06-02-at-17.33.31-1-.jpeg",
+    "images": [
+      "/images/productos/uploads/1782930742313-whatsapp-image-2026-06-02-at-17.33.31-1-.jpeg"
+    ],
     "category": "Panificados y Pastas congeladas Soy Sin Gluten",
-    "price": 2500,
-    "description": "",
-    "image": "/images/productos/panificacion y pastas/ppc-pan-panchos.png",
-    "stock": 1,
+    "stock": 3,
     "available": true,
     "imageX": 50,
     "imageY": 50,
-    "imageZoom": 1
-  },
-  {
-    "id": "ppc-pan-hamburguesa",
-    "name": "Pan hamburguesa x 130gr.",
-    "category": "Panificados y Pastas congeladas Soy Sin Gluten",
-    "price": 1500,
-    "description": "",
-    "image": "/images/productos/panificacion y pastas/ppc-pan-hamburguesa.png",
-    "stock": 1,
-    "available": true,
-    "imageX": 50,
-    "imageY": 50,
-    "imageZoom": 1
+    "imageZoom": 1,
+    "stockDulces": 0,
+    "stockSalados": 0,
+    "sinSelectorSabor": false,
+    "variantes": []
   },
   {
     "id": "des-clasico-2",
@@ -741,6 +760,60 @@
     "available": true,
     "imageX": 50,
     "imageY": 48,
+    "imageZoom": 1,
+    "stockDulces": 0,
+    "stockSalados": 0,
+    "sinSelectorSabor": false,
+    "variantes": []
+  },
+  {
+    "id": "ppc-pan-hamburguesa",
+    "name": "Pan hamburguesa x 130gr.",
+    "category": "Panificados y Pastas congeladas Soy Sin Gluten",
+    "price": 1500,
+    "description": "",
+    "image": "/images/productos/panificacion y pastas/ppc-pan-hamburguesa.png",
+    "stock": 3,
+    "available": true,
+    "imageX": 50,
+    "imageY": 50,
+    "imageZoom": 1,
+    "stockDulces": 0,
+    "stockSalados": 0,
+    "sinSelectorSabor": false,
+    "variantes": []
+  },
+  {
+    "id": "ppc-pan-panchos",
+    "name": "Pan de panchos x 2 unidades",
+    "category": "Panificados y Pastas congeladas Soy Sin Gluten",
+    "price": 2500,
+    "description": "",
+    "image": "/images/productos/panificacion y pastas/ppc-pan-panchos.png",
+    "stock": 0,
+    "available": true,
+    "imageX": 50,
+    "imageY": 50,
+    "imageZoom": 1,
+    "stockDulces": 0,
+    "stockSalados": 0,
+    "sinSelectorSabor": false,
+    "variantes": []
+  },
+  {
+    "id": "prod-1782930523236",
+    "name": "Alfajor de maicena",
+    "description": "Presentación: 1 unidad",
+    "price": 1800,
+    "image": "/images/productos/uploads/1782930669341-whatsapp-image-2026-06-02-at-17.33.39-1-.jpeg",
+    "images": [
+      "/images/productos/uploads/1782930669341-whatsapp-image-2026-06-02-at-17.33.39-1-.jpeg"
+    ],
+    "category": "Panificados y Pastas congeladas Soy Sin Gluten",
+    "stock": 3,
+    "available": true,
+    "imageX": 50,
+    "imageY": 50,
     "imageZoom": 1,
     "stockDulces": 0,
     "stockSalados": 0,
