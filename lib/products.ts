@@ -4,6 +4,7 @@ export const CATALOG_CATEGORIES = [
   "Panificados y Pastas congeladas Soy Sin Gluten",
   "Waffles Congelados",
   "Waffles con Cobertura",
+  "Postres individuales",
   "Desayunos",
   "Vianda Cumple",
 ] as const;

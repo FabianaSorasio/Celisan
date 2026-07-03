@@ -19,7 +19,7 @@ export function cartItemKey(item: Pick<CartItem, "productId" | "sabor">): string
 }
 
 /** Costo del delivery en pesos */
-export const DELIVERY_COSTO = 1500;
+export const DELIVERY_COSTO = 2000;
 
 /** Monto mínimo para envío gratis */
 export const DELIVERY_GRATIS_DESDE = 30000;

@@ -1,17 +1,21 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const AUTOPLAY_MS = 5000;
 
-type SlideAction = "dulce" | "historia" | "desayunos" | "catalog";
+type SlideAction = "dulce" | "historia" | "desayunos" | "catalog" | "postres";
+type TextPosition = "left" | "right";
 
 interface Slide {
   id: number;
-  image: string;
+  /** Imagen de fondo (usar image O video, no ambos) */
+  image?: string;
+  /** Video de fondo en loop (muted, autoplay) */
+  video?: string;
   imageAlt: string;
   imageClassName?: string;
   overlayClassName?: string;
@@ -21,21 +25,26 @@ interface Slide {
   action: SlideAction;
   /** Enlace externo (ej. WhatsApp). Abre en pestaña nueva. */
   ctaHref?: string;
+  /** Posición del texto: izquierda (default) o derecha */
+  textPosition?: TextPosition;
+  /** Logo pequeño que aparece debajo del botón CTA */
+  logo?: string;
 }
 
 const SLIDES: Slide[] = [
-  // 1 — antes slide 3: Día del Padre / Desayunos
+  // 1 — Desayunos
   {
     id: 0,
     image: "/desayuno_clasico.png",
     imageAlt: "Desayuno artesanal sin gluten para regalar",
     overlayClassName: "from-black/75 via-black/45 to-olive/30",
     title: "Hacé de su día un momento inolvidable",
-    subtitle: "Desayunos artesanales completos y 100% sin TACC. El regalo perfecto para cumpleaños, aniversarios o simplemente para sorprender a quien más querés.",
+    subtitle:
+      "Desayunos artesanales completos y 100% sin TACC. El regalo perfecto para cumpleaños, aniversarios o simplemente para sorprender a quien más querés.",
     cta: "Reservar Desayuno",
     action: "desayunos",
   },
-  // 2 — antes slide 1: Chocolate
+  // 2 — Waffles de chocolate
   {
     id: 1,
     image: "/Browniedechocolate.png",
@@ -47,19 +56,20 @@ const SLIDES: Slide[] = [
     cta: "Ver catálogo",
     action: "catalog",
   },
-  // 3 — antes slide 2: Soy Sin Gluten (imagen a sangre como el resto)
+  // 3 — Soy Sin Gluten
   {
     id: 2,
-    image: "/pastas_soysingluten.png",
-    imageAlt: "Celisan — comidas congeladas sin gluten",
-    overlayClassName: "from-olive/85 via-olive/55 to-black/40",
+    image: "/banner-soysingluten.jpg",
+    imageAlt: "Sorrentinos sin gluten con salsa — Soy Sin Gluten",
+    overlayClassName: "from-black/55 via-black/25 to-transparent",
     title: "Sabor casero, 100% Sin TACC",
     subtitle:
       "Todo un abanico de posibilidades de comidas congeladas sin gluten.",
     cta: "Conocé más",
     action: "historia",
+    logo: "/logo soysin gluten.png",
   },
-  // 4 — antes slide 4: Delivery
+  // 4 — Delivery
   {
     id: 3,
     image: "/delivery_celisan.png",
@@ -72,6 +82,20 @@ const SLIDES: Slide[] = [
     action: "catalog",
     ctaHref:
       "https://wa.me/5493564626508?text=Hola%20Celisan!%20Quería%20consultar%20los%20días,%20horarios%20y%20costos%20del%20servicio%20de%20delivery",
+  },
+  // 5 — Postres individuales
+  {
+    id: 4,
+    image: "/banner-postres.jpg",
+    imageAlt: "Postre individual de chocolate con crema mascarpone sin gluten",
+    overlayClassName: "from-black/75 via-black/40 to-transparent",
+    title: "Postres que enamoran",
+    subtitle:
+      "Individuales de 10×10 cm, se pueden agrandar por módulo a medida. 100% sin TACC. Por encargo anticipado — consultanos.",
+    cta: "Consultar por WhatsApp",
+    action: "postres",
+    ctaHref:
+      "https://wa.me/5493564626508?text=Hola%20Celisan!%20Quiero%20consultar%20por%20los%20postres%20individuales",
   },
 ];
 
@@ -88,6 +112,7 @@ export default function HeroSlider() {
   const router = useRouter();
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
   const goTo = useCallback((index: number) => {
     setActive((index + SLIDES.length) % SLIDES.length);
@@ -95,6 +120,21 @@ export default function HeroSlider() {
 
   const goNext = useCallback(() => goTo(active + 1), [active, goTo]);
   const goPrev = useCallback(() => goTo(active - 1), [active, goTo]);
+
+  // Pausa/reanuda el video según slide activo
+  useEffect(() => {
+    SLIDES.forEach((slide, i) => {
+      if (!slide.video) return;
+      const vid = videoRefs.current[i];
+      if (!vid) return;
+      if (i === active) {
+        vid.currentTime = 0;
+        vid.play().catch(() => {});
+      } else {
+        vid.pause();
+      }
+    });
+  }, [active]);
 
   useEffect(() => {
     if (paused) return;
@@ -121,12 +161,17 @@ export default function HeroSlider() {
         );
         scrollToId("productos");
         break;
+      case "postres":
+        router.push(
+          `/?categoria=${encodeURIComponent("Postres individuales")}#productos`
+        );
+        scrollToId("productos");
+        break;
       case "catalog":
+      default:
         router.push("/#productos");
         scrollToId("productos");
         break;
-      default:
-        scrollToId("productos");
     }
   };
 
@@ -152,21 +197,37 @@ export default function HeroSlider() {
               }`}
               aria-hidden={!isActive}
             >
-              <Image
-                src={slide.image}
-                alt={slide.imageAlt}
-                fill
-                priority={index === 0}
-                className="object-cover object-center"
-                sizes="100vw"
-              />
+              {/* Fondo: video o imagen */}
+              {slide.video ? (
+                <video
+                  ref={(el) => { videoRefs.current[index] = el; }}
+                  src={slide.video}
+                  muted
+                  loop
+                  playsInline
+                  autoPlay={isActive}
+                  className="absolute inset-0 w-full h-full object-cover object-center"
+                />
+              ) : slide.image ? (
+                <Image
+                  src={slide.image}
+                  alt={slide.imageAlt}
+                  fill
+                  priority={index === 0}
+                  className="object-cover object-center"
+                  sizes="100vw"
+                />
+              ) : null}
+
+              {/* Overlay degradé */}
               <div
                 className={`absolute inset-0 bg-gradient-to-r ${slide.overlayClassName ?? "from-black/70 via-black/40 to-transparent"}`}
                 aria-hidden
               />
 
+              {/* Contenido */}
               <div className="absolute inset-0 z-10 flex items-center">
-                <div className="max-w-7xl mx-auto w-full px-6 sm:px-10 lg:px-14">
+                <div className={`max-w-7xl mx-auto w-full px-6 sm:px-10 lg:px-14 flex ${slide.textPosition === "right" ? "justify-end" : "justify-start"}`}>
                   <div className="max-w-xl text-white">
                     <h1 className="text-2xl sm:text-3xl lg:text-5xl font-bold leading-tight tracking-tight drop-shadow-sm">
                       {slide.title}
@@ -191,6 +252,13 @@ export default function HeroSlider() {
                       >
                         {slide.cta}
                       </button>
+                    )}
+                    {slide.logo && (
+                      <img
+                        src={slide.logo}
+                        alt="Logo"
+                        className="mt-4 h-36 sm:h-40 w-auto object-contain drop-shadow-md"
+                      />
                     )}
                   </div>
                 </div>
