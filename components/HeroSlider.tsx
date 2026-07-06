@@ -7,7 +7,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const AUTOPLAY_MS = 5000;
 
-type SlideAction = "dulce" | "historia" | "desayunos" | "catalog" | "postres" | "waffles";
+type SlideAction = "dulce" | "historia" | "desayunos" | "catalog" | "postres" | "waffles" | "viandas";
 type TextPosition = "left" | "right";
 
 interface Slide {
@@ -32,16 +32,16 @@ interface Slide {
 }
 
 const SLIDES: Slide[] = [
-  // 1 — Desayunos
+  // 1 — Desayunos y Meriendas
   {
     id: 0,
     image: "/desayuno_clasico.png",
-    imageAlt: "Desayuno artesanal sin gluten para regalar",
+    imageAlt: "Desayuno y merienda artesanal sin gluten para regalar",
     overlayClassName: "from-black/75 via-black/45 to-olive/30",
-    title: "Hacé de su día un momento inolvidable",
+    title: "Desayunos y Meriendas para regalar",
     subtitle:
-      "Desayunos artesanales completos y 100% sin TACC. El regalo perfecto para cumpleaños, aniversarios o simplemente para sorprender a quien más querés.",
-    cta: "Reservar Desayuno",
+      "Canastas artesanales completas y 100% sin TACC. El regalo perfecto para cumpleaños, aniversarios o simplemente para sorprender a quien más querés.",
+    cta: "Ver Desayunos y Meriendas",
     action: "desayunos",
   },
   // 2 — Waffles de chocolate
@@ -65,8 +65,8 @@ const SLIDES: Slide[] = [
     title: "Sabor casero, 100% Sin TACC",
     subtitle:
       "Todo un abanico de posibilidades de comidas congeladas sin gluten.",
-    cta: "Conocé más",
-    action: "historia",
+    cta: "Ver Viandas Sin Gluten",
+    action: "viandas",
     logo: "/logo soysin gluten.png",
   },
   // 4 — Postres individuales
@@ -142,39 +142,41 @@ export default function HeroSlider() {
     return () => window.clearInterval(timer);
   }, [paused]);
 
+  const navigateToCategory = (categoria: string) => {
+    const params = new URLSearchParams({ categoria });
+    router.push(`/?${params.toString()}`, { scroll: false });
+    // El elemento #productos siempre está en el DOM (fuera del Suspense),
+    // así que podemos scrollear inmediatamente sin esperar la navegación.
+    const el = document.getElementById("productos");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
   const handleCta = (action: SlideAction) => {
     switch (action) {
       case "dulce":
-        router.push(
-          `/?categoria=${encodeURIComponent("Waffles con Cobertura")}#productos`
-        );
-        scrollToId("productos");
+        navigateToCategory("Waffles con Cobertura");
         break;
       case "waffles":
-        router.push(
-          `/?categoria=${encodeURIComponent("Waffles Congelados")}#productos`
-        );
-        scrollToId("productos");
+        navigateToCategory("Waffles Congelados");
+        break;
+      case "viandas":
+        navigateToCategory("Viandas Soy Sin Gluten");
+        break;
+      case "desayunos":
+        navigateToCategory("Desayunos y Meriendas");
+        break;
+      case "postres":
+        navigateToCategory("Postres individuales");
         break;
       case "historia":
         scrollToId("historia");
         break;
-      case "desayunos":
-        router.push(
-          `/?categoria=${encodeURIComponent("Desayunos y Meriendas")}#productos`
-        );
-        scrollToId("productos");
-        break;
-      case "postres":
-        router.push(
-          `/?categoria=${encodeURIComponent("Postres individuales")}#productos`
-        );
-        scrollToId("productos");
-        break;
       case "catalog":
       default:
-        router.push("/#productos");
-        scrollToId("productos");
+        router.push("/", { scroll: false });
+        document.getElementById("productos")?.scrollIntoView({ behavior: "smooth", block: "start" });
         break;
     }
   };
