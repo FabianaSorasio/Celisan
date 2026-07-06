@@ -117,6 +117,24 @@ export default function ProductCard({ product }: ProductCardProps) {
           <div className="mb-3 h-1" aria-hidden />
         )}
 
+        {/* Badge de delivery gratis para Desayunos y Vianda Cumple */}
+        {product.category === "Desayunos" && (
+          <div className="mb-3 flex items-center gap-1.5 bg-green-50 border border-green-200 rounded-lg px-3 py-1.5">
+            <span className="text-base">🛵</span>
+            <span className="text-xs font-bold text-green-700 leading-tight">
+              Delivery en la ciudad de San Francisco gratis!
+            </span>
+          </div>
+        )}
+        {product.category === "Vianda Cumple" && (
+          <div className="mb-3 flex items-center gap-1.5 bg-green-50 border border-green-200 rounded-lg px-3 py-1.5">
+            <span className="text-base">🛵</span>
+            <span className="text-xs font-bold text-green-700 leading-tight">
+              Delivery en la ciudad de San Francisco gratis a partir de 2 unidades!
+            </span>
+          </div>
+        )}
+
         {/* Selector de variantes (ej: Hamburguesas de legumbres) */}
         {hasVariantes && (
           <div className="mb-4">
