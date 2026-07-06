@@ -6,10 +6,22 @@ interface PostreModulosModalProps {
   productName: string;
   productPrice: number;
   onClose: () => void;
-  onConfirm: (modulos: number) => void;
+  onConfirm: (modulos: number, totalPrice: number) => void;
 }
 
-const OPCIONES_MODULOS = [1, 2, 4, 6, 8];
+// Descuento del 5% acumulativo por nivel
+const OPCIONES_MODULOS = [
+  { n: 1, descuento: 0 },
+  { n: 2, descuento: 5 },
+  { n: 4, descuento: 10 },
+  { n: 6, descuento: 15 },
+  { n: 8, descuento: 20 },
+];
+
+function calcTotal(basePrice: number, n: number, descuento: number): number {
+  const precioUnitario = basePrice * (1 - descuento / 100);
+  return Math.round(precioUnitario * n);
+}
 
 export default function PostreModulosModal({
   productName,
@@ -17,12 +29,14 @@ export default function PostreModulosModal({
   onClose,
   onConfirm,
 }: PostreModulosModalProps) {
-  const [modulos, setModulos] = useState(1);
+  const [selected, setSelected] = useState(OPCIONES_MODULOS[0]);
 
-  const totalPrice = productPrice * modulos;
+  const totalPrice = calcTotal(productPrice, selected.n, selected.descuento);
+  const precioUnitario = Math.round(productPrice * (1 - selected.descuento / 100));
+  const ahorro = selected.n * productPrice - totalPrice;
 
   const handleAgregar = () => {
-    onConfirm(modulos);
+    onConfirm(selected.n, totalPrice);
     onClose();
   };
 
@@ -52,36 +66,42 @@ export default function PostreModulosModal({
               🍫 Medida base: <strong>10×10 cm</strong> por módulo
             </p>
             <p className="text-xs text-amber-700 mt-0.5">
-              Podés agrandar el postre eligiendo más módulos (siempre en cantidad par).
+              A más módulos, menor precio por unidad.
             </p>
           </div>
 
           <div>
             <p className="text-xs font-semibold text-gray-700 mb-3">¿Cuántos módulos querés?</p>
             <div className="grid grid-cols-5 gap-2">
-              {OPCIONES_MODULOS.map((n) => {
-                const isSelected = modulos === n;
+              {OPCIONES_MODULOS.map((opcion) => {
+                const isSelected = selected.n === opcion.n;
+                const total = calcTotal(productPrice, opcion.n, opcion.descuento);
                 return (
                   <button
-                    key={n}
+                    key={opcion.n}
                     type="button"
-                    onClick={() => setModulos(n)}
-                    className={`flex flex-col items-center justify-center py-3 px-1 rounded-xl text-xs font-bold border-2 transition-all duration-200
+                    onClick={() => setSelected(opcion)}
+                    className={`flex flex-col items-center justify-center py-2.5 px-1 rounded-xl text-xs font-bold border-2 transition-all duration-200
                       ${isSelected
                         ? "bg-celisan-red text-white border-celisan-red shadow-md scale-[1.05]"
                         : "bg-white text-gray-700 border-gray-200 hover:border-celisan-red hover:text-celisan-red"
                       }`}
                   >
-                    <span className="text-base font-extrabold">{n}</span>
+                    <span className="text-base font-extrabold">{opcion.n}</span>
                     <span className="text-[9px] font-normal mt-0.5 leading-tight text-center">
-                      {n === 1 ? "individual" : `${n * 10}×10`}
+                      {opcion.n === 1 ? "individual" : `${opcion.n * 10}×10`}
                     </span>
+                    {opcion.descuento > 0 && (
+                      <span className={`text-[8px] font-bold mt-0.5 ${isSelected ? "text-white/80" : "text-green-600"}`}>
+                        -{opcion.descuento}%
+                      </span>
+                    )}
                   </button>
                 );
               })}
             </div>
             <p className="text-[10px] text-gray-400 mt-2 px-1">
-              📐 Medida final: {modulos * 10}×10 cm
+              📐 Medida final: {selected.n * 10}×10 cm
             </p>
           </div>
 
@@ -89,15 +109,15 @@ export default function PostreModulosModal({
           <div className="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 flex items-center justify-between">
             <div>
               <p className="text-xs text-gray-500">
-                ${productPrice.toLocaleString("es-AR")} × {modulos} {modulos === 1 ? "módulo" : "módulos"}
+                ${precioUnitario.toLocaleString("es-AR")}/u × {selected.n} {selected.n === 1 ? "módulo" : "módulos"}
               </p>
               <p className="text-lg font-bold text-celisan-red mt-0.5">
                 ${totalPrice.toLocaleString("es-AR")}
               </p>
             </div>
-            {modulos > 1 && (
-              <span className="text-xs bg-green-100 text-green-700 font-semibold px-2.5 py-1 rounded-lg">
-                {modulos} módulos
+            {ahorro > 0 && (
+              <span className="text-xs bg-green-100 text-green-700 font-semibold px-2.5 py-1.5 rounded-lg text-center leading-tight">
+                Ahorrás<br />${ahorro.toLocaleString("es-AR")}
               </span>
             )}
           </div>

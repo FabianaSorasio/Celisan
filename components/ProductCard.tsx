@@ -23,7 +23,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   const isDesayuno = product.category === "Desayunos y Meriendas";
   const isViandaCumple = product.category === "Vianda Cumple";
   const isPostre = product.category === "Postres individuales";
-  const isPedidoEspecial = isDesayuno || isViandaCumple;
+  const isPedidoEspecial = isDesayuno || isViandaCumple || isPostre;
   const [showDesayunoModal, setShowDesayunoModal] = useState(false);
   const [showPostreModal, setShowPostreModal] = useState(false);
   const isCongelado = product.category === "Waffles Congelados";
@@ -42,7 +42,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   const dulcesSinStock = product.stockDulces === 0;
   const saladosSinStock = product.stockSalados === 0;
   // Desayunos, Vianda Cumple y Postres siempre disponibles (son productos a pedido)
-  const outOfStock = isPedidoEspecial || isPostre
+  const outOfStock = isPedidoEspecial
     ? false
     : hasVariantes
     ? (selectedVarianteObj ? selectedVarianteObj.stock <= 0 : true)
@@ -50,18 +50,18 @@ export default function ProductCard({ product }: ProductCardProps) {
     ? (sabor === "Dulces" ? dulcesSinStock : saladosSinStock)
     : product.stock <= 0;
 
+  const handlePostreConfirm = (modulos: number, totalPrice: number) => {
+    addItem({
+      productId: product.id,
+      name: modulos > 1 ? `${product.name} (×${modulos} módulos)` : product.name,
+      price: totalPrice,
+    });
+  };
+
   const highlightedTitle = product.name.match(/(.*)\s(x[24]\.?)$/i);
   const detailLines = product.description
     ? product.description.split("\n").filter(Boolean)
     : [];
-
-  const handlePostreConfirm = (modulos: number) => {
-    addItem({
-      productId: product.id,
-      name: modulos > 1 ? `${product.name} (×${modulos} módulos)` : product.name,
-      price: product.price * modulos,
-    });
-  };
 
   return (
     <article
@@ -154,11 +154,11 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
         )}
 
-        {/* Badge de encargo anticipado para Postres */}
+        {/* Badge postre individual por encargo */}
         {isPostre && (
           <div className="mb-3 flex items-center gap-1.5 bg-amber-50 border border-amber-200 rounded-lg px-3 py-1.5">
             <span className="text-base">🍫</span>
-            <span className="text-xs font-bold text-amber-700 leading-tight">
+            <span className="text-xs font-bold text-amber-800 leading-tight">
               Individual 10×10 cm · Podés agrandar por módulo
             </span>
           </div>
@@ -247,7 +247,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             <button
               type="button"
               onClick={() => setShowPostreModal(true)}
-              className="px-5 py-2.5 rounded-xl bg-olive text-cream text-sm font-semibold hover:bg-olive-light transition-all active:scale-95 shadow-sm"
+              className="px-5 py-2.5 rounded-xl bg-celisan-red text-white text-sm font-semibold hover:opacity-90 transition-all active:scale-95 shadow-sm"
             >
               Encargar
             </button>
