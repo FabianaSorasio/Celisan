@@ -158,7 +158,7 @@ export default function PostreModulosModal({
         </div>
 
         {/* Footer */}
-        <div className="px-5 pb-5 pt-1">
+        <div className="px-5 pb-5 pt-1 flex-shrink-0 bg-white">
           <button
             type="button"
             onClick={handleConsultar}
