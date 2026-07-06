@@ -8,6 +8,7 @@ import {
   filterProductsByCategory,
   parseCategoryFilter,
 } from "@/lib/category-utils";
+import { CATALOG_CATEGORIES } from "@/lib/products";
 import type { CatalogCategoryFilter, Product } from "@/lib/products";
 
 interface CatalogProps {
@@ -37,10 +38,17 @@ export default function Catalog({ products }: CatalogProps) {
     [router, searchParams]
   );
 
-  const filtered = useMemo(
-    () => filterProductsByCategory(products, selectedCategory),
-    [products, selectedCategory]
-  );
+  const filtered = useMemo(() => {
+    const result = filterProductsByCategory(products, selectedCategory);
+    if (selectedCategory === "Todas") {
+      return [...result].sort((a, b) => {
+        const ai = CATALOG_CATEGORIES.indexOf(a.category as typeof CATALOG_CATEGORIES[number]);
+        const bi = CATALOG_CATEGORIES.indexOf(b.category as typeof CATALOG_CATEGORIES[number]);
+        return ai - bi;
+      });
+    }
+    return result;
+  }, [products, selectedCategory]);
 
   return (
     <div className="flex flex-col lg:flex-row gap-8 lg:gap-10">

@@ -5,7 +5,7 @@ export const CATALOG_CATEGORIES = [
   "Waffles Congelados",
   "Waffles con Cobertura",
   "Postres individuales",
-  "Desayunos",
+  "Desayunos y Meriendas",
   "Vianda Cumple",
 ] as const;
 
