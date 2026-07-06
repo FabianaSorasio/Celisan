@@ -21,6 +21,8 @@ interface Slide {
   overlayClassName?: string;
   title: string;
   subtitle: string;
+  /** Si true, el subtitle se muestra debajo del botón CTA en lugar de arriba */
+  subtitleBelow?: boolean;
   cta: string;
   action: SlideAction;
   /** Enlace externo (ej. WhatsApp). Abre en pestaña nueva. */
@@ -38,9 +40,9 @@ const SLIDES: Slide[] = [
     image: "/desayuno_clasico.png",
     imageAlt: "Desayuno y merienda artesanal sin gluten para regalar",
     overlayClassName: "from-black/75 via-black/45 to-olive/30",
-    title: "Desayunos y Meriendas para regalar",
-    subtitle:
-      "Canastas artesanales completas y 100% sin TACC. El regalo perfecto para cumpleaños, aniversarios o simplemente para sorprender a quien más querés.",
+    title: "Box Desayunos o Meriendas para regalar",
+    subtitle: "Súper completos y 100% sin gluten",
+    subtitleBelow: true,
     cta: "Ver Desayunos y Meriendas",
     action: "desayunos",
   },
@@ -62,7 +64,7 @@ const SLIDES: Slide[] = [
     image: "/banner-soysingluten.jpg",
     imageAlt: "Sorrentinos sin gluten con salsa — Soy Sin Gluten",
     overlayClassName: "from-black/55 via-black/25 to-transparent",
-    title: "Sabor casero, 100% Sin TACC",
+    title: "Sabor casero, 100% Sin gluten",
     subtitle:
       "Todo un abanico de posibilidades de comidas congeladas sin gluten.",
     cta: "Ver Viandas Sin Gluten",
@@ -77,7 +79,7 @@ const SLIDES: Slide[] = [
     overlayClassName: "from-black/75 via-black/40 to-transparent",
     title: "Postres que enamoran",
     subtitle:
-      "Individuales de 10×10 cm, se pueden agrandar por módulo a medida. 100% sin TACC. Por encargo anticipado — consultanos.",
+      "Individuales de 10×10 cm, se pueden agrandar por módulo a medida. 100% sin gluten. Por encargo anticipado — consultanos.",
     cta: "Ver Postres",
     action: "postres",
   },
@@ -238,9 +240,11 @@ export default function HeroSlider() {
                     <h1 className="text-2xl sm:text-3xl lg:text-5xl font-bold leading-tight tracking-tight drop-shadow-sm">
                       {slide.title}
                     </h1>
-                    <p className="mt-3 sm:mt-4 text-sm sm:text-base lg:text-lg text-white/90 leading-relaxed max-w-lg">
-                      {slide.subtitle}
-                    </p>
+                    {!slide.subtitleBelow && (
+                      <p className="mt-3 sm:mt-4 text-sm sm:text-base lg:text-lg text-white/90 leading-relaxed max-w-lg">
+                        {slide.subtitle}
+                      </p>
+                    )}
                     {slide.ctaHref ? (
                       <a
                         href={slide.ctaHref}
@@ -258,6 +262,11 @@ export default function HeroSlider() {
                       >
                         {slide.cta}
                       </button>
+                    )}
+                    {slide.subtitleBelow && (
+                      <p className="mt-3 text-sm sm:text-base text-white/90 font-medium leading-snug">
+                        {slide.subtitle}
+                      </p>
                     )}
                     {slide.logo && (
                       <img
