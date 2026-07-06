@@ -50,14 +50,6 @@ export default function ProductCard({ product }: ProductCardProps) {
     ? (sabor === "Dulces" ? dulcesSinStock : saladosSinStock)
     : product.stock <= 0;
 
-  const handlePostreConfirm = (modulos: number, totalPrice: number) => {
-    addItem({
-      productId: product.id,
-      name: modulos > 1 ? `${product.name} (×${modulos} módulos)` : product.name,
-      price: totalPrice,
-    });
-  };
-
   const highlightedTitle = product.name.match(/(.*)\s(x[24]\.?)$/i);
   const detailLines = product.description
     ? product.description.split("\n").filter(Boolean)
@@ -284,7 +276,6 @@ export default function ProductCard({ product }: ProductCardProps) {
           productName={product.name}
           productPrice={product.price}
           onClose={() => setShowPostreModal(false)}
-          onConfirm={handlePostreConfirm}
         />
       )}
     </article>

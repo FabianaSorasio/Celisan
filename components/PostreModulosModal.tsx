@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { WHATSAPP_NUMBER } from "@/lib/cart";
 
 interface PostreModulosModalProps {
   productName: string;
   productPrice: number;
   onClose: () => void;
-  onConfirm: (modulos: number, totalPrice: number) => void;
 }
 
 // Descuento del 5% acumulativo por nivel
@@ -27,16 +27,33 @@ export default function PostreModulosModal({
   productName,
   productPrice,
   onClose,
-  onConfirm,
 }: PostreModulosModalProps) {
   const [selected, setSelected] = useState(OPCIONES_MODULOS[0]);
+  const [fecha, setFecha] = useState("");
+  const [error, setError] = useState("");
 
   const totalPrice = calcTotal(productPrice, selected.n, selected.descuento);
   const precioUnitario = Math.round(productPrice * (1 - selected.descuento / 100));
   const ahorro = selected.n * productPrice - totalPrice;
 
-  const handleAgregar = () => {
-    onConfirm(selected.n, totalPrice);
+  const handleConsultar = () => {
+    if (!fecha) {
+      setError("Ingresá la fecha en que lo necesitás.");
+      return;
+    }
+    setError("");
+
+    const precio = totalPrice.toLocaleString("es-AR");
+    const mensaje =
+      `¡Hola Celisan! Quiero consultar disponibilidad para un postre 🍫\n\n` +
+      `*Producto:* ${productName}\n` +
+      `*Módulos:* ${selected.n} (${selected.size} cm)\n` +
+      `*Precio estimado:* $${precio}\n` +
+      `*Fecha que lo necesito:* ${fecha}\n\n` +
+      `Quedo a la espera de confirmar disponibilidad y coordinar el pago. ¡Gracias!`;
+
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`;
+    window.open(url, "_blank");
     onClose();
   };
 
@@ -44,7 +61,7 @@ export default function PostreModulosModal({
     <div className="fixed inset-0 z-[70] flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/40" onClick={onClose} aria-hidden />
 
-      <div className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden">
+      <div className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
         {/* Header */}
         <div className="bg-celisan-red px-5 py-4 flex items-center justify-between">
           <div>
@@ -60,7 +77,7 @@ export default function PostreModulosModal({
         </div>
 
         {/* Cuerpo */}
-        <div className="p-5 space-y-4">
+        <div className="p-5 space-y-4 overflow-y-auto flex-1">
           <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3">
             <p className="text-xs font-semibold text-amber-800">
               🍫 Medida base: <strong>10×10 cm</strong> por módulo
@@ -75,7 +92,6 @@ export default function PostreModulosModal({
             <div className="grid grid-cols-5 gap-2">
               {OPCIONES_MODULOS.map((opcion) => {
                 const isSelected = selected.n === opcion.n;
-                const total = calcTotal(productPrice, opcion.n, opcion.descuento);
                 return (
                   <button
                     key={opcion.n}
@@ -122,8 +138,22 @@ export default function PostreModulosModal({
             )}
           </div>
 
+          {/* Fecha */}
+          <div>
+            <label className="block text-xs font-semibold text-gray-700 mb-1">
+              📅 ¿Para qué fecha lo necesitás? *
+            </label>
+            <input
+              type="date"
+              value={fecha}
+              onChange={(e) => { setFecha(e.target.value); setError(""); }}
+              className="w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-celisan-red/30 focus:border-celisan-red"
+            />
+            {error && <p className="text-xs text-red-500 mt-1">{error}</p>}
+          </div>
+
           <p className="text-[10px] text-gray-400 italic text-center">
-            Este producto es por encargo anticipado. Te contactaremos para coordinar.
+            Te consultamos disponibilidad y coordinamos el pago por WhatsApp.
           </p>
         </div>
 
@@ -131,13 +161,14 @@ export default function PostreModulosModal({
         <div className="px-5 pb-5 pt-1">
           <button
             type="button"
-            onClick={handleAgregar}
-            className="w-full py-3.5 rounded-xl bg-olive hover:bg-olive-light text-cream font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-sm active:scale-[0.98]"
+            onClick={handleConsultar}
+            className="w-full py-3.5 rounded-xl bg-celisan-red hover:opacity-90 text-white font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-sm active:scale-[0.98]"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="h-5 w-5 fill-white">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+              <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.116 1.529 5.847L.057 23.5l5.797-1.52A11.93 11.93 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.651-.493-5.178-1.357l-.371-.22-3.841 1.007 1.027-3.748-.241-.387A9.963 9.963 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
             </svg>
-            Agregar al carrito — ${totalPrice.toLocaleString("es-AR")}
+            Consultar disponibilidad — ${totalPrice.toLocaleString("es-AR")}
           </button>
         </div>
       </div>
