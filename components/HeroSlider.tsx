@@ -272,7 +272,7 @@ export default function HeroSlider() {
                       <img
                         src={slide.logo}
                         alt="Logo"
-                        className="mt-4 h-36 sm:h-40 w-auto object-contain drop-shadow-md"
+                        className="mt-3 h-20 sm:h-28 lg:h-36 w-auto object-contain drop-shadow-md"
                       />
                     )}
                   </div>
