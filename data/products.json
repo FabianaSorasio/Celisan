@@ -23,11 +23,7 @@
     "available": true,
     "imageX": 50,
     "imageY": 50,
-    "imageZoom": 1,
-    "stockDulces": 0,
-    "stockSalados": 2,
-    "sinSelectorSabor": false,
-    "variantes": []
+    "imageZoom": 1
   },
   {
     "id": "wc-choc-x2",
@@ -116,7 +112,7 @@
     "price": 11600,
     "description": "",
     "image": "/images/productos/uploads/1782910097192-lasagna-ia_alta.webp",
-    "stock": 2,
+    "stock": 0,
     "available": true,
     "imageX": 47,
     "imageY": 36,
@@ -163,7 +159,7 @@
     "price": 10800,
     "description": "",
     "image": "/images/productos/uploads/1782910990425-canelones-ia_alta.webp",
-    "stock": 2,
+    "stock": 0,
     "available": true,
     "imageX": 48,
     "imageY": 52,
@@ -302,7 +298,7 @@
     "price": 12200,
     "description": "",
     "image": "/images/productos/uploads/1782911212099-1782769173496-corte-tarta-pollo-y-acelga.jpeg",
-    "stock": 4,
+    "stock": 1,
     "available": true,
     "imageX": 50,
     "imageY": 50,
@@ -367,7 +363,7 @@
     "price": 7200,
     "description": "",
     "image": "/images/productos/uploads/1782911536697-1782767876754-empanadas-carne-corte.png",
-    "stock": 0,
+    "stock": 1,
     "available": true,
     "imageX": 50,
     "imageY": 50,
@@ -410,7 +406,7 @@
     "price": 7900,
     "description": "",
     "image": "/images/productos/viandas/ssg-tacos.png",
-    "stock": 6,
+    "stock": 0,
     "available": true,
     "imageX": 50,
     "imageY": 50,
@@ -514,7 +510,7 @@
       "/images/productos/panificacion y pastas/ppc-sorrentinos-verd-2.png",
       "/images/productos/panificacion y pastas/ppc-sorrentinos-verd-1.png"
     ],
-    "stock": 0,
+    "stock": 2,
     "available": true,
     "imageX": 50,
     "imageY": 50,
@@ -539,7 +535,7 @@
     "variantes": [
       {
         "nombre": "Lentejas",
-        "stock": 2
+        "stock": 0
       },
       {
         "nombre": "Arvejas",
@@ -551,7 +547,7 @@
       },
       {
         "nombre": "Soja",
-        "stock": 2
+        "stock": 0
       }
     ],
     "stockDulces": 0,
@@ -578,7 +574,7 @@
     "price": 2000,
     "description": "",
     "image": "/images/productos/uploads/1782911614725-1782768626844-gemini_generated_image_8kxzse8kxzse8kxz.png",
-    "stock": 8,
+    "stock": 0,
     "available": true,
     "imageX": 50,
     "imageY": 50,
@@ -603,24 +599,20 @@
       "/images/productos/panificacion y pastas/ppc-mafalda-1.png",
       "/images/productos/panificacion y pastas/ppc-mafalda-2.png"
     ],
-    "stock": 4,
+    "stock": 1,
     "available": true,
     "imageX": 50,
     "imageY": 50,
-    "imageZoom": 1,
-    "stockDulces": 0,
-    "stockSalados": 0,
-    "sinSelectorSabor": false,
-    "variantes": []
+    "imageZoom": 1
   },
   {
     "id": "ppc-pan-lactal",
     "name": "Tipo Pan Lactal x 700gr.",
     "category": "Panificados y Pastas congeladas Soy Sin Gluten",
-    "price": 6800,
+    "price": 6500,
     "description": "",
     "image": "/images/productos/uploads/1782911679368-1782768169189-whatsapp-image-2026-05-21-at-09.54.19-3-.jpeg",
-    "stock": 7,
+    "stock": 1,
     "available": true,
     "imageX": 49,
     "imageY": 39,
@@ -638,10 +630,10 @@
     "id": "ppc-pan-baguette",
     "name": "Pan baguette x 200gr.",
     "category": "Panificados y Pastas congeladas Soy Sin Gluten",
-    "price": 2300,
+    "price": 2000,
     "description": "",
     "image": "/images/productos/uploads/1782911728606-1782769982017-pan-baguette-baja.jpeg",
-    "stock": 10,
+    "stock": 0,
     "available": true,
     "imageX": 50,
     "imageY": 50,
@@ -662,7 +654,7 @@
     "price": 4200,
     "description": "",
     "image": "/images/productos/panificacion y pastas/ppc-pan-integral.png",
-    "stock": 2,
+    "stock": 0,
     "available": true,
     "imageX": 50,
     "imageY": 50,
@@ -682,7 +674,7 @@
       "/images/productos/uploads/1782930742313-whatsapp-image-2026-06-02-at-17.33.31-1-.jpeg"
     ],
     "category": "Panificados y Pastas congeladas Soy Sin Gluten",
-    "stock": 5,
+    "stock": 3,
     "available": true,
     "imageX": 50,
     "imageY": 50,
@@ -697,7 +689,7 @@
     "name": "Desayuno Clásico 2 cuadraditos",
     "category": "Desayunos y Meriendas",
     "price": 28000,
-    "description": "Contiene: \n1 cuadradito waffle salado  de jamón y queso.\n1 cuadradito salados o dulces.\nQueso crema\nMermelada\nDulce de leche\nJugo de Naranja\nSaquitos de café\nLeche en polvo\nSaquitos de té \nSaquitos de mate cocido\nEdulcorante\nAzúcar",
+    "description": "Porción para una persona:\n1 cuadradito waffle salado de jamón y queso.\n1 cuadradito waffle a elección (dulce o salado).\nQueso crema\nMermelada\nDulce de leche\nJugo de Naranja\nSaquitos de café\nLeche en polvo\nSaquitos de té\nSaquitos de mate cocido\nEdulcorante\nAzúcar",
     "image": "/images/productos/desayunos/des-clasico-2.png",
     "video": "/images/productos/desayunos/des-clasico-2.mp4",
     "stock": 1,
@@ -802,10 +794,10 @@
     "id": "ppc-pan-panchos",
     "name": "Pan de panchos x 2 unidades",
     "category": "Panificados y Pastas congeladas Soy Sin Gluten",
-    "price": 2700,
+    "price": 2500,
     "description": "",
     "image": "/images/productos/panificacion y pastas/ppc-pan-panchos.png",
-    "stock": 8,
+    "stock": 0,
     "available": true,
     "imageX": 50,
     "imageY": 50,
@@ -838,7 +830,7 @@
   {
     "id": "prod-1783084314317",
     "name": "Selva Negra",
-    "description": "Doble waffle de chocolate de 10x10 cm relleno de dulce de leche con cobertura de crema chantilly, con cerezas y rulitos de chocolate. Sólo reservando con anticipación a la fecha solicitada. Se pueden agregar módulos iguales al postre individual para hacer tipo torta, consultar.",
+    "description": "Doble waffle de chocolate de 10x10 cm relleno de dulce de leche con cobertura de crema chantilly, con cerezas y rulitos de chocolate. Reservar con anticipación a la fecha solicitada.",
     "price": 14000,
     "image": "/images/productos/uploads/1783084359231-selva-negra-alta.png",
     "images": [
@@ -858,7 +850,7 @@
   {
     "id": "prod-1783084465549",
     "name": "Postre Chajá",
-    "description": "Doble waffle de vainilla con relleno de dulce de leche y cobertura de crema chantilly, duraznos al natural y toque de nueces. Se solicita a pedido, con anticipación a la fecha deseada. Se pueden agregar módulos iguales al postre individual para hacer tipo torta, consultar.",
+    "description": "Doble waffle de vainilla con relleno de dulce de leche y cobertura de crema chantilly, duraznos al natural y toque de nueces. Reservar con anticipación a la fecha solicitada.",
     "price": 14000,
     "image": "/images/productos/uploads/1783084489738-gemini_generated_image_kmon1vkmon1vkmon.png",
     "images": [
@@ -878,7 +870,7 @@
   {
     "id": "prod-1783084611633",
     "name": "Postre con crema mascarpone",
-    "description": "Doble waffle de chocolate de 10x10 cm con relleno de dulce de leche y crema mascarpone, con copitos e hilos de chocolate. Se encarga con anticipación a la fecha deseada. Se pueden agregar módulos iguales al postre individual para hacer tipo torta, consultar.",
+    "description": "Doble waffle de chocolate de 10x10 cm con relleno de dulce de leche y crema mascarpone, con copitos e hilos de chocolate. Reservar con anticipación a la fecha solicitada.",
     "price": 14000,
     "image": "/images/productos/uploads/1783084686259-whatsapp-image-2026-07-03-at-09.36.51-1-.jpeg",
     "images": [

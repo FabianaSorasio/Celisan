@@ -18,15 +18,22 @@ const MOTIVOS = [
   "Otro",
 ];
 
+const GUSTOS_WAFFLE = [
+  "Dulce — vainilla",
+  "Salado",
+];
+
 export default function DesayunoOrderModal({
   productName,
   productPrice,
   onClose,
 }: DesayunoOrderModalProps) {
+  const isClasico = productName.toLowerCase().includes("clásico") || productName.toLowerCase().includes("clasico");
   const [para, setPara] = useState("");
   const [deParte, setDeParte] = useState("");
   const [motivo, setMotivo] = useState(MOTIVOS[0]);
   const [motivoCustom, setMotivoCustom] = useState("");
+  const [gustoWaffle, setGustoWaffle] = useState(GUSTOS_WAFFLE[0]);
   const [direccion, setDireccion] = useState("");
   const [comentarios, setComentarios] = useState("");
   const [errors, setErrors] = useState<string[]>([]);
@@ -54,6 +61,7 @@ export default function DesayunoOrderModal({
       `*Para:* ${para.trim()}\n` +
       `*De parte de:* ${deParte.trim()}\n` +
       `*Motivo:* ${motivoFinal}\n` +
+      (isClasico ? `*Gusto de waffle a elección:* ${gustoWaffle}\n` : "") +
       `*Dirección de envío:* ${direccion.trim()}\n` +
       (comentarios.trim() ? `*Comentarios:* ${comentarios.trim()}\n` : "") +
       `\nQuedo a la espera de confirmar el pedido y el pago. ¡Gracias!`;
@@ -131,6 +139,23 @@ export default function DesayunoOrderModal({
               />
             )}
           </div>
+
+          {isClasico && (
+            <div>
+              <label className="block text-xs font-semibold text-gray-700 mb-1">
+                🧇 Gusto del waffle a elección *
+              </label>
+              <select
+                value={gustoWaffle}
+                onChange={(e) => setGustoWaffle(e.target.value)}
+                className="w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-celisan-red/30 focus:border-celisan-red bg-white"
+              >
+                {GUSTOS_WAFFLE.map((g) => (
+                  <option key={g} value={g}>{g}</option>
+                ))}
+              </select>
+            </div>
+          )}
 
           <div>
             <label className="block text-xs font-semibold text-gray-700 mb-1">Dirección de envío *</label>

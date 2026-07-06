@@ -11,11 +11,11 @@ interface PostreModulosModalProps {
 
 // Descuento del 5% acumulativo por nivel
 const OPCIONES_MODULOS = [
-  { n: 1, descuento: 0 },
-  { n: 2, descuento: 5 },
-  { n: 4, descuento: 10 },
-  { n: 6, descuento: 15 },
-  { n: 8, descuento: 20 },
+  { n: 1, descuento: 0,  size: "10×10" },
+  { n: 2, descuento: 5,  size: "20×10" },
+  { n: 4, descuento: 10, size: "20×20" },
+  { n: 6, descuento: 15, size: "20×30" },
+  { n: 8, descuento: 20, size: "20×40" },
 ];
 
 function calcTotal(basePrice: number, n: number, descuento: number): number {
@@ -89,7 +89,7 @@ export default function PostreModulosModal({
                   >
                     <span className="text-base font-extrabold">{opcion.n}</span>
                     <span className="text-[9px] font-normal mt-0.5 leading-tight text-center">
-                      {opcion.n === 1 ? "individual" : `${opcion.n * 10}×10`}
+                      {opcion.size}
                     </span>
                     {opcion.descuento > 0 && (
                       <span className={`text-[8px] font-bold mt-0.5 ${isSelected ? "text-white/80" : "text-green-600"}`}>
@@ -101,7 +101,7 @@ export default function PostreModulosModal({
               })}
             </div>
             <p className="text-[10px] text-gray-400 mt-2 px-1">
-              📐 Medida final: {selected.n * 10}×10 cm
+              📐 Medida final: {selected.size} cm
             </p>
           </div>
 
