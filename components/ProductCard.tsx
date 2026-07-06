@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { createPortal } from "react-dom";
 import type { Product } from "@/lib/products";
 import { useCart } from "@/components/CartProvider";
 import DesayunoOrderModal from "@/components/DesayunoOrderModal";
@@ -57,7 +58,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   return (
     <article
-      className="group relative bg-white rounded-2xl overflow-hidden transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-antigravity-hover border border-gray-100/80 flex flex-col h-full"
+      className={`group relative bg-white rounded-2xl overflow-hidden transition-all duration-300 ease-out border border-gray-100/80 flex flex-col h-full ${showDesayunoModal || showPostreModal ? "" : "hover:-translate-y-2 hover:shadow-antigravity-hover"}`}
       style={{
         boxShadow:
           "0 25px 50px -12px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.03)",
@@ -263,20 +264,22 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
       </div>
 
-      {showDesayunoModal && (
+      {showDesayunoModal && createPortal(
         <DesayunoOrderModal
           productName={product.name}
           productPrice={product.price}
           onClose={() => setShowDesayunoModal(false)}
-        />
+        />,
+        document.body
       )}
 
-      {showPostreModal && (
+      {showPostreModal && createPortal(
         <PostreModulosModal
           productName={product.name}
           productPrice={product.price}
           onClose={() => setShowPostreModal(false)}
-        />
+        />,
+        document.body
       )}
     </article>
   );
