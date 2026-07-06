@@ -3,6 +3,8 @@
 import { useState } from "react";
 import type { Product } from "@/lib/products";
 import { useCart } from "@/components/CartProvider";
+import DesayunoOrderModal from "@/components/DesayunoOrderModal";
+import PostreModulosModal from "@/components/PostreModulosModal";
 
 function StockBadge({ stock }: { stock: number }) {
   if (stock <= 0) return <span className="text-[10px] font-normal text-gray-400 mt-0.5 block">Sin stock</span>;
@@ -18,6 +20,12 @@ type Sabor = "Dulces" | "Salados";
 
 export default function ProductCard({ product }: ProductCardProps) {
   const { addItem } = useCart();
+  const isDesayuno = product.category === "Desayunos y Meriendas";
+  const isViandaCumple = product.category === "Vianda Cumple";
+  const isPostre = product.category === "Postres individuales";
+  const isPedidoEspecial = isDesayuno || isViandaCumple;
+  const [showDesayunoModal, setShowDesayunoModal] = useState(false);
+  const [showPostreModal, setShowPostreModal] = useState(false);
   const isCongelado = product.category === "Waffles Congelados";
   const isCongeladoConSelector = isCongelado && !product.sinSelectorSabor;
   const hasVariantes = !!product.variantes?.length;
@@ -33,7 +41,10 @@ export default function ProductCard({ product }: ProductCardProps) {
   // Si el producto tiene stock por sabor, usarlo; si no, usar stock general
   const dulcesSinStock = product.stockDulces === 0;
   const saladosSinStock = product.stockSalados === 0;
-  const outOfStock = hasVariantes
+  // Desayunos, Vianda Cumple y Postres siempre disponibles (son productos a pedido)
+  const outOfStock = isPedidoEspecial || isPostre
+    ? false
+    : hasVariantes
     ? (selectedVarianteObj ? selectedVarianteObj.stock <= 0 : true)
     : isCongeladoConSelector
     ? (sabor === "Dulces" ? dulcesSinStock : saladosSinStock)
@@ -43,6 +54,14 @@ export default function ProductCard({ product }: ProductCardProps) {
   const detailLines = product.description
     ? product.description.split("\n").filter(Boolean)
     : [];
+
+  const handlePostreConfirm = (modulos: number) => {
+    addItem({
+      productId: product.id,
+      name: modulos > 1 ? `${product.name} (×${modulos} módulos)` : product.name,
+      price: product.price * modulos,
+    });
+  };
 
   return (
     <article
@@ -118,7 +137,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         )}
 
         {/* Badge de delivery gratis para Desayunos y Vianda Cumple */}
-        {product.category === "Desayunos" && (
+        {product.category === "Desayunos y Meriendas" && (
           <div className="mb-3 flex items-center gap-1.5 bg-green-50 border border-green-200 rounded-lg px-3 py-1.5">
             <span className="text-base">🛵</span>
             <span className="text-xs font-bold text-green-700 leading-tight">
@@ -131,6 +150,16 @@ export default function ProductCard({ product }: ProductCardProps) {
             <span className="text-base">🛵</span>
             <span className="text-xs font-bold text-green-700 leading-tight">
               Delivery en la ciudad de San Francisco gratis a partir de 2 unidades!
+            </span>
+          </div>
+        )}
+
+        {/* Badge de encargo anticipado para Postres */}
+        {isPostre && (
+          <div className="mb-3 flex items-center gap-1.5 bg-amber-50 border border-amber-200 rounded-lg px-3 py-1.5">
+            <span className="text-base">🍫</span>
+            <span className="text-xs font-bold text-amber-700 leading-tight">
+              Individual 10×10 cm · Podés agrandar por módulo
             </span>
           </div>
         )}
@@ -206,23 +235,58 @@ export default function ProductCard({ product }: ProductCardProps) {
           <span className="text-celisan-red font-bold text-lg">
             ${product.price.toLocaleString("es-AR")}
           </span>
-          <button
-            type="button"
-            disabled={outOfStock}
-            onClick={() =>
-              addItem({
-                productId: product.id,
-                name: product.name,
-                price: product.price,
-                ...(hasVariantes ? { sabor: variante } : isCongelado ? { sabor } : {}),
-              })
-            }
-            className="px-5 py-2.5 rounded-xl bg-olive text-cream text-sm font-semibold hover:bg-olive-light transition-all active:scale-95 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-olive"
-          >
-            Agregar
-          </button>
+          {isDesayuno ? (
+            <button
+              type="button"
+              onClick={() => setShowDesayunoModal(true)}
+              className="px-5 py-2.5 rounded-xl bg-celisan-red text-white text-sm font-semibold hover:opacity-90 transition-all active:scale-95 shadow-sm"
+            >
+              Encargar
+            </button>
+          ) : isPostre ? (
+            <button
+              type="button"
+              onClick={() => setShowPostreModal(true)}
+              className="px-5 py-2.5 rounded-xl bg-olive text-cream text-sm font-semibold hover:bg-olive-light transition-all active:scale-95 shadow-sm"
+            >
+              Encargar
+            </button>
+          ) : (
+            <button
+              type="button"
+              disabled={outOfStock}
+              onClick={() =>
+                addItem({
+                  productId: product.id,
+                  name: product.name,
+                  price: product.price,
+                  ...(hasVariantes ? { sabor: variante } : isCongelado ? { sabor } : {}),
+                })
+              }
+              className="px-5 py-2.5 rounded-xl bg-olive text-cream text-sm font-semibold hover:bg-olive-light transition-all active:scale-95 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-olive"
+            >
+              {isViandaCumple ? "Encargar" : "Agregar"}
+            </button>
+          )}
         </div>
       </div>
+
+      {showDesayunoModal && (
+        <DesayunoOrderModal
+          productName={product.name}
+          productPrice={product.price}
+          onClose={() => setShowDesayunoModal(false)}
+        />
+      )}
+
+      {showPostreModal && (
+        <PostreModulosModal
+          productName={product.name}
+          productPrice={product.price}
+          onClose={() => setShowPostreModal(false)}
+          onConfirm={handlePostreConfirm}
+        />
+      )}
     </article>
   );
 }

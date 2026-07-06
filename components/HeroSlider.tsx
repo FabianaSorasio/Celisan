@@ -7,7 +7,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const AUTOPLAY_MS = 5000;
 
-type SlideAction = "dulce" | "historia" | "desayunos" | "catalog" | "postres";
+type SlideAction = "dulce" | "historia" | "desayunos" | "catalog" | "postres" | "waffles";
 type TextPosition = "left" | "right";
 
 interface Slide {
@@ -53,8 +53,8 @@ const SLIDES: Slide[] = [
     title: "Waffles de chocolate congelados",
     subtitle:
       "Para que los prepares vos mismo en casa, calentitos y listos en minutos. 100% libres de gluten.",
-    cta: "Ver catálogo",
-    action: "catalog",
+    cta: "Ver Waffles",
+    action: "waffles",
   },
   // 3 — Soy Sin Gluten
   {
@@ -69,9 +69,21 @@ const SLIDES: Slide[] = [
     action: "historia",
     logo: "/logo soysin gluten.png",
   },
-  // 4 — Delivery
+  // 4 — Postres individuales
   {
     id: 3,
+    image: "/banner-postres.jpg",
+    imageAlt: "Postre individual de chocolate con crema mascarpone sin gluten",
+    overlayClassName: "from-black/75 via-black/40 to-transparent",
+    title: "Postres que enamoran",
+    subtitle:
+      "Individuales de 10×10 cm, se pueden agrandar por módulo a medida. 100% sin TACC. Por encargo anticipado — consultanos.",
+    cta: "Ver Postres",
+    action: "postres",
+  },
+  // 5 — Delivery
+  {
+    id: 4,
     image: "/delivery_celisan.png",
     imageAlt: "Delivery Celisan — llevamos el sabor a tu puerta",
     overlayClassName: "from-black/80 via-olive/55 to-black/35",
@@ -82,20 +94,6 @@ const SLIDES: Slide[] = [
     action: "catalog",
     ctaHref:
       "https://wa.me/5493564626508?text=Hola%20Celisan!%20Quería%20consultar%20los%20días,%20horarios%20y%20costos%20del%20servicio%20de%20delivery",
-  },
-  // 5 — Postres individuales
-  {
-    id: 4,
-    image: "/banner-postres.jpg",
-    imageAlt: "Postre individual de chocolate con crema mascarpone sin gluten",
-    overlayClassName: "from-black/75 via-black/40 to-transparent",
-    title: "Postres que enamoran",
-    subtitle:
-      "Individuales de 10×10 cm, se pueden agrandar por módulo a medida. 100% sin TACC. Por encargo anticipado — consultanos.",
-    cta: "Consultar por WhatsApp",
-    action: "postres",
-    ctaHref:
-      "https://wa.me/5493564626508?text=Hola%20Celisan!%20Quiero%20consultar%20por%20los%20postres%20individuales",
   },
 ];
 
@@ -152,12 +150,18 @@ export default function HeroSlider() {
         );
         scrollToId("productos");
         break;
+      case "waffles":
+        router.push(
+          `/?categoria=${encodeURIComponent("Waffles Congelados")}#productos`
+        );
+        scrollToId("productos");
+        break;
       case "historia":
         scrollToId("historia");
         break;
       case "desayunos":
         router.push(
-          `/?categoria=${encodeURIComponent("Desayunos")}#productos`
+          `/?categoria=${encodeURIComponent("Desayunos y Meriendas")}#productos`
         );
         scrollToId("productos");
         break;
