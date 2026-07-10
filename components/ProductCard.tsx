@@ -27,6 +27,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   const isPedidoEspecial = isDesayuno || isViandaCumple || isPostre;
   const [showDesayunoModal, setShowDesayunoModal] = useState(false);
   const [showPostreModal, setShowPostreModal] = useState(false);
+  const [showFullDesc, setShowFullDesc] = useState(false);
   const isCongelado = product.category === "Waffles Congelados";
   const isCongeladoConSelector = isCongelado && !product.sinSelectorSabor;
   const hasVariantes = !!product.variantes?.length;
@@ -121,6 +122,29 @@ export default function ProductCard({ product }: ProductCardProps) {
           ) : (
             <div className="mb-3 h-2" aria-hidden />
           )
+        ) : isDesayuno && product.description ? (
+          (() => {
+            const lines = product.description.split("\n").filter(Boolean);
+            const PREVIEW = 3;
+            const needsToggle = lines.length > PREVIEW;
+            const visible = showFullDesc ? lines : lines.slice(0, PREVIEW);
+            return (
+              <div className="mb-3">
+                <p className="text-sm text-gray-600 whitespace-pre-line first-line:font-bold first-line:text-celisan-red">
+                  {visible.join("\n")}
+                </p>
+                {needsToggle && (
+                  <button
+                    type="button"
+                    onClick={() => setShowFullDesc((v) => !v)}
+                    className="mt-1 text-xs font-semibold text-celisan-red hover:underline focus:outline-none"
+                  >
+                    {showFullDesc ? "Ver menos ▲" : "Ver más ▼"}
+                  </button>
+                )}
+              </div>
+            );
+          })()
         ) : product.description ? (
           <p className="text-sm text-gray-600 mb-3 whitespace-pre-line first-line:font-bold first-line:text-celisan-red">
             {product.description}
