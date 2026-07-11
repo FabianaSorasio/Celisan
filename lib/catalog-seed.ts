@@ -273,7 +273,7 @@ export const catalogSeed: Product[] = [
   {
     id: "ppc-prepizzas",
     name: "Pre pizzas",
-    category: "Panificación y Pastas Soy Sin Gluten",
+    category: "Panificados y Pastas congeladas Soy Sin Gluten",
     price: 2900,
     description: "",
     image: img("panificacion y pastas", "ppc-prepizzas"),
@@ -282,7 +282,7 @@ export const catalogSeed: Product[] = [
   {
     id: "ppc-noquis",
     name: "Ñoquis crudos x 250gr",
-    category: "Panificación y Pastas Soy Sin Gluten",
+    category: "Panificados y Pastas congeladas Soy Sin Gluten",
     price: 5800,
     description: "",
     image: img("panificacion y pastas", "ppc-noquis-1"),
@@ -295,7 +295,7 @@ export const catalogSeed: Product[] = [
   {
     id: "ppc-sorrentinos-jyq",
     name: "Sorrentinos crudos de jamón y queso x 8 unidades",
-    category: "Panificación y Pastas Soy Sin Gluten",
+    category: "Panificados y Pastas congeladas Soy Sin Gluten",
     price: 8600,
     description: "",
     image: img("panificacion y pastas", "ppc-sorrentinos-jyq-1"),
@@ -308,7 +308,7 @@ export const catalogSeed: Product[] = [
   {
     id: "ppc-sorrentinos-verdura",
     name: "Sorrentinos crudos de verdura x 8 unidades",
-    category: "Panificación y Pastas Soy Sin Gluten",
+    category: "Panificados y Pastas congeladas Soy Sin Gluten",
     price: 8600,
     description: "",
     image: img("panificacion y pastas", "ppc-sorrentinos-verd-1"),
@@ -321,7 +321,7 @@ export const catalogSeed: Product[] = [
   {
     id: "ppc-hamb-legumbres",
     name: "Hamburguesas de legumbres x 4 unidades",
-    category: "Panificación y Pastas Soy Sin Gluten",
+    category: "Panificados y Pastas congeladas Soy Sin Gluten",
     price: 4000,
     description: "",
     image: img("panificacion y pastas", "ppc-hamb-legumbres"),
@@ -330,7 +330,7 @@ export const catalogSeed: Product[] = [
   {
     id: "ppc-emp-crudas",
     name: "Empanadas crudas x 4 unidades",
-    category: "Panificación y Pastas Soy Sin Gluten",
+    category: "Panificados y Pastas congeladas Soy Sin Gluten",
     price: 11500,
     description: "",
     image: img("panificacion y pastas", "ppc-emp-crudas"),
@@ -340,7 +340,7 @@ export const catalogSeed: Product[] = [
   {
     id: "ppc-medialunas",
     name: "Medialunas x 50gr.",
-    category: "Panificación y Pastas Soy Sin Gluten",
+    category: "Panificados y Pastas congeladas Soy Sin Gluten",
     price: 2000,
     description: "",
     image: img("panificacion y pastas", "ppc-medialunas"),
@@ -349,7 +349,7 @@ export const catalogSeed: Product[] = [
   {
     id: "ppc-mafalda",
     name: "Mafalda x unidad",
-    category: "Panificación y Pastas Soy Sin Gluten",
+    category: "Panificados y Pastas congeladas Soy Sin Gluten",
     price: 2600,
     description: "",
     image: img("panificacion y pastas", "ppc-mafalda-1"),
@@ -362,7 +362,7 @@ export const catalogSeed: Product[] = [
   {
     id: "ppc-pan-lactal",
     name: "Tipo Pan Lactal x 700gr.",
-    category: "Panificación y Pastas Soy Sin Gluten",
+    category: "Panificados y Pastas congeladas Soy Sin Gluten",
     price: 6500,
     description: "",
     image: img("panificacion y pastas", "ppc-pan-lactal"),
@@ -371,7 +371,7 @@ export const catalogSeed: Product[] = [
   {
     id: "ppc-pan-baguette",
     name: "Pan baguette x 200gr.",
-    category: "Panificación y Pastas Soy Sin Gluten",
+    category: "Panificados y Pastas congeladas Soy Sin Gluten",
     price: 2000,
     description: "",
     image: img("panificacion y pastas", "ppc-pan-baguette"),
@@ -380,7 +380,7 @@ export const catalogSeed: Product[] = [
   {
     id: "ppc-pan-campo",
     name: "Pan Integral x 330 gr",
-    category: "Panificación y Pastas Soy Sin Gluten",
+    category: "Panificados y Pastas congeladas Soy Sin Gluten",
     price: 4200,
     description: "",
     image: img("panificacion y pastas", "ppc-pan-integral"),
@@ -389,7 +389,7 @@ export const catalogSeed: Product[] = [
   {
     id: "ppc-pan-panchos",
     name: "Pan de panchos x 2 unidades",
-    category: "Panificación y Pastas Soy Sin Gluten",
+    category: "Panificados y Pastas congeladas Soy Sin Gluten",
     price: 2500,
     description: "",
     image: img("panificacion y pastas", "ppc-pan-panchos"),
@@ -398,7 +398,7 @@ export const catalogSeed: Product[] = [
   {
     id: "ppc-pan-hamburguesa",
     name: "Pan hamburguesa x 130gr.",
-    category: "Panificación y Pastas Soy Sin Gluten",
+    category: "Panificados y Pastas congeladas Soy Sin Gluten",
     price: 1500,
     description: "",
     image: img("panificacion y pastas", "ppc-pan-hamburguesa"),
@@ -409,7 +409,7 @@ export const catalogSeed: Product[] = [
   {
     id: "des-clasico-2",
     name: "Desayuno Clásico 2 cuadraditos",
-    category: "Desayunos",
+    category: "Desayunos y Meriendas",
     price: 28000,
     description: "Porción 1 persona",
     image: img("desayunos", "des-clasico-2"),
@@ -419,7 +419,7 @@ export const catalogSeed: Product[] = [
   {
     id: "des-clasico-4",
     name: "Desayuno Clásico 4 cuadraditos",
-    category: "Desayunos",
+    category: "Desayunos y Meriendas",
     price: 48000,
     description: "Porción para compartir con otro",
     image: img("desayunos", "des-clasico-4"),
@@ -429,7 +429,7 @@ export const catalogSeed: Product[] = [
   {
     id: "des-proteico-2",
     name: "Desayuno Proteico 2 cuadraditos",
-    category: "Desayunos",
+    category: "Desayunos y Meriendas",
     price: 28000,
     description: "Porción para una persona",
     image: img("desayunos", "des-proteico-2"),
@@ -439,7 +439,7 @@ export const catalogSeed: Product[] = [
   {
     id: "des-taza",
     name: "Adicional taza + cuchara",
-    category: "Desayunos",
+    category: "Desayunos y Meriendas",
     price: 15000,
     description: "",
     image: img("desayunos", "des-taza-1"),
