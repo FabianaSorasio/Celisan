@@ -1,11 +1,7 @@
 import { NextResponse } from "next/server";
 import { getProducts, saveProducts } from "@/lib/products-data";
 import type { Product } from "@/lib/products";
-
-function isAuthenticated(req: Request): boolean {
-  const cookie = req.headers.get("cookie") ?? "";
-  return cookie.includes("admin_auth=1");
-}
+import { isAuthenticated } from "@/lib/admin-auth";
 
 export async function GET(req: Request) {
   if (!isAuthenticated(req)) {

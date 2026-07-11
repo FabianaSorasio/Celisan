@@ -1,11 +1,7 @@
 import { NextResponse } from "next/server";
 import { writeFileSync, mkdirSync } from "fs";
 import { join, extname } from "path";
-
-function isAuthenticated(req: Request): boolean {
-  const cookie = req.headers.get("cookie") ?? "";
-  return cookie.includes("admin_auth=1");
-}
+import { isAuthenticated } from "@/lib/admin-auth";
 
 export async function POST(req: Request) {
   if (!isAuthenticated(req)) {

@@ -101,12 +101,12 @@ export default function AdminPage() {
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
   const [toast, setToast] = useState<{ msg: string; ok: boolean } | null>(null);
 
-  // Verificar cookie al cargar
+  // Verificar sesión al cargar (la cookie es httpOnly, no se puede leer desde JS)
   useEffect(() => {
-    const cookies = document.cookie;
-    if (cookies.includes("admin_auth=1")) {
-      setIsLoggedIn(true);
-    }
+    fetch("/api/admin/auth")
+      .then((res) => res.json())
+      .then((data) => setIsLoggedIn(!!data.ok))
+      .catch(() => setIsLoggedIn(false));
   }, []);
 
   const showToast = useCallback((msg: string, ok = true) => {
