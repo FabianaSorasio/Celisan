@@ -1,6 +1,22 @@
+import { existsSync, readFileSync } from "fs";
+import { join } from "path";
 import { catalogSeed } from "@/lib/catalog-seed";
 import { normalizeCategory } from "@/lib/category-utils";
 import type { Product } from "@/lib/products";
+
+const DATA_PATH = join(process.cwd(), "data", "products.json");
+
+/** Lee el archivo JSON del admin si existe. */
+function getLocalProducts(): Product[] | null {
+  try {
+    if (!existsSync(DATA_PATH)) return null;
+    const raw = readFileSync(DATA_PATH, "utf-8");
+    const data = JSON.parse(raw) as Product[];
+    return data.length > 0 ? data : null;
+  } catch {
+    return null;
+  }
+}
 
 const SHEET_COLUMNS = [
   "ID",
@@ -24,8 +40,7 @@ function parseStock(value: string): number {
 
 function rowToProduct(cells: string[]): Product | null {
   if (cells.length < 7) return null;
-  const [id, name, categoryRaw, priceRaw, description, imageRaw, stockRaw] =
-    cells;
+  const [id, name, categoryRaw, priceRaw, description, imageRaw, stockRaw] = cells;
   if (!id?.trim() || !name?.trim()) return null;
   const category = normalizeCategory(categoryRaw ?? "");
   if (!category) return null;
@@ -48,24 +63,6 @@ function rowToProduct(cells: string[]): Product | null {
   };
 }
 
-/**
- * Filtra productos que corresponden a pricing mayorista.
- * Estos no deben aparecer en el catálogo público minorista.
- */
-function removeMayoristaProducts(products: Product[]): Product[] {
-  return products.filter((p) => {
-    const nameLower = p.name.toLowerCase();
-    const idLower = p.id.toLowerCase();
-    return (
-      !nameLower.includes("mayorista") &&
-      !idLower.includes("-may-") &&
-      !nameLower.includes("x 6") &&
-      !nameLower.includes("x 12")
-    );
-  });
-}
-
-/** Parsea CSV exportado por Google Sheets (gviz). */
 export function parseSheetCsv(csv: string): Product[] {
   const rows: string[][] = [];
   let current = "";
@@ -76,23 +73,14 @@ export function parseSheetCsv(csv: string): Product[] {
     const ch = csv[i];
     const next = csv[i + 1];
     if (ch === '"') {
-      if (inQuotes && next === '"') {
-        current += '"';
-        i++;
-      } else {
-        inQuotes = !inQuotes;
-      }
+      if (inQuotes && next === '"') { current += '"'; i++; }
+      else { inQuotes = !inQuotes; }
       continue;
     }
-    if (ch === "," && !inQuotes) {
-      row.push(current);
-      current = "";
-      continue;
-    }
+    if (ch === "," && !inQuotes) { row.push(current); current = ""; continue; }
     if ((ch === "\n" || ch === "\r") && !inQuotes) {
       if (ch === "\r" && next === "\n") i++;
-      row.push(current);
-      current = "";
+      row.push(current); current = "";
       if (row.some((c) => c.trim())) rows.push(row);
       row = [];
       continue;
@@ -103,7 +91,6 @@ export function parseSheetCsv(csv: string): Product[] {
     row.push(current);
     if (row.some((c) => c.trim())) rows.push(row);
   }
-
   if (rows.length === 0) return [];
 
   const header = rows[0].map((h) => h.trim());
@@ -111,59 +98,34 @@ export function parseSheetCsv(csv: string): Product[] {
     header[i]?.toLowerCase().includes(col.toLowerCase().slice(0, 4))
   );
   const dataRows = hasHeader ? rows.slice(1) : rows;
-
-  return dataRows
-    .map((r) => rowToProduct(r))
-    .filter((p): p is Product => p !== null);
+  return dataRows.map((r) => rowToProduct(r)).filter((p): p is Product => p !== null);
 }
 
 function parseApiValues(values: string[][]): Product[] {
   if (!values.length) return [];
   const header = values[0].map((h) => String(h).trim());
   const colIndex = (name: string) =>
-    header.findIndex((h) =>
-      h.toLowerCase().startsWith(name.toLowerCase().slice(0, 4))
-    );
-
+    header.findIndex((h) => h.toLowerCase().startsWith(name.toLowerCase().slice(0, 4)));
   const idx = {
-    id: colIndex("ID"),
-    name: colIndex("Nombre"),
-    category: colIndex("Categoría"),
-    price: colIndex("Precio"),
-    description: colIndex("Descripción"),
-    image: colIndex("Imagen"),
-    stock: colIndex("Stock"),
+    id: colIndex("ID"), name: colIndex("Nombre"), category: colIndex("Categoría"),
+    price: colIndex("Precio"), description: colIndex("Descripción"),
+    image: colIndex("Imagen"), stock: colIndex("Stock"),
   };
-
   if (idx.id < 0 || idx.name < 0) {
     return values.slice(1).map((r) => rowToProduct(r.map(String))).filter(Boolean) as Product[];
   }
-
-  return values
-    .slice(1)
-    .map((row) => {
-      const cells = [
-        String(row[idx.id] ?? ""),
-        String(row[idx.name] ?? ""),
-        String(row[idx.category] ?? ""),
-        String(row[idx.price] ?? ""),
-        String(row[idx.description] ?? ""),
-        String(row[idx.image] ?? ""),
-        String(row[idx.stock] ?? "1"),
-      ];
-      return rowToProduct(cells);
-    })
-    .filter((p): p is Product => p !== null);
+  return values.slice(1).map((row) => {
+    const cells = [
+      String(row[idx.id] ?? ""), String(row[idx.name] ?? ""), String(row[idx.category] ?? ""),
+      String(row[idx.price] ?? ""), String(row[idx.description] ?? ""),
+      String(row[idx.image] ?? ""), String(row[idx.stock] ?? "1"),
+    ];
+    return rowToProduct(cells);
+  }).filter((p): p is Product => p !== null);
 }
 
-async function fetchFromSheetsApi(
-  sheetId: string,
-  apiKey: string,
-  range: string
-): Promise<Product[]> {
-  const url = new URL(
-    `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${encodeURIComponent(range)}`
-  );
+async function fetchFromSheetsApi(sheetId: string, apiKey: string, range: string): Promise<Product[]> {
+  const url = new URL(`https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${encodeURIComponent(range)}`);
   url.searchParams.set("key", apiKey);
   const res = await fetch(url.toString(), { next: { revalidate: 60 } });
   if (!res.ok) throw new Error(`Sheets API ${res.status}`);
@@ -184,27 +146,27 @@ async function fetchFromCsvExport(sheetId: string): Promise<Product[]> {
 }
 
 /**
- * Obtiene el catálogo desde Google Sheets.
- * Variables: GOOGLE_SHEET_ID, GOOGLE_SHEETS_API_KEY (opcional), GOOGLE_SHEET_RANGE (opcional, default Sheet1!A1:G500)
+ * Prioridad: 1) data/products.json (admin) → 2) Google Sheets → 3) catalogSeed
  */
 export async function fetchProducts(): Promise<Product[]> {
+  // 1. JSON local del admin (fuente principal)
+  const local = getLocalProducts();
+  if (local) return local;
+
+  // 2. Google Sheets (si está configurado)
   const sheetId = process.env.GOOGLE_SHEET_ID?.trim();
   const apiKey = process.env.GOOGLE_SHEETS_API_KEY?.trim();
   const range = process.env.GOOGLE_SHEET_RANGE?.trim() || "Hoja 1!A1:G500";
 
-  if (!sheetId) {
-    return removeMayoristaProducts(catalogSeed);
+  if (sheetId) {
+    try {
+      if (apiKey) return await fetchFromSheetsApi(sheetId, apiKey, range);
+      return await fetchFromCsvExport(sheetId);
+    } catch {
+      // cae al seed
+    }
   }
 
-  try {
-    let products: Product[];
-    if (apiKey) {
-      products = await fetchFromSheetsApi(sheetId, apiKey, range);
-    } else {
-      products = await fetchFromCsvExport(sheetId);
-    }
-    return removeMayoristaProducts(products);
-  } catch {
-    return removeMayoristaProducts(catalogSeed);
-  }
+  // 3. Fallback al seed estático
+  return catalogSeed;
 }

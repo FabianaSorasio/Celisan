@@ -6,7 +6,7 @@ export const CATALOG_CATEGORIES = [
   "Waffles con Cobertura",
   "Postres individuales",
   "Desayunos y Meriendas",
-  "Vianda Cumple",
+  "Vianda Fiesta!",
 ] as const;
 
 export type CatalogCategoryFilter = (typeof CATALOG_CATEGORIES)[number];

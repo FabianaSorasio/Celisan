@@ -11,6 +11,9 @@ import {
 import { CATALOG_CATEGORIES } from "@/lib/products";
 import type { CatalogCategoryFilter, Product } from "@/lib/products";
 
+// Categorías ocultas temporalmente (siguen existiendo en los datos)
+const HIDDEN_CATEGORIES: string[] = ["Waffles con Cobertura"];
+
 interface CatalogProps {
   products: Product[];
 }
@@ -18,6 +21,10 @@ interface CatalogProps {
 export default function Catalog({ products }: CatalogProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const visibleProducts = useMemo(
+    () => products.filter((p) => !HIDDEN_CATEGORIES.includes(p.category)),
+    [products]
+  );
 
   const selectedCategory = useMemo(
     () => parseCategoryFilter(searchParams.get("categoria")),
@@ -34,12 +41,20 @@ export default function Catalog({ products }: CatalogProps) {
       }
       const query = params.toString();
       router.replace(query ? `/?${query}` : "/", { scroll: false });
+      // Esperamos a que la grilla filtrada termine de re-renderizarse
+      // (cambia de alto) antes de scrollear, si no el scroll "smooth"
+      // apunta a una posición que después queda fuera de la página.
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          document.getElementById("productos")?.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      });
     },
     [router, searchParams]
   );
 
   const filtered = useMemo(() => {
-    const result = filterProductsByCategory(products, selectedCategory);
+    const result = filterProductsByCategory(visibleProducts, selectedCategory);
     if (selectedCategory === "Todas") {
       return [...result].sort((a, b) => {
         const ai = CATALOG_CATEGORIES.indexOf(a.category as typeof CATALOG_CATEGORIES[number]);
@@ -48,7 +63,7 @@ export default function Catalog({ products }: CatalogProps) {
       });
     }
     return result;
-  }, [products, selectedCategory]);
+  }, [visibleProducts, selectedCategory]);
 
   return (
     <div className="flex flex-col lg:flex-row gap-8 lg:gap-10">

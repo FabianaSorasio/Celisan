@@ -6,6 +6,7 @@ import type { Product } from "@/lib/products";
 import { useCart } from "@/components/CartProvider";
 import DesayunoOrderModal from "@/components/DesayunoOrderModal";
 import PostreModulosModal from "@/components/PostreModulosModal";
+import ViandaCumpleOrderModal from "@/components/ViandaCumpleOrderModal";
 
 function StockBadge({ stock }: { stock: number }) {
   if (stock <= 0) return <span className="text-[10px] font-normal text-gray-400 mt-0.5 block">Sin stock</span>;
@@ -22,11 +23,13 @@ type Sabor = "Dulces" | "Salados";
 export default function ProductCard({ product }: ProductCardProps) {
   const { addItem } = useCart();
   const isDesayuno = product.category === "Desayunos y Meriendas";
-  const isViandaCumple = product.category === "Vianda Cumple";
+  const isViandaCumple = product.category === "Vianda Fiesta!";
   const isPostre = product.category === "Postres individuales";
   const isPedidoEspecial = isDesayuno || isViandaCumple || isPostre;
   const [showDesayunoModal, setShowDesayunoModal] = useState(false);
   const [showPostreModal, setShowPostreModal] = useState(false);
+  const [showViandaCumpleModal, setShowViandaCumpleModal] = useState(false);
+  const [videoPlaying, setVideoPlaying] = useState(false);
   const [showFullDesc, setShowFullDesc] = useState(false);
   const isCongelado = product.category === "Waffles Congelados";
   const isCongeladoConSelector = isCongelado && !product.sinSelectorSabor;
@@ -43,7 +46,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   // Si el producto tiene stock por sabor, usarlo; si no, usar stock general
   const dulcesSinStock = product.stockDulces === 0;
   const saladosSinStock = product.stockSalados === 0;
-  // Desayunos, Vianda Cumple y Postres siempre disponibles (son productos a pedido)
+  // Desayunos, Vianda Fiesta! y Postres siempre disponibles (son productos a pedido)
   const outOfStock = isPedidoEspecial
     ? false
     : hasVariantes
@@ -59,7 +62,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   return (
     <article
-      className={`group relative bg-white rounded-2xl overflow-hidden transition-all duration-300 ease-out border border-gray-100/80 flex flex-col h-full ${showDesayunoModal || showPostreModal ? "" : "hover:-translate-y-2 hover:shadow-antigravity-hover"}`}
+      className={`group relative bg-white rounded-2xl overflow-hidden transition-all duration-300 ease-out border border-gray-100/80 flex flex-col h-full ${showDesayunoModal || showPostreModal || showViandaCumpleModal ? "" : "hover:-translate-y-2 hover:shadow-antigravity-hover"}`}
       style={{
         boxShadow:
           "0 25px 50px -12px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.03)",
@@ -69,24 +72,47 @@ export default function ProductCard({ product }: ProductCardProps) {
         <img
           src={product.image}
           alt={product.name}
-          className={`absolute inset-0 h-full w-full object-cover transition-all duration-500 ${product.video ? "group-hover:opacity-0" : "group-hover:scale-105"}`}
+          className={`absolute inset-0 h-full w-full object-cover transition-all duration-500 ${videoPlaying ? "opacity-0" : "group-hover:scale-105"}`}
           loading="lazy"
           decoding="async"
         />
-        {product.video && (
-          <>
-            <video
-              src={product.video}
-              className="absolute inset-0 h-full w-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-              autoPlay
-              muted
-              loop
-              playsInline
-            />
-            <span className="absolute top-3 left-3 px-2 py-1 rounded-lg bg-black/50 text-white text-xs font-semibold flex items-center gap-1 group-hover:opacity-0 transition-opacity duration-300">
-              ▶ Video
-            </span>
-          </>
+        {product.video && videoPlaying && (
+          <video
+            src={product.video}
+            className="absolute inset-0 h-full w-full object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+            onClick={(e) => {
+              e.stopPropagation();
+              setVideoPlaying(false);
+            }}
+          />
+        )}
+        {product.video && !videoPlaying && (
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              setVideoPlaying(true);
+            }}
+            className="absolute top-3 left-3 px-2 py-1 rounded-lg bg-black/50 text-white text-xs font-semibold flex items-center gap-1 hover:bg-black/70 transition-colors"
+          >
+            ▶ Video
+          </button>
+        )}
+        {product.video && videoPlaying && (
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              setVideoPlaying(false);
+            }}
+            className="absolute top-3 left-3 px-2 py-1 rounded-lg bg-black/50 text-white text-xs font-semibold flex items-center gap-1 hover:bg-black/70 transition-colors"
+          >
+            ✕ Foto
+          </button>
         )}
         {outOfStock && (
           <span className="absolute top-3 right-3 px-2 py-1 rounded-lg bg-gray-900/80 text-white text-xs font-semibold">
@@ -153,7 +179,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           <div className="mb-3 h-1" aria-hidden />
         )}
 
-        {/* Badge de delivery gratis para Desayunos y Vianda Cumple */}
+        {/* Badge de delivery gratis para Desayunos y Vianda Fiesta! */}
         {product.category === "Desayunos y Meriendas" && (
           <div className="mb-3 flex items-center gap-1.5 bg-green-50 border border-green-200 rounded-lg px-3 py-1.5">
             <span className="text-base">🛵</span>
@@ -162,7 +188,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             </span>
           </div>
         )}
-        {product.category === "Vianda Cumple" && (
+        {product.category === "Vianda Fiesta!" && (
           <div className="mb-3 flex items-center gap-1.5 bg-green-50 border border-green-200 rounded-lg px-3 py-1.5">
             <span className="text-base">🛵</span>
             <span className="text-xs font-bold text-green-700 leading-tight">
@@ -268,6 +294,14 @@ export default function ProductCard({ product }: ProductCardProps) {
             >
               Encargar
             </button>
+          ) : isViandaCumple ? (
+            <button
+              type="button"
+              onClick={() => setShowViandaCumpleModal(true)}
+              className="px-5 py-2.5 rounded-xl bg-celisan-red text-white text-sm font-semibold hover:opacity-90 transition-all active:scale-95 shadow-sm"
+            >
+              Encargar
+            </button>
           ) : (
             <button
               type="button"
@@ -282,7 +316,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               }
               className="px-5 py-2.5 rounded-xl bg-olive text-cream text-sm font-semibold hover:bg-olive-light transition-all active:scale-95 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-olive"
             >
-              {isViandaCumple ? "Encargar" : "Agregar"}
+              Agregar
             </button>
           )}
         </div>
@@ -302,6 +336,15 @@ export default function ProductCard({ product }: ProductCardProps) {
           productName={product.name}
           productPrice={product.price}
           onClose={() => setShowPostreModal(false)}
+        />,
+        document.body
+      )}
+
+      {showViandaCumpleModal && createPortal(
+        <ViandaCumpleOrderModal
+          productName={product.name}
+          productPrice={product.price}
+          onClose={() => setShowViandaCumpleModal(false)}
         />,
         document.body
       )}

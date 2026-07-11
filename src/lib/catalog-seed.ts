@@ -450,11 +450,11 @@ export const catalogSeed: Product[] = [
     stock: 1,
   },
 
-  // ── Vianda Cumple ───────────────────────────────────────────────────────────
+  // ── Vianda Fiesta! ───────────────────────────────────────────────────────────
   {
     id: "vc-jyq-oreo",
-    name: "Vianda Cumple JyQ / Oreo",
-    category: "Vianda Cumple",
+    name: "Vianda Fiesta! JyQ / Oreo",
+    category: "Vianda Fiesta!",
     price: 24000,
     description:
       "Contiene: cuadradito salado de jyq, cuadradito dulce de óreo con dulce de leche y copitos de chocolate, bolsita de pochoclos salados y juguito de naranja sin gluten",

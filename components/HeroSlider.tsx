@@ -41,7 +41,7 @@ const SLIDES: Slide[] = [
     imageAlt: "Desayuno y merienda artesanal sin gluten para regalar",
     overlayClassName: "from-black/75 via-black/45 to-olive/30",
     title: "Box Desayunos o Meriendas para regalar",
-    subtitle: "Súper completos y 100% sin gluten",
+    subtitle: "Desde el proteico para tu dieta fitness al clásico de jamón y queso — cambiá los ingredientes a tu gusto, ¡todo es posible!",
     subtitleBelow: true,
     cta: "Ver Desayunos y Meriendas",
     action: "desayunos",
