@@ -3,6 +3,14 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  // Evita que Vercel empaquete las fotos/videos de /public/images dentro de
+  // cada función de la API (eso hacía que la función de subida de imágenes
+  // superara el límite de tamaño permitido).
+  experimental: {
+    outputFileTracingExcludes: {
+      "*": ["public/images/**", "public/videos/**"],
+    },
+  },
   async headers() {
     return [
       {
