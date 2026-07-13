@@ -7,6 +7,7 @@ import { useCart } from "@/components/CartProvider";
 import DesayunoOrderModal from "@/components/DesayunoOrderModal";
 import PostreModulosModal from "@/components/PostreModulosModal";
 import ViandaCumpleOrderModal from "@/components/ViandaCumpleOrderModal";
+import ImageModal from "@/components/ImageModal";
 
 function StockBadge({ stock }: { stock: number }) {
   if (stock <= 0) return <span className="text-[10px] font-normal text-gray-400 mt-0.5 block">Sin stock</span>;
@@ -31,6 +32,14 @@ export default function ProductCard({ product }: ProductCardProps) {
   const [showViandaCumpleModal, setShowViandaCumpleModal] = useState(false);
   const [videoPlaying, setVideoPlaying] = useState(false);
   const [showFullDesc, setShowFullDesc] = useState(false);
+  const [imageOpen, setImageOpen] = useState(false);
+
+  // Carrusel — activo sólo cuando hay más de 1 imagen en el array
+  const gallery = product.images && product.images.length > 1 ? product.images : null;
+  const [slide, setSlide] = useState(0);
+  const currentImage = gallery ? gallery[slide] : product.image;
+  const prevSlide = () => setSlide((s) => (s - 1 + (gallery?.length ?? 1)) % (gallery?.length ?? 1));
+  const nextSlide = () => setSlide((s) => (s + 1) % (gallery?.length ?? 1));
   const isCongelado = product.category === "Waffles Congelados";
   const isCongeladoConSelector = isCongelado && !product.sinSelectorSabor;
   const hasVariantes = !!product.variantes?.length;
@@ -69,13 +78,56 @@ export default function ProductCard({ product }: ProductCardProps) {
       }}
     >
       <div className="aspect-[4/3] relative bg-gray-100 overflow-hidden">
-        <img
-          src={product.image}
-          alt={product.name}
-          className={`absolute inset-0 h-full w-full object-cover transition-all duration-500 ${videoPlaying ? "opacity-0" : "group-hover:scale-105"}`}
-          loading="lazy"
-          decoding="async"
-        />
+        <button
+          type="button"
+          className={`absolute inset-0 w-full h-full focus:outline-none ${videoPlaying ? "pointer-events-none" : "cursor-zoom-in"}`}
+          onClick={() => !videoPlaying && setImageOpen(true)}
+          aria-label={`Ampliar imagen de ${product.name}`}
+        >
+          <img
+            key={currentImage}
+            src={currentImage}
+            alt={product.name}
+            className={`absolute inset-0 h-full w-full object-cover transition-all duration-500 ${videoPlaying ? "opacity-0" : "group-hover:scale-105"}`}
+            loading="lazy"
+            decoding="async"
+          />
+        </button>
+        {gallery && !videoPlaying && (
+          <>
+            <button
+              type="button"
+              onClick={(e) => { e.stopPropagation(); prevSlide(); }}
+              className="absolute left-2 top-1/2 -translate-y-1/2 flex items-center justify-center w-8 h-8 rounded-full bg-black/50 hover:bg-black/75 text-white transition-colors z-10"
+              aria-label="Foto anterior"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
+              </svg>
+            </button>
+            <button
+              type="button"
+              onClick={(e) => { e.stopPropagation(); nextSlide(); }}
+              className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center justify-center w-8 h-8 rounded-full bg-black/50 hover:bg-black/75 text-white transition-colors z-10"
+              aria-label="Foto siguiente"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+              </svg>
+            </button>
+            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+              {gallery.map((_, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={(e) => { e.stopPropagation(); setSlide(i); }}
+                  className={`w-2 h-2 rounded-full transition-all ${i === slide ? "bg-white scale-125" : "bg-white/50 hover:bg-white/80"}`}
+                  aria-label={`Foto ${i + 1}`}
+                />
+              ))}
+            </div>
+          </>
+        )}
         {product.video && videoPlaying && (
           <video
             src={product.video}
@@ -347,6 +399,14 @@ export default function ProductCard({ product }: ProductCardProps) {
           onClose={() => setShowViandaCumpleModal(false)}
         />,
         document.body
+      )}
+
+      {imageOpen && (
+        <ImageModal
+          src={currentImage}
+          alt={product.name}
+          onClose={() => setImageOpen(false)}
+        />
       )}
     </article>
   );
