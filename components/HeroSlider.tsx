@@ -16,9 +16,13 @@ interface Slide {
   image?: string;
   /** Video de fondo en loop (muted, autoplay) */
   video?: string;
+  /** Video chico flotante sobre la imagen de fondo (recuadro, no ocupa todo el slide) */
+  insetVideo?: string;
   imageAlt: string;
   imageClassName?: string;
   overlayClassName?: string;
+  /** Texto chico opcional arriba del título (ej: "Waffles congelados salados:") */
+  kicker?: string;
   title: string;
   subtitle: string;
   /** Si true, el subtitle se muestra debajo del botón CTA en lugar de arriba */
@@ -37,7 +41,7 @@ const SLIDES: Slide[] = [
   // 1 — Desayunos y Meriendas
   {
     id: 0,
-    image: "/desayuno_clasico.png",
+    image: "/images/banner/banner-desayunos.png",
     imageAlt: "Desayuno y merienda artesanal sin gluten para regalar",
     overlayClassName: "from-black/75 via-black/45 to-olive/30",
     title: "Box Desayunos o Meriendas para regalar",
@@ -46,22 +50,22 @@ const SLIDES: Slide[] = [
     cta: "Ver Desayunos y Meriendas",
     action: "desayunos",
   },
-  // 2 — Waffles de chocolate
+  // 2 — Waffles salados congelados (foto de fondo)
   {
     id: 1,
-    image: "/Browniedechocolate.png",
-    imageAlt: "Waffles de chocolate congelados sin gluten",
+    image: "/images/banner/banner-waffle-salado-foto.jpg",
+    imageAlt: "Waffle salado congelado sin gluten",
     overlayClassName: "from-[#3d2314]/85 via-[#5c3a2a]/60 to-black/40",
-    title: "Waffles de chocolate congelados",
-    subtitle:
-      "Para que los prepares vos mismo en casa, calentitos y listos en minutos. 100% libres de gluten.",
+    kicker: "Waffles congelados salados:",
+    title: "La base perfecta y sin gluten para tus sándwiches más creativos.",
+    subtitle: "",
     cta: "Ver Waffles",
     action: "waffles",
   },
   // 3 — Soy Sin Gluten
   {
     id: 2,
-    image: "/banner-soysingluten.jpg",
+    image: "/images/banner/banner-soysingluten.jpg",
     imageAlt: "Sorrentinos sin gluten con salsa — Soy Sin Gluten",
     overlayClassName: "from-black/55 via-black/25 to-transparent",
     title: "Sabor casero, 100% Sin gluten",
@@ -69,12 +73,12 @@ const SLIDES: Slide[] = [
       "Todo un abanico de posibilidades de comidas congeladas sin gluten.",
     cta: "Ver Viandas Sin Gluten",
     action: "viandas",
-    logo: "/logo soysin gluten.png",
+    logo: "/images/banner/logo-soysingluten.png",
   },
   // 4 — Postres individuales
   {
     id: 3,
-    image: "/banner-postres.jpg",
+    image: "/images/banner/banner-postres.jpg",
     imageAlt: "Postre individual de chocolate con crema mascarpone sin gluten",
     overlayClassName: "from-black/75 via-black/40 to-transparent",
     title: "Postres que enamoran",
@@ -86,7 +90,7 @@ const SLIDES: Slide[] = [
   // 5 — Delivery
   {
     id: 4,
-    image: "/delivery_celisan.png",
+    image: "/images/banner/banner-delivery.png",
     imageAlt: "Delivery Celisan — llevamos el sabor a tu puerta",
     overlayClassName: "from-black/80 via-olive/55 to-black/35",
     title: "¡Llevamos el sabor a tu puerta!",
@@ -113,6 +117,7 @@ export default function HeroSlider() {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const insetVideoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
   const goTo = useCallback((index: number) => {
     setActive((index + SLIDES.length) % SLIDES.length);
@@ -121,11 +126,10 @@ export default function HeroSlider() {
   const goNext = useCallback(() => goTo(active + 1), [active, goTo]);
   const goPrev = useCallback(() => goTo(active - 1), [active, goTo]);
 
-  // Pausa/reanuda el video según slide activo
+  // Pausa/reanuda el video (de fondo o flotante) según slide activo
   useEffect(() => {
     SLIDES.forEach((slide, i) => {
-      if (!slide.video) return;
-      const vid = videoRefs.current[i];
+      const vid = slide.video ? videoRefs.current[i] : slide.insetVideo ? insetVideoRefs.current[i] : null;
       if (!vid) return;
       if (i === active) {
         vid.currentTime = 0;
@@ -205,7 +209,10 @@ export default function HeroSlider() {
               }`}
               aria-hidden={!isActive}
             >
-              {/* Fondo: video o imagen */}
+              {/* Fondo: video o imagen. El video usa object-contain (no cover) porque
+                  suele venir en formato vertical de celular: recortarlo a pantalla
+                  completa lo mostraba demasiado "pegado"/zoomeado. Así se ve entero,
+                  centrado sobre el fondo oscuro del banner. */}
               {slide.video ? (
                 <video
                   ref={(el) => { videoRefs.current[index] = el; }}
@@ -214,7 +221,7 @@ export default function HeroSlider() {
                   loop
                   playsInline
                   autoPlay={isActive}
-                  className="absolute inset-0 w-full h-full object-cover object-center"
+                  className="absolute inset-0 w-full h-full object-contain object-center bg-gray-900"
                 />
               ) : slide.image ? (
                 <Image
@@ -227,6 +234,21 @@ export default function HeroSlider() {
                 />
               ) : null}
 
+              {/* Video flotante sobre la imagen de fondo, en un recuadro chico */}
+              {slide.insetVideo && (
+                <div className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 lg:bottom-8 lg:right-10 w-24 h-32 sm:w-32 sm:h-44 lg:w-40 lg:h-56 rounded-2xl overflow-hidden shadow-2xl z-[5]">
+                  <video
+                    ref={(el) => { insetVideoRefs.current[index] = el; }}
+                    src={slide.insetVideo}
+                    muted
+                    loop
+                    playsInline
+                    autoPlay={isActive}
+                    className="absolute inset-0 w-full h-full object-cover object-center"
+                  />
+                </div>
+              )}
+
               {/* Overlay degradé */}
               <div
                 className={`absolute inset-0 bg-gradient-to-r ${slide.overlayClassName ?? "from-black/70 via-black/40 to-transparent"}`}
@@ -237,10 +259,15 @@ export default function HeroSlider() {
               <div className="absolute inset-0 z-10 flex items-center">
                 <div className={`max-w-7xl mx-auto w-full px-6 sm:px-10 lg:px-14 flex ${slide.textPosition === "right" ? "justify-end" : "justify-start"}`}>
                   <div className="max-w-xl text-white">
+                    {slide.kicker && (
+                      <p className="text-sm sm:text-base font-semibold tracking-wide text-white/90 mb-1.5 drop-shadow-sm">
+                        {slide.kicker}
+                      </p>
+                    )}
                     <h1 className="text-2xl sm:text-3xl lg:text-5xl font-bold leading-tight tracking-tight drop-shadow-sm">
                       {slide.title}
                     </h1>
-                    {!slide.subtitleBelow && (
+                    {!slide.subtitleBelow && slide.subtitle && (
                       <p className="mt-3 sm:mt-4 text-sm sm:text-base lg:text-lg text-white/90 leading-relaxed max-w-lg">
                         {slide.subtitle}
                       </p>
@@ -281,6 +308,15 @@ export default function HeroSlider() {
             </article>
           );
         })}
+
+        {/* Placa "Sin Gluten" — fija, visible en todos los slides */}
+        <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20 w-11 h-11 sm:w-14 sm:h-14 drop-shadow-lg">
+          <img
+            src="/images/banner/badge-sin-gluten.png"
+            alt="Certificado Sin Gluten"
+            className="w-full h-full object-contain"
+          />
+        </div>
 
         {/* Flechas */}
         <button

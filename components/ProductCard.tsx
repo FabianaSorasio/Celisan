@@ -9,10 +9,19 @@ import PostreModulosModal from "@/components/PostreModulosModal";
 import ViandaCumpleOrderModal from "@/components/ViandaCumpleOrderModal";
 import ImageModal from "@/components/ImageModal";
 
-function StockBadge({ stock }: { stock: number }) {
+function StockBadge({ stock, isSelected }: { stock: number; isSelected?: boolean }) {
   if (stock <= 0) return <span className="text-[10px] font-normal text-gray-400 mt-0.5 block">Sin stock</span>;
-  if (stock === 1) return <span className="text-[10px] font-bold text-orange-500 mt-0.5 block">¡Queda uno solo!</span>;
-  return <span className="text-[10px] font-bold text-green-600 mt-0.5 block">¡Hay stock!</span>;
+  if (stock === 1)
+    return (
+      <span className={`text-[10px] font-bold mt-0.5 block ${isSelected ? "text-orange-200" : "text-orange-500"}`}>
+        ¡Queda uno solo!
+      </span>
+    );
+  return (
+    <span className={`text-[10px] font-bold mt-0.5 block ${isSelected ? "text-lime-300" : "text-green-700"}`}>
+      ¡Hay stock!
+    </span>
+  );
 }
 
 interface ProductCardProps {
@@ -282,7 +291,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                       }`}
                   >
                     <span className="text-sm">{v.nombre}</span>
-                    <StockBadge stock={v.stock} />
+                    <StockBadge stock={v.stock} isSelected={isSelected} />
                   </button>
                 );
               })}
