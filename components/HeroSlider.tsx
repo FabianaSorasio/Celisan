@@ -68,7 +68,7 @@ const SLIDES: Slide[] = [
     image: "/images/banner/banner-soysingluten.jpg",
     imageAlt: "Sorrentinos sin gluten con salsa — Soy Sin Gluten",
     overlayClassName: "from-black/55 via-black/25 to-transparent",
-    title: "Sabor casero, 100% Sin gluten",
+    title: "Sabor casero,\n100% sin gluten",
     subtitle:
       "Todo un abanico de posibilidades de comidas congeladas sin gluten.",
     cta: "Ver Viandas Sin Gluten",
@@ -257,14 +257,14 @@ export default function HeroSlider() {
 
               {/* Contenido */}
               <div className="absolute inset-0 z-10 flex items-center">
-                <div className={`max-w-7xl mx-auto w-full px-6 sm:px-10 lg:px-14 flex ${slide.textPosition === "right" ? "justify-end" : "justify-start"}`}>
+                <div className={`max-w-7xl mx-auto w-full pl-16 pr-6 sm:pl-20 sm:pr-10 lg:pl-24 lg:pr-14 flex ${slide.textPosition === "right" ? "justify-end" : "justify-start"}`}>
                   <div className="max-w-xl text-white">
                     {slide.kicker && (
                       <p className="text-sm sm:text-base font-semibold tracking-wide text-white/90 mb-1.5 drop-shadow-sm">
                         {slide.kicker}
                       </p>
                     )}
-                    <h1 className="text-2xl sm:text-3xl lg:text-5xl font-bold leading-tight tracking-tight drop-shadow-sm">
+                    <h1 className="text-2xl sm:text-3xl lg:text-5xl font-bold leading-tight tracking-tight drop-shadow-sm whitespace-pre-line">
                       {slide.title}
                     </h1>
                     {!slide.subtitleBelow && slide.subtitle && (
