@@ -25,7 +25,7 @@
     "imageX": 50,
     "imageY": 50,
     "imageZoom": 1,
-    "stockDulces": 1,
+    "stockDulces": 3,
     "stockSalados": 2,
     "sinSelectorSabor": false,
     "variantes": [],
@@ -38,12 +38,15 @@
     "price": 6600,
     "description": "Por 2 unidades.\nMedida: 20 x 10 cm",
     "image": "/images/productos/Congelados/wc-chocx2.png",
-    "stock": 1,
+    "stock": 2,
     "available": true,
     "sinSelectorSabor": true,
     "imageX": 50,
     "imageY": 50,
-    "imageZoom": 1
+    "imageZoom": 1,
+    "stockDulces": 0,
+    "stockSalados": 0,
+    "variantes": []
   },
   {
     "id": "wc-choc-x4",
@@ -52,12 +55,15 @@
     "price": 12100,
     "description": "Por 4 unidades.\nMedida: 20 x 20 cm",
     "image": "/images/productos/Congelados/wc-chocx4.png",
-    "stock": 1,
+    "stock": 2,
     "available": true,
     "sinSelectorSabor": true,
     "imageX": 50,
     "imageY": 50,
-    "imageZoom": 1
+    "imageZoom": 1,
+    "stockDulces": 0,
+    "stockSalados": 0,
+    "variantes": []
   },
   {
     "id": "wcb-veggie",
@@ -454,7 +460,7 @@
       "/images/productos/panificados/ppc-noquis-2.png",
       "/images/productos/panificados/ppc-noquis-1.png"
     ],
-    "stock": 5,
+    "stock": 4,
     "available": true,
     "imageX": 46,
     "imageY": 47,
@@ -475,7 +481,7 @@
       "/images/productos/panificados/ppc-sorrentinos-jyq-2.png",
       "/images/productos/panificados/ppc-sorrentinos-jyq-1.png"
     ],
-    "stock": 5,
+    "stock": 4,
     "available": true,
     "imageX": 50,
     "imageY": 50,
@@ -735,7 +741,7 @@
     "id": "des-proteico-2",
     "name": "Desayuno Proteico 2 cuadraditos",
     "category": "Desayunos y Meriendas",
-    "price": 28000,
+    "price": 30000,
     "description": "Porción para una persona:\n2 cuadraditos waffle salado de 10x10 cm  Queso crema\nRevuelto de huevo con queso derretido.\nPalta con semillas.\nJugo de Naranja\nSaquito de café\nLeche en polvo\nSaquito de té \nSaquito de mate cocido\nEdulcorante\nAzúcar",
     "image": "/images/productos/desayunos/des-proteico-2.png",
     "video": "/images/productos/desayunos/des-proteico-2.mp4",
@@ -791,7 +797,7 @@
     "price": 1800,
     "description": "Presentación: 1 unidad (130 gr.)",
     "image": "/images/productos/panificados/ppc-pan-hamburguesa.png",
-    "stock": 3,
+    "stock": 1,
     "available": true,
     "imageX": 50,
     "imageY": 50,

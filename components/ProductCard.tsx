@@ -62,8 +62,8 @@ export default function ProductCard({ product }: ProductCardProps) {
   const selectedVarianteObj = product.variantes?.find((v) => v.nombre === variante);
 
   // Si el producto tiene stock por sabor, usarlo; si no, usar stock general
-  const dulcesSinStock = product.stockDulces === 0;
-  const saladosSinStock = product.stockSalados === 0;
+  const dulcesSinStock = (product.stockDulces ?? 0) <= 0;
+  const saladosSinStock = (product.stockSalados ?? 0) <= 0;
   // Desayunos, Vianda Fiesta! y Postres siempre disponibles (son productos a pedido)
   const outOfStock = isPedidoEspecial
     ? false
@@ -71,6 +71,8 @@ export default function ProductCard({ product }: ProductCardProps) {
     ? (selectedVarianteObj ? selectedVarianteObj.stock <= 0 : true)
     : isCongeladoConSelector
     ? (sabor === "Dulces" ? dulcesSinStock : saladosSinStock)
+    : isCongelado
+    ? (dulcesSinStock && saladosSinStock)
     : product.stock <= 0;
 
   const highlightedTitle = product.name.match(/(.*)\s(x[24]\.?)$/i);

@@ -24,6 +24,26 @@ export const DELIVERY_COSTO = 2000;
 /** Monto mínimo para envío gratis */
 export const DELIVERY_GRATIS_DESDE = 30000;
 
+/** Dirección del local para retiro en persona */
+export const RETIRO_DIRECCION = "Dean Funes 3019, Bº Cottolengo, San Francisco";
+
+/** Días y horarios disponibles para retiro en el local */
+export const RETIRO_HORARIOS: { dia: string; horario: string }[] = [
+  { dia: "Lunes", horario: "17:30 a 20:00 hs" },
+  { dia: "Martes", horario: "17:30 a 20:00 hs" },
+  { dia: "Miércoles", horario: "17:30 a 20:00 hs" },
+  { dia: "Jueves", horario: "17:30 a 20:00 hs" },
+  { dia: "Viernes", horario: "17:30 a 20:00 hs" },
+  { dia: "Sábado", horario: "10:00 a 12:00 hs" },
+];
+
+/** Días y horarios disponibles para delivery */
+export const DELIVERY_HORARIOS: { dia: string; horario: string }[] = [
+  { dia: "Lunes", horario: "11:30 a 13:00 hs" },
+  { dia: "Miércoles", horario: "11:30 a 13:00 hs" },
+  { dia: "Viernes", horario: "11:30 a 13:00 hs" },
+];
+
 /**
  * Calcula el costo de envío según tipo de entrega y subtotal.
  * Si es retiro en local → 0.
@@ -51,6 +71,8 @@ export interface FormatWhatsAppParams {
   altura: string;
   detalle: string;
   pago: "efectivo" | "transferencia";
+  dia: string;
+  horario: string;
 }
 
 export function formatWhatsAppMessage(params: FormatWhatsAppParams): string {
@@ -66,6 +88,8 @@ export function formatWhatsAppMessage(params: FormatWhatsAppParams): string {
     altura,
     detalle,
     pago,
+    dia,
+    horario,
   } = params;
 
   const lines = items.map((i) => {
@@ -74,10 +98,12 @@ export function formatWhatsAppMessage(params: FormatWhatsAppParams): string {
     return `${i.quantity} x ${i.name}${saborLabel} — $${sub.toLocaleString("es-AR")}`;
   });
 
+  const diaLabel = dia ? ` — ${dia}, ${horario}` : "";
+
   const entregaLabel =
     entrega === "retiro"
-      ? "Retiro en local"
-      : `Delivery a: ${calle} ${altura}${detalle ? ` (${detalle})` : ""}`;
+      ? `Retiro en local (${RETIRO_DIRECCION})${diaLabel}`
+      : `Delivery a: ${calle} ${altura}${detalle ? ` (${detalle})` : ""}${diaLabel}`;
 
   const envioLinea =
     entrega === "delivery"

@@ -49,7 +49,7 @@ export default function Footer() {
             Pedidos y consultas por WhatsApp. Estamos en San Francisco, Córdoba.
           </p>
           <a
-            href="https://wa.me/5493564626508"
+            href="https://wa.me/5493564626508?text=Hola!%20Quiero%20hacer%20un%20pedido%20de%20Celisan."
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-olive text-cream font-semibold hover:bg-olive-light transition-colors"
@@ -66,9 +66,6 @@ export default function Footer() {
           </a>
           <a href={socialLinks.facebook} target="_blank" rel="noopener noreferrer" className="text-olive hover:text-celisan-red transition-colors" aria-label="Facebook">
             <Facebook size={iconSize} />
-          </a>
-          <a href={socialLinks.whatsapp} target="_blank" rel="noopener noreferrer" className="text-olive hover:text-celisan-red transition-colors" aria-label="WhatsApp">
-            <MessageCircle size={iconSize} />
           </a>
         </div>
       </div>

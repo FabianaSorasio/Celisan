@@ -11,6 +11,9 @@ import {
   DELIVERY_GRATIS_DESDE,
   DELIVERY_COSTO,
   WHATSAPP_NUMBER,
+  RETIRO_DIRECCION,
+  RETIRO_HORARIOS,
+  DELIVERY_HORARIOS,
 } from "@/lib/cart";
 
 interface CartProps {
@@ -27,6 +30,7 @@ export default function Cart({ onClose }: CartProps) {
   const [calle, setCalle] = useState("");
   const [altura, setAltura] = useState("");
   const [detalle, setDetalle] = useState("");
+  const [dia, setDia] = useState("");
   const [pago, setPago] = useState<"efectivo" | "transferencia">("transferencia");
   const [errors, setErrors] = useState<string[]>([]);
   const [pedidoEnviado, setPedidoEnviado] = useState(false);
@@ -35,10 +39,19 @@ export default function Cart({ onClose }: CartProps) {
   const deliveryCost = calcDeliveryCost(subtotal, entrega);
   const total = subtotal + deliveryCost;
 
+  const opcionesDia = entrega === "retiro" ? RETIRO_HORARIOS : DELIVERY_HORARIOS;
+  const horarioSeleccionado = opcionesDia.find((o) => o.dia === dia)?.horario ?? "";
+
+  const cambiarEntrega = (nueva: "retiro" | "delivery") => {
+    setEntrega(nueva);
+    setDia("");
+  };
+
   const validate = () => {
     const errs: string[] = [];
     if (!nombre.trim()) errs.push("Ingresá tu nombre y apellido.");
     if (!telefono.trim()) errs.push("Ingresá tu número de teléfono.");
+    if (!dia) errs.push(entrega === "retiro" ? "Elegí un día de retiro." : "Elegí un día de entrega.");
     if (entrega === "delivery") {
       if (!calle.trim()) errs.push("Ingresá la calle.");
       if (!altura.trim()) errs.push("Ingresá la altura.");
@@ -64,6 +77,8 @@ export default function Cart({ onClose }: CartProps) {
         altura: altura.trim(),
         detalle: detalle.trim(),
         pago,
+        dia,
+        horario: horarioSeleccionado,
       })
     );
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, "_blank");
@@ -184,19 +199,47 @@ export default function Cart({ onClose }: CartProps) {
                   <div className="flex rounded-lg overflow-hidden border border-gray-200">
                     <button
                       type="button"
-                      onClick={() => setEntrega("retiro")}
+                      onClick={() => cambiarEntrega("retiro")}
                       className={`flex-1 py-2 text-sm font-semibold transition-colors ${entrega === "retiro" ? "bg-celisan-red text-white" : "bg-white text-gray-500 hover:bg-gray-50"}`}
                     >
                       Retiro en local
                     </button>
                     <button
                       type="button"
-                      onClick={() => setEntrega("delivery")}
+                      onClick={() => cambiarEntrega("delivery")}
                       className={`flex-1 py-2 text-sm font-semibold transition-colors border-l border-gray-200 ${entrega === "delivery" ? "bg-celisan-red text-white" : "bg-white text-gray-500 hover:bg-gray-50"}`}
                     >
                       🛵 Delivery
                     </button>
                   </div>
+
+                  {/* Selector de día (retiro y delivery) */}
+                  <div>
+                    <label className="text-xs font-medium text-gray-500 px-1">
+                      {entrega === "retiro" ? "Día de retiro" : "Día de entrega"}
+                    </label>
+                    <select
+                      value={dia}
+                      onChange={(e) => setDia(e.target.value)}
+                      className="w-full mt-1 px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-celisan-red/30 focus:border-celisan-red bg-white"
+                    >
+                      <option value="">Elegí un día...</option>
+                      {opcionesDia.map((o) => (
+                        <option key={o.dia} value={o.dia}>
+                          {o.dia} — {o.horario}
+                        </option>
+                      ))}
+                    </select>
+                    <p className="text-xs text-gray-400 px-1 mt-1">
+                      Fuera de estos días/horarios, consultanos por WhatsApp.
+                    </p>
+                  </div>
+
+                  {entrega === "retiro" && (
+                    <p className="text-xs text-gray-500 px-1">
+                      📍 Retirás en <strong>{RETIRO_DIRECCION}</strong>
+                    </p>
+                  )}
 
                   {entrega === "delivery" && (
                     <>
