@@ -1,10 +1,12 @@
 import type { Product } from "@/lib/products";
 
+const R2_BASE = process.env.R2_PUBLIC_URL ?? "";
+
 /** Ruta de imagen por id y subcarpeta */
-const img = (sub: string, id: string) => `/images/productos/${sub}/${id}.png`;
+const img = (sub: string, id: string) => `${R2_BASE}/images/productos/${sub}/${id}.png`;
 
 /** Ruta de video por id y subcarpeta */
-const vid = (sub: string, id: string) => `/images/productos/${sub}/${id}.mp4`;
+const vid = (sub: string, id: string) => `${R2_BASE}/images/productos/${sub}/${id}.mp4`;
 
 /**
  * Dataset de referencia del catálogo Celisan.
@@ -21,7 +23,7 @@ export const catalogSeed: Product[] = [
     category: "Waffles Congelados",
     price: 5500,
     description: "Por 2 unidades.\nMedida: 20 x 10 cm",
-    image: img("congelados", "wc-vainilla-x2"),
+    image: img("Congelados", "wc-vainilla-x2"),
     stock: 1,
   },
   {
@@ -30,7 +32,7 @@ export const catalogSeed: Product[] = [
     category: "Waffles Congelados",
     price: 9990,
     description: "Por 4 unidades.\nMedida: 20 x 20 cm",
-    image: img("congelados", "wc-vainilla-x4"),
+    image: img("Congelados", "wc-vainilla-x4"),
     stock: 1,
   },
   // Chocolate: solo dulce, sin selector de sabor
@@ -40,7 +42,7 @@ export const catalogSeed: Product[] = [
     category: "Waffles Congelados",
     price: 6000,
     description: "Por 2 unidades.\nMedida: 20 x 10 cm",
-    image: img("congelados", "wc-chocx2"),
+    image: img("Congelados", "wc-chocx2"),
     stock: 1,
   },
   {
@@ -49,7 +51,7 @@ export const catalogSeed: Product[] = [
     category: "Waffles Congelados",
     price: 11000,
     description: "Por 4 unidades.\nMedida: 20 x 20 cm",
-    image: img("congelados", "wc-chocx4"),
+    image: img("Congelados", "wc-chocx4"),
     stock: 1,
   },
 
@@ -61,7 +63,7 @@ export const catalogSeed: Product[] = [
     price: 13990,
     description:
       "Berenjena asada, tomates y queso sobre waffle artesanal sin gluten.",
-    image: "/images/productos/cobertura/waffle-berenjena.png",
+    image: `${R2_BASE}/images/productos/cobertura/waffle-berenjena.png`,
     stock: 1,
   },
   {
@@ -70,7 +72,7 @@ export const catalogSeed: Product[] = [
     category: "Waffles con Cobertura",
     price: 13990,
     description: "Jamón y queso fundido en waffle recién hecho sin gluten.",
-    image: "/images/productos/cobertura/waffle-jyqueso.png",
+    image: `${R2_BASE}/images/productos/cobertura/waffle-jyqueso.png`,
     stock: 1,
   },
   {
@@ -80,7 +82,7 @@ export const catalogSeed: Product[] = [
     price: 13990,
     description:
       "Banana con dulce de leche e hilos de chocolate sobre waffle artesanal sin gluten.",
-    image: "/images/productos/cobertura/waffle-dulce.png",
+    image: `${R2_BASE}/images/productos/cobertura/waffle-dulce.png`,
     stock: 1,
   },
   {
@@ -90,7 +92,7 @@ export const catalogSeed: Product[] = [
     price: 15990,
     description:
       "Mix de frutos rojos con crema chantilly sobre waffle artesanal sin gluten.",
-    image: "/images/productos/cobertura/waffle-frutos.png",
+    image: `${R2_BASE}/images/productos/cobertura/waffle-frutos.png`,
     stock: 1,
   },
 
@@ -459,7 +461,7 @@ export const catalogSeed: Product[] = [
     description:
       "Contiene: cuadradito salado de jyq, cuadradito dulce de óreo con dulce de leche y copitos de chocolate, bolsita de pochoclos salados y juguito de naranja sin gluten",
     image: img("viandacumple", "vc-jyq-oreo"),
-    video: "/images/productos/viandacumple/vianda-infantil.mp4",
+    video: `${R2_BASE}/images/productos/viandacumple/vianda-infantil.mp4`,
     stock: 1,
   },
 ];

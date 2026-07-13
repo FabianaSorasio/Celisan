@@ -1,7 +1,19 @@
 import { NextResponse } from "next/server";
-import { writeFileSync, mkdirSync } from "fs";
-import { join, extname } from "path";
+import { extname } from "path";
 import { isAuthenticated } from "@/lib/admin-auth";
+import { uploadToR2 } from "@/lib/r2";
+
+const CONTENT_TYPES: Record<string, string> = {
+  ".png": "image/png",
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
+  ".webp": "image/webp",
+  ".gif": "image/gif",
+  ".mp4": "video/mp4",
+  ".webm": "video/webm",
+  ".mov": "video/quicktime",
+  ".m4v": "video/x-m4v",
+};
 
 export async function POST(req: Request) {
   if (!isAuthenticated(req)) {
@@ -41,13 +53,11 @@ export async function POST(req: Request) {
     .toLowerCase();
   const filename = `${timestamp}-${safeName}`;
 
-  const uploadDir = join(process.cwd(), "public", "images", folder);
-  mkdirSync(uploadDir, { recursive: true });
-
   const bytes = await file.arrayBuffer();
   const buffer = Buffer.from(bytes);
-  writeFileSync(join(uploadDir, filename), buffer);
+  const contentType = CONTENT_TYPES[ext] ?? "application/octet-stream";
+  const key = `images/${folder}/${filename}`;
 
-  const publicPath = `/images/${folder}/${filename}`;
+  const publicPath = await uploadToR2(key, buffer, contentType);
   return NextResponse.json({ path: publicPath });
 }
