@@ -40,7 +40,7 @@ export const catalogSeed: Product[] = [
     category: "Waffles Congelados",
     price: 6000,
     description: "Por 2 unidades.\nMedida: 20 x 10 cm",
-    image: img("congelados", "wc-choc"),
+    image: img("congelados", "wc-chocx2"),
     stock: 1,
   },
   {
@@ -49,7 +49,7 @@ export const catalogSeed: Product[] = [
     category: "Waffles Congelados",
     price: 11000,
     description: "Por 4 unidades.\nMedida: 20 x 20 cm",
-    image: img("congelados", "wc-choc"),
+    image: img("congelados", "wc-chocx4"),
     stock: 1,
   },
 
