@@ -223,11 +223,15 @@
     "price": 8600,
     "description": "",
     "image": "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/viandas/ssg-sand-pollo.png",
-    "stock": 1,
+    "stock": 0,
     "available": true,
     "imageX": 50,
     "imageY": 50,
-    "imageZoom": 1
+    "imageZoom": 1,
+    "stockDulces": 0,
+    "stockSalados": 0,
+    "sinSelectorSabor": false,
+    "variantes": []
   },
   {
     "id": "ssg-sand-vegetales",
@@ -262,7 +266,7 @@
     "price": 11500,
     "description": "",
     "image": "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/viandas/viandas-tarta-jyq-1.png",
-    "stock": 4,
+    "stock": 3,
     "available": true,
     "imageX": 42,
     "imageY": 49,
@@ -310,7 +314,7 @@
     "price": 12200,
     "description": "",
     "image": "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/viandas/viandas-tarta-pollo-1.jpeg",
-    "stock": 2,
+    "stock": 3,
     "available": true,
     "imageX": 50,
     "imageY": 50,
@@ -435,7 +439,7 @@
     "price": 3200,
     "description": "Presentación: 1 unidad de 22 cm",
     "image": "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/panificados/panificados-prepizza-1.jpeg",
-    "stock": 4,
+    "stock": 6,
     "available": true,
     "imageX": 50,
     "imageY": 50,
@@ -560,7 +564,7 @@
       },
       {
         "nombre": "Soja",
-        "stock": 3
+        "stock": 2
       }
     ],
     "stockDulces": 0,
@@ -629,7 +633,7 @@
     "price": 6800,
     "description": "Presentación: 1 unidad (700 gr.)",
     "image": "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/panificados/panificados-pan-lactal-1.jpeg",
-    "stock": 6,
+    "stock": 7,
     "available": true,
     "imageX": 49,
     "imageY": 39,
@@ -797,7 +801,7 @@
     "price": 1800,
     "description": "Presentación: 1 unidad (130 gr.)",
     "image": "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/panificados/ppc-pan-hamburguesa.png",
-    "stock": 1,
+    "stock": 2,
     "available": true,
     "imageX": 50,
     "imageY": 50,
@@ -834,7 +838,7 @@
       "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/panificados/panificados-alfajor-maicena-1.jpeg"
     ],
     "category": "Panificados y Pastas congeladas Soy Sin Gluten",
-    "stock": 2,
+    "stock": 3,
     "available": true,
     "imageX": 50,
     "imageY": 50,

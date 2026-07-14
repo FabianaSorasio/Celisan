@@ -71,8 +71,6 @@ export default function ProductCard({ product }: ProductCardProps) {
     ? (selectedVarianteObj ? selectedVarianteObj.stock <= 0 : true)
     : isCongeladoConSelector
     ? (sabor === "Dulces" ? dulcesSinStock : saladosSinStock)
-    : isCongelado
-    ? (dulcesSinStock && saladosSinStock)
     : product.stock <= 0;
 
   const highlightedTitle = product.name.match(/(.*)\s(x[24]\.?)$/i);

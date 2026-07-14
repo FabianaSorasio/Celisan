@@ -489,7 +489,8 @@ function AdminCard({
 }) {
   const isHidden = product.available === false;
   const hasVariantes = !!product.variantes?.length;
-  const isCongeladoConSelector = product.category === "Waffles Congelados" && !product.sinSelectorSabor;
+  const isCongelado = product.category === "Waffles Congelados";
+  const isCongeladoConSelector = isCongelado && !product.sinSelectorSabor;
   const noStock = hasVariantes
     ? product.variantes!.every((v) => v.stock <= 0)
     : isCongeladoConSelector
