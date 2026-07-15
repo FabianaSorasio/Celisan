@@ -1,0 +1,48 @@
+ID,Nombre,Categoría,Precio,Descripción,Imagen_URL,Stock
+ssg-lasagna,Lasagna con bolognesa,Línea Soy Sin Gluten,11600,,/images/productos/ssg-lasagna.png,1
+ssg-sorrentinos,"Sorrentinos c/ salsa roja (jamón y queso / verduras)",Línea Soy Sin Gluten,10800,,/images/productos/ssg-sorrentinos.png,1
+ssg-canelones,Canelones (de carne / acelga bolognesa),Línea Soy Sin Gluten,10800,,/images/productos/ssg-canelones.png,1
+ssg-bollitos,Bollitos de pan (50 gr),Línea Soy Sin Gluten,400,,/images/productos/ssg-bollitos.png,1
+ssg-sand-bondiola,Sandwich de bondiola cerdo (chico),Línea Soy Sin Gluten,8600,,/images/productos/ssg-sand-bondiola.png,1
+ssg-sand-hamburguesa,Sandwich Hamburguesa (casera / queso),Línea Soy Sin Gluten,7200,,/images/productos/ssg-sand-hamburguesa.png,1
+ssg-sand-pollo,"Sandwich Pollo, verdeo (queso azul, cebolla)",Línea Soy Sin Gluten,7500,,/images/productos/ssg-sand-pollo.png,1
+ssg-sand-vegetales,Sandwich de vegetales (asados / queso),Línea Soy Sin Gluten,6500,,/images/productos/ssg-sand-vegetales.png,1
+ssg-sand-jyq,Sandwich de jamón y queso,Línea Soy Sin Gluten,7200,,/images/productos/ssg-sand-jyq.png,1
+ssg-tarta-jyq,1/2 Tarta de jamón y queso,Línea Soy Sin Gluten,11500,,/images/productos/ssg-tarta-jyq.png,1
+ssg-tarta-anco,"1/2 Tarta de anco, acelga y queso",Línea Soy Sin Gluten,12200,,/images/productos/ssg-tarta-anco.png,1
+ssg-tarta-zapallito,"1/2 Tarta de zapallito, cebolla y queso",Línea Soy Sin Gluten,11500,,/images/productos/ssg-tarta-zapallito.png,1
+ssg-tarta-pollo,1/2 Tarta de pollo y acelga,Línea Soy Sin Gluten,12200,,/images/productos/ssg-tarta-pollo.png,1
+ssg-pizza,Pizza lista x4 porciones,Línea Soy Sin Gluten,7900,,/images/productos/ssg-pizza.png,1
+ssg-emp-dulce,Empanadas (3 unidades) carne Dulce,Línea Soy Sin Gluten,7200,,/images/productos/ssg-emp-dulce.png,1
+ssg-emp-salada,Empanadas (3 unidades) carne Salada,Línea Soy Sin Gluten,7200,,/images/productos/ssg-emp-salada.png,1
+ssg-emp-arabes,Empanadas (3 unidades) árabes,Línea Soy Sin Gluten,7200,,/images/productos/ssg-emp-arabes.png,1
+ssg-tacos,Tacos de verdura (3 unidades),Línea Soy Sin Gluten,7900,,/images/productos/ssg-tacos.png,1
+ppc-prepizzas,Pre pizzas,Panificados y Pastas congeladas,2900,,/images/productos/ppc-prepizzas.png,1
+ppc-noquis,Ñoquis crudos x 250gr,Panificados y Pastas congeladas,5800,,/images/productos/ppc-noquis.png,1
+ppc-sorrentinos-crudos,Sorrentinos crudos X 8 unidades (jamón y queso / verduras),Panificados y Pastas congeladas,8600,,/images/productos/ppc-sorrentinos-crudos.png,1
+ppc-hamb-legumbres,Hamburguesas de legumbres (4 unidades),Panificados y Pastas congeladas,4000,,/images/productos/ppc-hamb-legumbres.png,1
+ppc-emp-crudas,Empanadas crudas (x 4 unidades),Panificados y Pastas congeladas,11500,,/images/productos/ppc-emp-crudas.png,1
+ppc-medialunas,Medialunas x 50gr.,Panificados y Pastas congeladas,2000,,/images/productos/ppc-medialunas.png,1
+ppc-mafalda,Mafalda x unidad,Panificados y Pastas congeladas,2600,,/images/productos/ppc-mafalda.png,1
+ppc-pan-lactal,Tipo Pan Lactal x 700gr.,Panificados y Pastas congeladas,6500,,/images/productos/ppc-pan-lactal.png,1
+ppc-pan-baguette,Pan baguette x 200gr.,Panificados y Pastas congeladas,2000,,/images/productos/ppc-pan-baguette.png,1
+ppc-pan-campo,Pan de campo x 330 gr,Panificados y Pastas congeladas,4200,,/images/productos/ppc-pan-campo.png,1
+ppc-pan-panchos,Pan de panchos x 2 unidades,Panificados y Pastas congeladas,2500,,/images/productos/ppc-pan-panchos.png,1
+ppc-pan-hamburguesa,Pan hamburguesa 130gr.,Panificados y Pastas congeladas,1500,,/images/productos/ppc-pan-hamburguesa.png,1
+wc-may-x2,Waffles Salados x 2 (Mayorista),Waffles Congelados,5500,"Por 2 unidades.
+Medida: 20 x 10 cm",/congeladox2.png,1
+wc-may-x4,Waffles Salados x 4 (Mayorista),Waffles Congelados,9990,"Por 4 unidades.
+Medida: 20 x 20 cm",/congeladox4.png,1
+wc-min-x2,Waffles Salados x 2 (Minorista),Waffles Congelados,4100,"Por 2 unidades.
+Medida: 20 x 10 cm",/congeladox2.png,1
+wc-min-x4,Waffles Salados x 4 (Minorista),Waffles Congelados,7500,"Por 4 unidades.
+Medida: 20 x 20 cm",/congeladox4.png,1
+wcb-veggie,Waffle Salado Morado Veggie,Waffles con Cobertura,13990,Berenjena asada tomates y queso sobre waffle artesanal sin gluten.,/waffle-berenjena.png,1
+wcb-jyq,Waffle Salado con Jamón y Queso,Waffles con Cobertura,13990,Jamón y queso fundido en waffle recién hecho sin gluten.,/waffle-jyqueso.png,1
+wcb-banana,"Waffle con Banana, Dulce de leche y chocolate",Waffles con Cobertura,13990,Banana con dulce de leche e hilos de chocolate sobre waffle artesanal sin gluten.,/waffle-dulce.png,1
+wcb-frutos,Waffle con Frutos Rojos y crema chantilly,Waffles con Cobertura,15990,Mix de frutos rojos con crema chantilly sobre waffle artesanal sin gluten.,/waffle-frutos.png,1
+des-clasico-2,Desayuno Clásico 2 cuadraditos,Desayunos,25000,,/images/productos/des-clasico-2.png,1
+des-clasico-4,Desayuno Clásico 4 cuadraditos,Desayunos,44000,,/images/productos/des-clasico-4.png,1
+des-proteico-2,Desayuno Proteico 2 cuadraditos,Desayunos,25000,,/images/productos/des-proteico-2.png,1
+des-taza,Adicional taza + cuchara,Desayunos,15000,,/images/productos/des-taza.png,1
+vc-jyq-oreo,Vianda Fiesta! JyQ / Oreo,Vianda Fiesta!,20000,,/images/productos/vc-jyq-oreo.png,1

@@ -1,0 +1,23 @@
+[
+  {
+    "code": "CUPONWAFFLE",
+    "percent": 5,
+    "active": true,
+    "label": "Waffle congelado",
+    "categories": [
+      "Waffles Congelados"
+    ]
+  },
+  {
+    "code": "DESCUENTO10",
+    "percent": 10,
+    "active": false,
+    "label": "Descuento 10%"
+  },
+  {
+    "code": "DESCUENTO15",
+    "percent": 15,
+    "active": false,
+    "label": "Descuento 15%"
+  }
+]
