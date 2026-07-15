@@ -6,6 +6,7 @@ import {
   cartItemKey,
   cartTotal,
   calcDeliveryCost,
+  calcCouponDiscount,
   formatWhatsAppMessage,
   itemSubtotal,
   DELIVERY_GRATIS_DESDE,
@@ -35,9 +36,53 @@ export default function Cart({ onClose }: CartProps) {
   const [errors, setErrors] = useState<string[]>([]);
   const [pedidoEnviado, setPedidoEnviado] = useState(false);
 
+  // Cupón de descuento
+  const [cuponInput, setCuponInput] = useState("");
+  const [cupon, setCupon] = useState<{ code: string; percent: number; categories: string[] } | null>(null);
+  const [cuponError, setCuponError] = useState("");
+  const [validandoCupon, setValidandoCupon] = useState(false);
+
   const subtotal = cartTotal(items);
+  const descuento = cupon ? calcCouponDiscount(items, subtotal, cupon.percent, cupon.categories) : 0;
   const deliveryCost = calcDeliveryCost(subtotal, entrega);
-  const total = subtotal + deliveryCost;
+  const total = subtotal - descuento + deliveryCost;
+
+  const aplicarCupon = async () => {
+    if (!cuponInput.trim()) return;
+    setValidandoCupon(true);
+    setCuponError("");
+    try {
+      const res = await fetch("/api/coupons/validate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code: cuponInput.trim() }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.ok) {
+        setCupon(null);
+        setCuponError(data.error ?? "Cupón inválido.");
+        return;
+      }
+      const categories: string[] = data.categories ?? [];
+      if (categories.length > 0 && !items.some((i) => i.category && categories.includes(i.category))) {
+        setCupon(null);
+        setCuponError(`Este cupón aplica solo a: ${categories.join(", ")} — no tenés productos de esas categorías en el carrito.`);
+        return;
+      }
+      setCupon({ code: data.code, percent: data.percent, categories });
+    } catch {
+      setCupon(null);
+      setCuponError("No se pudo validar el cupón. Probá de nuevo.");
+    } finally {
+      setValidandoCupon(false);
+    }
+  };
+
+  const quitarCupon = () => {
+    setCupon(null);
+    setCuponInput("");
+    setCuponError("");
+  };
 
   const opcionesDia = entrega === "retiro" ? RETIRO_HORARIOS : DELIVERY_HORARIOS;
   const horarioSeleccionado = opcionesDia.find((o) => o.dia === dia)?.horario ?? "";
@@ -79,6 +124,8 @@ export default function Cart({ onClose }: CartProps) {
         pago,
         dia,
         horario: horarioSeleccionado,
+        cuponCodigo: cupon?.code,
+        cuponDescuento: descuento,
       })
     );
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, "_blank");
@@ -152,7 +199,13 @@ export default function Cart({ onClose }: CartProps) {
                     <div className="flex items-center gap-1">
                       <button type="button" onClick={() => updateQuantity(item.productId, item.quantity - 1, item.sabor)} className="w-7 h-7 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-100 text-lg leading-none flex items-center justify-center" aria-label="Menos">−</button>
                       <span className="w-6 text-center text-sm font-semibold">{item.quantity}</span>
-                      <button type="button" onClick={() => updateQuantity(item.productId, item.quantity + 1, item.sabor)} className="w-7 h-7 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-100 text-lg leading-none flex items-center justify-center" aria-label="Más">+</button>
+                      <button
+                        type="button"
+                        onClick={() => updateQuantity(item.productId, item.quantity + 1, item.sabor)}
+                        disabled={item.maxStock !== undefined && item.quantity >= item.maxStock}
+                        className="w-7 h-7 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-100 text-lg leading-none flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-white"
+                        aria-label="Más"
+                      >+</button>
                     </div>
                     <button type="button" onClick={() => removeItem(item.productId, item.sabor)} className="text-xs text-red-500 hover:text-red-700 font-medium">Eliminar</button>
                   </div>
@@ -307,6 +360,55 @@ export default function Cart({ onClose }: CartProps) {
                 </div>
               </div>
 
+              {/* Cupón de descuento */}
+              <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+                <div className="px-4 py-2.5 bg-gray-50 border-b border-gray-200 flex items-center gap-2">
+                  <span className="text-base">🎟️</span>
+                  <span className="font-semibold text-sm text-gray-700">Cupón de Descuento</span>
+                </div>
+                <div className="p-3">
+                  {cupon ? (
+                    <div className="flex items-center justify-between bg-celisan-red/10 border border-celisan-red/20 rounded-lg px-3 py-2">
+                      <span className="text-sm font-semibold text-celisan-red">
+                        {cupon.code} — {cupon.percent}% OFF aplicado 🎉
+                        {cupon.categories.length > 0 && (
+                          <span className="block text-xs font-normal text-celisan-red/80 mt-0.5">
+                            Solo sobre: {cupon.categories.join(", ")}
+                          </span>
+                        )}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={quitarCupon}
+                        className="text-xs text-gray-500 hover:text-gray-700 font-medium underline"
+                      >
+                        Quitar
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        placeholder="Código de cupón"
+                        value={cuponInput}
+                        onChange={(e) => { setCuponInput(e.target.value); setCuponError(""); }}
+                        onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); aplicarCupon(); } }}
+                        className="flex-1 px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-celisan-red/30 focus:border-celisan-red placeholder-gray-400 uppercase"
+                      />
+                      <button
+                        type="button"
+                        onClick={aplicarCupon}
+                        disabled={validandoCupon || !cuponInput.trim()}
+                        className="px-4 py-2.5 rounded-lg bg-olive text-cream text-sm font-semibold hover:bg-olive-light transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {validandoCupon ? "..." : "Aplicar"}
+                      </button>
+                    </div>
+                  )}
+                  {cuponError && <p className="text-xs text-red-500 mt-1.5 px-1">{cuponError}</p>}
+                </div>
+              </div>
+
               {/* Errores de validación */}
               {errors.length > 0 && (
                 <div className="bg-red-50 border border-red-200 rounded-xl px-3 py-2.5">
@@ -328,6 +430,12 @@ export default function Cart({ onClose }: CartProps) {
                 <span>Subtotal</span>
                 <span>${subtotal.toLocaleString("es-AR")}</span>
               </div>
+              {cupon && (
+                <div className="flex justify-between text-celisan-red font-medium">
+                  <span>Cupón {cupon.code} (-{cupon.percent}%)</span>
+                  <span>-${descuento.toLocaleString("es-AR")}</span>
+                </div>
+              )}
               {entrega === "delivery" && (
                 <div className="flex justify-between text-gray-500">
                   <span>Envío</span>

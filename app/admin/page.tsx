@@ -3,8 +3,17 @@
 import { useEffect, useState, useCallback } from "react";
 import type { Product, ProductCategory } from "@/lib/products";
 import { CATALOG_CATEGORIES } from "@/lib/products";
+import type { Coupon } from "@/lib/coupons";
 
 const CATEGORIES = CATALOG_CATEGORIES.filter((c) => c !== "Todas") as ProductCategory[];
+
+// Categorías que usan "Encargar" (WhatsApp aparte) en vez del carrito — los
+// cupones limitados a estas categorías todavía no tienen efecto real.
+const ENCARGAR_CATEGORIES: ProductCategory[] = [
+  "Desayunos y Meriendas",
+  "Postres individuales",
+  "Vianda Fiesta!",
+];
 
 // ── Utilidades ────────────────────────────────────────────────────────────────
 
@@ -100,6 +109,10 @@ export default function AdminPage() {
   const [uploadingVideo, setUploadingVideo] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
   const [toast, setToast] = useState<{ msg: string; ok: boolean } | null>(null);
+  const [showCoupons, setShowCoupons] = useState(false);
+  const [coupons, setCoupons] = useState<Coupon[]>([]);
+  const [couponsLoading, setCouponsLoading] = useState(false);
+  const [savingCoupons, setSavingCoupons] = useState(false);
 
   // Verificar sesión al cargar (la cookie es httpOnly, no se puede leer desde JS)
   useEffect(() => {
@@ -252,6 +265,48 @@ export default function AdminPage() {
     }
   };
 
+  // ── Cupones ───────────────────────────────────────────────────────────────
+
+  const fetchCoupons = useCallback(async () => {
+    setCouponsLoading(true);
+    try {
+      const res = await fetch("/api/admin/coupons");
+      if (!res.ok) throw new Error("Error al cargar");
+      const data = await res.json();
+      setCoupons(data);
+    } catch {
+      showToast("Error al cargar cupones", false);
+    } finally {
+      setCouponsLoading(false);
+    }
+  }, [showToast]);
+
+  const openCoupons = () => {
+    setShowCoupons(true);
+    fetchCoupons();
+  };
+
+  const handleSaveCoupons = async () => {
+    setSavingCoupons(true);
+    try {
+      const res = await fetch("/api/admin/coupons", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(coupons),
+      });
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error ?? "Error al guardar cupones");
+      }
+      showToast("Cupones guardados ✓");
+      setShowCoupons(false);
+    } catch (err) {
+      showToast((err as Error).message, false);
+    } finally {
+      setSavingCoupons(false);
+    }
+  };
+
   // ── Subir imagen ──────────────────────────────────────────────────────────
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, target: "main" | "gallery") => {
@@ -365,6 +420,12 @@ export default function AdminPage() {
         <div className="flex items-center gap-3">
           <a href="/" target="_blank" className="text-xs text-white/80 hover:text-white underline">Ver sitio</a>
           <button
+            onClick={openCoupons}
+            className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-white/10 text-white font-bold text-sm hover:bg-white/20 transition-colors"
+          >
+            🎟️ Cupones
+          </button>
+          <button
             onClick={() => { setIsNew(true); setEditProduct({ ...DEFAULT_FORM, id: slugify(`prod-${Date.now()}`) }); }}
             className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-white text-celisan-red font-bold text-sm hover:bg-gray-100 transition-colors"
           >
@@ -447,6 +508,18 @@ export default function AdminPage() {
         />
       )}
 
+      {/* Modal de cupones */}
+      {showCoupons && (
+        <CouponsModal
+          coupons={coupons}
+          loading={couponsLoading}
+          saving={savingCoupons}
+          onChange={setCoupons}
+          onSave={handleSaveCoupons}
+          onClose={() => setShowCoupons(false)}
+        />
+      )}
+
       {/* Confirmación de borrado */}
       {confirmDelete && (
         <div className="fixed inset-0 z-[80] flex items-center justify-center p-4">
@@ -462,6 +535,165 @@ export default function AdminPage() {
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+// ── Modal de cupones ───────────────────────────────────────────────────────────
+
+function CouponsModal({
+  coupons,
+  loading,
+  saving,
+  onChange,
+  onSave,
+  onClose,
+}: {
+  coupons: Coupon[];
+  loading: boolean;
+  saving: boolean;
+  onChange: (coupons: Coupon[]) => void;
+  onSave: () => void;
+  onClose: () => void;
+}) {
+  const updateCoupon = (index: number, patch: Partial<Coupon>) => {
+    onChange(coupons.map((c, i) => (i === index ? { ...c, ...patch } : c)));
+  };
+
+  const deleteCoupon = (index: number) => {
+    onChange(coupons.filter((_, i) => i !== index));
+  };
+
+  const addCoupon = () => {
+    onChange([...coupons, { code: "", percent: 10, active: false, label: "" }]);
+  };
+
+  return (
+    <div className="fixed inset-0 z-[70] flex items-center justify-center p-4">
+      <div className="absolute inset-0 bg-black/40" onClick={onClose} aria-hidden />
+      <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[85vh] flex flex-col">
+        <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
+          <h2 className="font-bold text-gray-800 text-lg">🎟️ Cupones de descuento</h2>
+          <button onClick={onClose} className="text-gray-400 hover:text-gray-600 text-xl leading-none">✕</button>
+        </div>
+
+        <div className="flex-1 overflow-y-auto p-5 space-y-3">
+          {loading ? (
+            <p className="text-center text-gray-400 py-10">Cargando...</p>
+          ) : coupons.length === 0 ? (
+            <p className="text-center text-gray-400 py-10">No hay cupones creados todavía.</p>
+          ) : (
+            coupons.map((c, i) => (
+              <div key={i} className="border border-gray-200 rounded-xl p-3 space-y-2">
+                <div className="flex gap-2">
+                  <div className="flex-1">
+                    <label className="block text-xs font-semibold text-gray-600 mb-1">Código</label>
+                    <input
+                      type="text"
+                      value={c.code}
+                      onChange={(e) => updateCoupon(i, { code: e.target.value.toUpperCase() })}
+                      placeholder="CUPONAMIGO"
+                      className="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm uppercase focus:outline-none focus:ring-2 focus:ring-celisan-red/30 focus:border-celisan-red"
+                    />
+                  </div>
+                  <div className="w-24">
+                    <label className="block text-xs font-semibold text-gray-600 mb-1">% Off</label>
+                    <input
+                      type="number"
+                      min={1}
+                      max={100}
+                      value={c.percent}
+                      onChange={(e) => updateCoupon(i, { percent: Number(e.target.value) })}
+                      className="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-celisan-red/30 focus:border-celisan-red"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-gray-600 mb-1">Nombre interno (no lo ve el cliente)</label>
+                  <input
+                    type="text"
+                    value={c.label ?? ""}
+                    onChange={(e) => updateCoupon(i, { label: e.target.value })}
+                    placeholder="Ej: Día del Amigo"
+                    className="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-celisan-red/30 focus:border-celisan-red"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-gray-600 mb-1">
+                    Categorías donde aplica (ninguna elegida = todo el pedido)
+                  </label>
+                  <div className="flex flex-wrap gap-1.5">
+                    {CATEGORIES.map((cat) => {
+                      const selected = (c.categories ?? []).includes(cat);
+                      const esEncargar = ENCARGAR_CATEGORIES.includes(cat);
+                      return (
+                        <button
+                          key={cat}
+                          type="button"
+                          onClick={() => {
+                            const current = c.categories ?? [];
+                            const next = selected ? current.filter((x) => x !== cat) : [...current, cat];
+                            updateCoupon(i, { categories: next });
+                          }}
+                          className={`px-2 py-1 rounded-lg text-[11px] font-semibold border transition-colors ${
+                            selected
+                              ? "bg-celisan-red text-white border-celisan-red"
+                              : "bg-gray-50 text-gray-600 border-gray-200 hover:border-gray-300"
+                          }`}
+                        >
+                          {cat}{esEncargar ? " ⚠️" : ""}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  {(c.categories ?? []).some((cat) => ENCARGAR_CATEGORIES.includes(cat as ProductCategory)) && (
+                    <p className="text-[11px] text-amber-600 mt-1">
+                      ⚠️ Las categorías marcadas todavía no pasan por el carrito (usan "Encargar" por WhatsApp aparte) — este cupón no se va a aplicar ahí todavía.
+                    </p>
+                  )}
+                </div>
+                <div className="flex items-center justify-between pt-1">
+                  <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={c.active}
+                      onChange={(e) => updateCoupon(i, { active: e.target.checked })}
+                      className="w-4 h-4 accent-celisan-red"
+                    />
+                    {c.active ? "Activo" : "Inactivo"}
+                  </label>
+                  <button
+                    onClick={() => deleteCoupon(i)}
+                    className="text-xs text-red-500 hover:text-red-700 font-medium"
+                  >
+                    🗑️ Eliminar
+                  </button>
+                </div>
+              </div>
+            ))
+          )}
+
+          <button
+            onClick={addCoupon}
+            className="w-full py-2.5 rounded-xl border-2 border-dashed border-gray-300 text-gray-500 text-sm font-semibold hover:border-celisan-red hover:text-celisan-red transition-colors"
+          >
+            + Agregar cupón
+          </button>
+        </div>
+
+        <div className="flex gap-3 px-5 py-4 border-t border-gray-100">
+          <button onClick={onClose} className="flex-1 py-2.5 rounded-xl border border-gray-200 text-sm font-medium text-gray-600 hover:bg-gray-50">
+            Cancelar
+          </button>
+          <button
+            onClick={onSave}
+            disabled={saving}
+            className="flex-1 py-2.5 rounded-xl bg-celisan-red text-white text-sm font-bold hover:opacity-90 disabled:opacity-50"
+          >
+            {saving ? "Guardando..." : "Guardar cambios"}
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

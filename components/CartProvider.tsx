@@ -32,14 +32,17 @@ export function CartProvider({ children }: { children: ReactNode }) {
       setItems((prev) => {
         const key = cartItemKey(item);
         const existing = prev.find((i) => cartItemKey(i) === key);
+        const cap = item.maxStock ?? existing?.maxStock;
         if (existing) {
+          const nextQty = cap ? Math.min(existing.quantity + quantity, cap) : existing.quantity + quantity;
           return prev.map((i) =>
             cartItemKey(i) === key
-              ? { ...i, quantity: i.quantity + quantity }
+              ? { ...i, quantity: nextQty }
               : i
           );
         }
-        return [...prev, { ...item, quantity }];
+        const initialQty = cap ? Math.min(quantity, cap) : quantity;
+        return [...prev, { ...item, quantity: initialQty }];
       });
     },
     []
@@ -65,7 +68,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
       }
       const key = cartItemKey({ productId, sabor });
       setItems((prev) =>
-        prev.map((i) => (cartItemKey(i) === key ? { ...i, quantity } : i))
+        prev.map((i) =>
+          cartItemKey(i) === key
+            ? { ...i, quantity: i.maxStock ? Math.min(quantity, i.maxStock) : quantity }
+            : i
+        )
       );
     },
     [removeItem]

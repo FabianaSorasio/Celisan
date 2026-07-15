@@ -4,6 +4,10 @@ export interface CartItem {
   price: number;
   quantity: number;
   sabor?: string;
+  /** Stock disponible al momento de agregarlo (limita cuánto se puede sumar/incrementar). */
+  maxStock?: number;
+  /** Categoría del producto (para cupones que aplican solo a ciertas categorías). */
+  category?: string;
 }
 
 export function cartTotal(items: CartItem[]): number {
@@ -59,6 +63,29 @@ export function calcDeliveryCost(
   return DELIVERY_COSTO;
 }
 
+/** Subtotal de los items del carrito que pertenecen a alguna de las categorías dadas. */
+export function categorySubtotal(items: CartItem[], categories: string[]): number {
+  return items
+    .filter((i) => i.category && categories.includes(i.category))
+    .reduce((sum, i) => sum + itemSubtotal(i), 0);
+}
+
+/**
+ * Calcula el monto de descuento de un cupón (redondeado al peso).
+ * Si el cupón tiene categorías, el % se aplica solo sobre el subtotal de esas
+ * categorías; si no tiene categorías (o está vacío), se aplica sobre todo el
+ * subtotal del carrito.
+ */
+export function calcCouponDiscount(
+  items: CartItem[],
+  subtotal: number,
+  percent: number,
+  categories?: string[]
+): number {
+  const base = categories && categories.length > 0 ? categorySubtotal(items, categories) : subtotal;
+  return Math.round((base * percent) / 100);
+}
+
 export interface FormatWhatsAppParams {
   items: CartItem[];
   subtotal: number;
@@ -73,6 +100,8 @@ export interface FormatWhatsAppParams {
   pago: "efectivo" | "transferencia";
   dia: string;
   horario: string;
+  cuponCodigo?: string;
+  cuponDescuento?: number;
 }
 
 export function formatWhatsAppMessage(params: FormatWhatsAppParams): string {
@@ -90,6 +119,8 @@ export function formatWhatsAppMessage(params: FormatWhatsAppParams): string {
     pago,
     dia,
     horario,
+    cuponCodigo,
+    cuponDescuento,
   } = params;
 
   const lines = items.map((i) => {
@@ -117,11 +148,16 @@ export function formatWhatsAppMessage(params: FormatWhatsAppParams): string {
   const pagoLabel =
     pago === "efectivo" ? "Efectivo 💵" : "Transferencia bancaria 🏦";
 
+  const descuentoLinea =
+    cuponCodigo && cuponDescuento
+      ? `\nCupón ${cuponCodigo}: -$${cuponDescuento.toLocaleString("es-AR")}`
+      : "";
+
   return (
     `¡Hola Celisan! Quiero confirmar mi pedido:\n\n` +
     `*Cliente:* ${nombre} — Tel: ${telefono}\n\n` +
     `*Productos:*\n${lines.join("\n")}\n\n` +
-    `Subtotal: $${subtotal.toLocaleString("es-AR")}${envioLinea}\n` +
+    `Subtotal: $${subtotal.toLocaleString("es-AR")}${descuentoLinea}${envioLinea}\n` +
     `*Total: $${total.toLocaleString("es-AR")}*\n\n` +
     `*Entrega:* ${entregaLabel}\n` +
     `*Pago:* ${pagoLabel}`

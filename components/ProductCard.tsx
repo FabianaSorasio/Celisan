@@ -73,6 +73,13 @@ export default function ProductCard({ product }: ProductCardProps) {
     ? (sabor === "Dulces" ? dulcesSinStock : saladosSinStock)
     : product.stock <= 0;
 
+  // Límite real de stock para lo que se está por agregar (según variante/sabor elegido)
+  const currentMaxStock = hasVariantes
+    ? selectedVarianteObj?.stock ?? 0
+    : isCongeladoConSelector
+    ? (sabor === "Dulces" ? product.stockDulces ?? 0 : product.stockSalados ?? 0)
+    : product.stock;
+
   const highlightedTitle = product.name.match(/(.*)\s(x[24]\.?)$/i);
   const detailLines = product.description
     ? product.description.split("\n").filter(Boolean)
@@ -345,7 +352,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               onClick={() => setShowDesayunoModal(true)}
               className="px-5 py-2.5 rounded-xl bg-celisan-red text-white text-sm font-semibold hover:opacity-90 transition-all active:scale-95 shadow-sm"
             >
-              Encargar
+              Consultar
             </button>
           ) : isPostre ? (
             <button
@@ -353,7 +360,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               onClick={() => setShowPostreModal(true)}
               className="px-5 py-2.5 rounded-xl bg-celisan-red text-white text-sm font-semibold hover:opacity-90 transition-all active:scale-95 shadow-sm"
             >
-              Encargar
+              Consultar
             </button>
           ) : isViandaCumple ? (
             <button
@@ -361,7 +368,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               onClick={() => setShowViandaCumpleModal(true)}
               className="px-5 py-2.5 rounded-xl bg-celisan-red text-white text-sm font-semibold hover:opacity-90 transition-all active:scale-95 shadow-sm"
             >
-              Encargar
+              Consultar
             </button>
           ) : (
             <button
@@ -372,6 +379,8 @@ export default function ProductCard({ product }: ProductCardProps) {
                   productId: product.id,
                   name: product.name,
                   price: product.price,
+                  maxStock: currentMaxStock,
+                  category: product.category,
                   ...(hasVariantes ? { sabor: variante } : isCongelado ? { sabor } : {}),
                 })
               }
