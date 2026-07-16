@@ -84,6 +84,10 @@ export default function Catalog({ products }: CatalogProps) {
         </p>
       </div>
 
+      <p className="text-xs text-gray-400 italic mb-6 -mt-4">
+        Las fotos son a modo ilustrativo. La presentación final puede variar levemente.
+      </p>
+
       {selectedCategory === "Waffles con Cobertura" && (
         <section className="mb-8 rounded-2xl p-6 sm:p-8 text-center border border-gray-200 bg-white">
           <p className="text-sm sm:text-base font-semibold text-gray-800">
