@@ -1,21 +1,12 @@
-import { existsSync, readFileSync } from "fs";
-import { join } from "path";
 import { catalogSeed } from "@/lib/catalog-seed";
 import { normalizeCategory } from "@/lib/category-utils";
+import { getProducts as getStoredProducts } from "@/lib/products-data";
 import type { Product } from "@/lib/products";
 
-const DATA_PATH = join(process.cwd(), "data", "products.json");
-
-/** Lee el archivo JSON del admin si existe. */
-function getLocalProducts(): Product[] | null {
-  try {
-    if (!existsSync(DATA_PATH)) return null;
-    const raw = readFileSync(DATA_PATH, "utf-8");
-    const data = JSON.parse(raw) as Product[];
-    return data.length > 0 ? data : null;
-  } catch {
-    return null;
-  }
+/** Lee los productos guardados por el admin (R2, con respaldo local), si hay alguno. */
+async function getLocalProducts(): Promise<Product[] | null> {
+  const data = await getStoredProducts();
+  return data.length > 0 ? data : null;
 }
 
 const SHEET_COLUMNS = [
@@ -149,8 +140,8 @@ async function fetchFromCsvExport(sheetId: string): Promise<Product[]> {
  * Prioridad: 1) data/products.json (admin) → 2) Google Sheets → 3) catalogSeed
  */
 export async function fetchProducts(): Promise<Product[]> {
-  // 1. JSON local del admin (fuente principal)
-  const local = getLocalProducts();
+  // 1. JSON guardado por el admin (fuente principal)
+  const local = await getLocalProducts();
   if (local) return local;
 
   // 2. Google Sheets (si está configurado)

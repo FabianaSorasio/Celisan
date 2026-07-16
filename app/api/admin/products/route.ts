@@ -7,7 +7,7 @@ export async function GET(req: Request) {
   if (!isAuthenticated(req)) {
     return NextResponse.json({ error: "No autorizado" }, { status: 401 });
   }
-  return NextResponse.json(getProducts());
+  return NextResponse.json(await getProducts());
 }
 
 export async function PUT(req: Request) {
@@ -18,7 +18,7 @@ export async function PUT(req: Request) {
   if (!Array.isArray(body)) {
     return NextResponse.json({ error: "Se esperaba un array de productos" }, { status: 400 });
   }
-  saveProducts(body as Product[]);
+  await saveProducts(body as Product[]);
   return NextResponse.json({ ok: true });
 }
 
@@ -31,7 +31,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Faltan campos obligatorios" }, { status: 400 });
   }
 
-  const products = getProducts();
+  const products = await getProducts();
   if (products.find((p) => p.id === body.id)) {
     return NextResponse.json({ error: "Ya existe un producto con ese ID" }, { status: 409 });
   }
@@ -53,6 +53,6 @@ export async function POST(req: Request) {
   };
 
   products.push(newProduct);
-  saveProducts(products);
+  await saveProducts(products);
   return NextResponse.json(newProduct, { status: 201 });
 }

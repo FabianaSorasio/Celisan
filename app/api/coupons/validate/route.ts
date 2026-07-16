@@ -9,7 +9,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: "Ingresá un código de cupón." }, { status: 400 });
   }
 
-  const coupon = findActiveCoupon(code);
+  const coupon = await findActiveCoupon(code);
   if (!coupon) {
     return NextResponse.json({ ok: false, error: "Cupón inválido o vencido." }, { status: 404 });
   }

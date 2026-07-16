@@ -1,25 +1,38 @@
-import { readFileSync, writeFileSync, existsSync } from "fs";
+import { readFileSync, existsSync } from "fs";
 import { join } from "path";
 import type { Coupon } from "@/lib/coupons";
+import { readJsonFromR2, saveJsonToR2 } from "@/lib/r2";
 
-const DATA_PATH = join(process.cwd(), "data", "coupons.json");
+const R2_KEY = "data/coupons.json";
+const LOCAL_PATH = join(process.cwd(), "data", "coupons.json");
 
-export function getCoupons(): Coupon[] {
+/** Solo se usa si R2 todavía no tiene nada guardado (primer arranque). */
+function getLocalFallback(): Coupon[] {
   try {
-    if (!existsSync(DATA_PATH)) return [];
-    const raw = readFileSync(DATA_PATH, "utf-8");
-    return JSON.parse(raw) as Coupon[];
+    if (!existsSync(LOCAL_PATH)) return [];
+    return JSON.parse(readFileSync(LOCAL_PATH, "utf-8")) as Coupon[];
   } catch {
     return [];
   }
 }
 
-export function saveCoupons(coupons: Coupon[]): void {
-  writeFileSync(DATA_PATH, JSON.stringify(coupons, null, 2), "utf-8");
+export async function getCoupons(): Promise<Coupon[]> {
+  try {
+    const fromR2 = await readJsonFromR2<Coupon[]>(R2_KEY);
+    if (fromR2) return fromR2;
+  } catch {
+    // R2 no disponible (ej: variables no configuradas en local) — usar el archivo local
+  }
+  return getLocalFallback();
+}
+
+export async function saveCoupons(coupons: Coupon[]): Promise<void> {
+  await saveJsonToR2(R2_KEY, coupons);
 }
 
 /** Busca un cupón activo por código, sin importar mayúsculas/minúsculas ni espacios. */
-export function findActiveCoupon(code: string): Coupon | undefined {
+export async function findActiveCoupon(code: string): Promise<Coupon | undefined> {
   const normalized = code.trim().toUpperCase();
-  return getCoupons().find((c) => c.active && c.code.trim().toUpperCase() === normalized);
+  const coupons = await getCoupons();
+  return coupons.find((c) => c.active && c.code.trim().toUpperCase() === normalized);
 }

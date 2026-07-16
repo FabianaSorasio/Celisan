@@ -7,7 +7,7 @@ export async function GET(req: Request) {
   if (!isAuthenticated(req)) {
     return NextResponse.json({ error: "No autorizado" }, { status: 401 });
   }
-  return NextResponse.json(getCoupons());
+  return NextResponse.json(await getCoupons());
 }
 
 export async function PUT(req: Request) {
@@ -26,6 +26,6 @@ export async function PUT(req: Request) {
       );
     }
   }
-  saveCoupons(body as Coupon[]);
+  await saveCoupons(body as Coupon[]);
   return NextResponse.json({ ok: true });
 }

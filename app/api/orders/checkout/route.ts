@@ -19,7 +19,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "No hay items para descontar" }, { status: 400 });
   }
 
-  const products = getProducts();
+  const products = await getProducts();
 
   for (const item of items) {
     const product = products.find((p) => p.id === item.productId);
@@ -42,6 +42,6 @@ export async function POST(req: Request) {
     }
   }
 
-  saveProducts(products);
+  await saveProducts(products);
   return NextResponse.json({ ok: true });
 }
