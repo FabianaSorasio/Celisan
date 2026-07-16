@@ -104,7 +104,7 @@ export default function Cart({ onClose }: CartProps) {
     return errs;
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     if (items.length === 0) return;
     const errs = validate();
     if (errs.length > 0) { setErrors(errs); return; }
@@ -128,6 +128,21 @@ export default function Cart({ onClose }: CartProps) {
         cuponDescuento: descuento,
       })
     );
+
+    // Descuenta el stock vendido. Si falla, no bloquea el envío del pedido
+    // (se puede corregir el stock a mano desde el admin).
+    try {
+      await fetch("/api/orders/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          items: items.map((i) => ({ productId: i.productId, quantity: i.quantity, sabor: i.sabor })),
+        }),
+      });
+    } catch {
+      // ignorar: el pedido igual se envía por WhatsApp
+    }
+
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, "_blank");
     clearCart();
     setPedidoEnviado(true);

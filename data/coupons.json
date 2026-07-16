@@ -1,11 +1,12 @@
 [
   {
-    "code": "CUPONWAFFLE",
+    "code": "CUPONSOYSINGLUTEN",
     "percent": 5,
     "active": true,
-    "label": "Waffle congelado",
+    "label": "5%bienvenida soysingluten",
     "categories": [
-      "Waffles Congelados"
+      "Viandas Soy Sin Gluten",
+      "Panificados y Pastas congeladas Soy Sin Gluten"
     ]
   },
   {
