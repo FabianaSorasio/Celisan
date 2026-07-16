@@ -134,7 +134,7 @@ Si falta alguna de estas en Vercel, el sitio en producción no puede guardar pro
 
 ## 12. Identidad visual
 
-- **Colores** (`tailwind.config.ts`): `celisan-red` (#722F37, vino/bordó), `olive` (#808000, verde oliva), `olive-light` (#9A9A00), `cream` (#FFFDF5, fondo general).
+- **Colores** (`tailwind.config.ts`): `celisan-red` (#C62828, rojo del logo), `olive` (#55572F, verde oliva del logo), `olive-light` (#777959, variante clara para hover), `cream` (#FFFDF5, fondo general).
 - **Tono**: cálido, artesanal, con emojis en textos de producto y WhatsApp para reforzar cercanía.
 - **Componentes reutilizables de UI**: badges de stock ("¡Hay stock!", "¡Queda uno solo!", "Sin stock"), carrusel de fotos con flechas + puntitos, lightbox de imagen ampliada, reproductor de video inline en las cards.
 

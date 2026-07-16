@@ -61,6 +61,7 @@ export default function VideoModal({ src, title, onClose }: VideoModalProps) {
         <video
           controls
           autoPlay
+          playsInline
           className="w-full rounded-2xl shadow-2xl"
           aria-label={title}
         >

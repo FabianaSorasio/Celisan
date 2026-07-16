@@ -47,7 +47,7 @@ export default function PostreModulosModal({
     const mensaje =
       `¡Hola Celisan! Quiero consultar disponibilidad para un postre 🍫\n\n` +
       `*Producto:* ${productName}\n` +
-      `*Módulos:* ${selected.n} (${selected.size} cm)\n` +
+      `*Unidades:* ${selected.n} (${selected.size} cm)\n` +
       `*Precio estimado:* $${precio}\n` +
       `*Fecha que lo necesito:* ${fecha}\n\n` +
       `Quedo a la espera de confirmar disponibilidad y coordinar el pago. ¡Gracias!`;
@@ -80,15 +80,15 @@ export default function PostreModulosModal({
         <div className="p-5 space-y-4 overflow-y-auto flex-1">
           <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3">
             <p className="text-xs font-semibold text-amber-800">
-              🍫 Medida base: <strong>10×10 cm</strong> por módulo
+              🍫 Medida base: <strong>10×10 cm</strong> por unidad
             </p>
             <p className="text-xs text-amber-700 mt-0.5">
-              A más módulos, menor precio por unidad.
+              A más unidades, menor precio por unidad.
             </p>
           </div>
 
           <div>
-            <p className="text-xs font-semibold text-gray-700 mb-3">¿Cuántos módulos querés?</p>
+            <p className="text-xs font-semibold text-gray-700 mb-3">¿Cuántas unidades querés?</p>
             <div className="grid grid-cols-5 gap-2">
               {OPCIONES_MODULOS.map((opcion) => {
                 const isSelected = selected.n === opcion.n;
@@ -125,7 +125,7 @@ export default function PostreModulosModal({
           <div className="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 flex items-center justify-between">
             <div>
               <p className="text-xs text-gray-500">
-                ${precioUnitario.toLocaleString("es-AR")}/u × {selected.n} {selected.n === 1 ? "módulo" : "módulos"}
+                ${precioUnitario.toLocaleString("es-AR")}/u × {selected.n} {selected.n === 1 ? "unidad" : "unidades"}
               </p>
               <p className="text-lg font-bold text-celisan-red mt-0.5">
                 ${totalPrice.toLocaleString("es-AR")}

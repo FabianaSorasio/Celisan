@@ -9,43 +9,19 @@ interface DesayunoOrderModalProps {
   onClose: () => void;
 }
 
-const MOTIVOS = [
-  "Cumpleaños",
-  "Día festivo",
-  "Regalo sorpresa",
-  "Aniversario",
-  "Día de la madre / padre",
-  "Otro",
-];
-
-const GUSTOS_WAFFLE = [
-  "Dulce — vainilla",
-  "Salado",
-];
-
 export default function DesayunoOrderModal({
   productName,
   productPrice,
   onClose,
 }: DesayunoOrderModalProps) {
-  const isClasico = productName.toLowerCase().includes("clásico") || productName.toLowerCase().includes("clasico");
-  const [para, setPara] = useState("");
-  const [deParte, setDeParte] = useState("");
-  const [motivo, setMotivo] = useState(MOTIVOS[0]);
-  const [motivoCustom, setMotivoCustom] = useState("");
-  const [gustoWaffle, setGustoWaffle] = useState(GUSTOS_WAFFLE[0]);
+  const [nombre, setNombre] = useState("");
   const [fecha, setFecha] = useState("");
-  const [direccion, setDireccion] = useState("");
-  const [comentarios, setComentarios] = useState("");
   const [errors, setErrors] = useState<string[]>([]);
 
   const validate = () => {
     const errs: string[] = [];
-    if (!para.trim()) errs.push("Ingresá para quién es el desayuno.");
-    if (!deParte.trim()) errs.push("Ingresá quién lo manda.");
-    if (!direccion.trim()) errs.push("Ingresá la dirección de entrega.");
+    if (!nombre.trim()) errs.push("Ingresá tu nombre.");
     if (!fecha) errs.push("Ingresá la fecha de entrega.");
-    if (motivo === "Otro" && !motivoCustom.trim()) errs.push("Describí el motivo.");
     return errs;
   };
 
@@ -54,19 +30,13 @@ export default function DesayunoOrderModal({
     if (errs.length > 0) { setErrors(errs); return; }
     setErrors([]);
 
-    const motivoFinal = motivo === "Otro" ? motivoCustom.trim() : motivo;
     const precio = productPrice.toLocaleString("es-AR");
 
     const mensaje =
       `¡Hola Celisan! Quiero encargar un desayuno 🥐\n\n` +
       `*Producto:* ${productName} — $${precio}\n\n` +
-      `*Para:* ${para.trim()}\n` +
-      `*De parte de:* ${deParte.trim()}\n` +
-      `*Motivo:* ${motivoFinal}\n` +
-      (isClasico ? `*Gusto de waffle a elección:* ${gustoWaffle}\n` : "") +
+      `*Nombre:* ${nombre.trim()}\n` +
       `*Fecha de entrega:* ${fecha}\n` +
-      `*Dirección de envío:* ${direccion.trim()}\n` +
-      (comentarios.trim() ? `*Comentarios:* ${comentarios.trim()}\n` : "") +
       `\nQuedo a la espera de confirmar el pedido y el pago. ¡Gracias!`;
 
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`;
@@ -94,71 +64,21 @@ export default function DesayunoOrderModal({
         </div>
 
         {/* Formulario */}
-        <div className="p-5 space-y-3 max-h-[70vh] overflow-y-auto">
+        <div className="p-5 space-y-3">
           <p className="text-xs text-gray-500 italic">
-            Completá los datos del regalo y te contactamos por WhatsApp para coordinar el envío y el pago.
+            Completá tus datos y te contactamos por WhatsApp para coordinar el pedido y el pago.
           </p>
 
           <div>
-            <label className="block text-xs font-semibold text-gray-700 mb-1">¿Para quién es? *</label>
-            <input
-              type="text"
-              placeholder="Nombre del destinatario"
-              value={para}
-              onChange={(e) => setPara(e.target.value)}
-              className="w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-celisan-red/30 focus:border-celisan-red placeholder-gray-400"
-            />
-          </div>
-
-          <div>
-            <label className="block text-xs font-semibold text-gray-700 mb-1">¿Quién lo manda? *</label>
+            <label className="block text-xs font-semibold text-gray-700 mb-1">Nombre *</label>
             <input
               type="text"
               placeholder="Tu nombre"
-              value={deParte}
-              onChange={(e) => setDeParte(e.target.value)}
+              value={nombre}
+              onChange={(e) => setNombre(e.target.value)}
               className="w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-celisan-red/30 focus:border-celisan-red placeholder-gray-400"
             />
           </div>
-
-          <div>
-            <label className="block text-xs font-semibold text-gray-700 mb-1">Motivo *</label>
-            <select
-              value={motivo}
-              onChange={(e) => setMotivo(e.target.value)}
-              className="w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-celisan-red/30 focus:border-celisan-red bg-white"
-            >
-              {MOTIVOS.map((m) => (
-                <option key={m} value={m}>{m}</option>
-              ))}
-            </select>
-            {motivo === "Otro" && (
-              <input
-                type="text"
-                placeholder="Describí el motivo..."
-                value={motivoCustom}
-                onChange={(e) => setMotivoCustom(e.target.value)}
-                className="mt-2 w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-celisan-red/30 focus:border-celisan-red placeholder-gray-400"
-              />
-            )}
-          </div>
-
-          {isClasico && (
-            <div>
-              <label className="block text-xs font-semibold text-gray-700 mb-1">
-                🧇 Gusto del waffle a elección *
-              </label>
-              <select
-                value={gustoWaffle}
-                onChange={(e) => setGustoWaffle(e.target.value)}
-                className="w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-celisan-red/30 focus:border-celisan-red bg-white"
-              >
-                {GUSTOS_WAFFLE.map((g) => (
-                  <option key={g} value={g}>{g}</option>
-                ))}
-              </select>
-            </div>
-          )}
 
           <div>
             <label className="block text-xs font-semibold text-gray-700 mb-1">📅 Fecha de entrega *</label>
@@ -167,29 +87,6 @@ export default function DesayunoOrderModal({
               value={fecha}
               onChange={(e) => setFecha(e.target.value)}
               className="w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-celisan-red/30 focus:border-celisan-red"
-            />
-          </div>
-
-          <div>
-            <label className="block text-xs font-semibold text-gray-700 mb-1">Dirección de envío *</label>
-            <input
-              type="text"
-              placeholder="Calle, altura, barrio"
-              value={direccion}
-              onChange={(e) => setDireccion(e.target.value)}
-              className="w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-celisan-red/30 focus:border-celisan-red placeholder-gray-400"
-            />
-            <p className="text-[10px] text-gray-400 mt-1 px-1">📍 Delivery solo en San Francisco (Córdoba)</p>
-          </div>
-
-          <div>
-            <label className="block text-xs font-semibold text-gray-700 mb-1">Comentarios adicionales</label>
-            <textarea
-              placeholder="Mensaje especial, preferencias, horario de entrega..."
-              value={comentarios}
-              onChange={(e) => setComentarios(e.target.value)}
-              rows={3}
-              className="w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-celisan-red/30 focus:border-celisan-red placeholder-gray-400 resize-none"
             />
           </div>
 

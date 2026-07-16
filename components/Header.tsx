@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, Search, ShoppingCart, User, X } from "lucide-react";
+import { Menu, ShoppingCart, X } from "lucide-react";
 import Cart from "./Cart";
 import { useCart } from "./CartProvider";
 
@@ -106,22 +106,6 @@ export default function Header() {
             <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
               <button
                 type="button"
-                className="hidden sm:flex p-2.5 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-olive transition-colors"
-                aria-label="Búsqueda"
-                onClick={() => handleNavClick("/#productos")}
-              >
-                <Search className="h-5 w-5" strokeWidth={2} />
-              </button>
-              <button
-                type="button"
-                className="hidden sm:flex p-2.5 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-olive transition-colors"
-                aria-label="Mi cuenta"
-                title="Próximamente"
-              >
-                <User className="h-5 w-5" strokeWidth={2} />
-              </button>
-              <button
-                type="button"
                 onClick={() => setCartOpen(true)}
                 className="relative p-2.5 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-olive transition-colors"
                 aria-label={`Carrito${count > 0 ? `, ${count} productos` : ""}`}
@@ -179,24 +163,6 @@ export default function Header() {
                   </Link>
                 );
               })}
-              <div className="flex gap-2 px-3 pt-2 sm:hidden">
-                <button
-                  type="button"
-                  className="flex-1 flex items-center justify-center gap-2 py-2 rounded-lg border border-gray-200 text-gray-600 text-sm"
-                  onClick={() => handleNavClick("/#productos")}
-                >
-                  <Search className="h-4 w-4" />
-                  Buscar
-                </button>
-                <button
-                  type="button"
-                  className="flex-1 flex items-center justify-center gap-2 py-2 rounded-lg border border-gray-200 text-gray-600 text-sm"
-                  title="Próximamente"
-                >
-                  <User className="h-4 w-4" />
-                  Cuenta
-                </button>
-              </div>
             </nav>
           )}
         </div>

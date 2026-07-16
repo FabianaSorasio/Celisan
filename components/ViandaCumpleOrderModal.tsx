@@ -9,15 +9,6 @@ interface ViandaCumpleOrderModalProps {
   onClose: () => void;
 }
 
-const MOTIVOS = [
-  "Cumpleaños",
-  "Día festivo",
-  "Regalo sorpresa",
-  "Aniversario",
-  "Día de la madre / padre",
-  "Otro",
-];
-
 const CANTIDADES = Array.from({ length: 10 }, (_, i) => i + 1);
 const DELIVERY_GRATIS_DESDE_UNIDADES = 2;
 
@@ -26,14 +17,9 @@ export default function ViandaCumpleOrderModal({
   productPrice,
   onClose,
 }: ViandaCumpleOrderModalProps) {
-  const [para, setPara] = useState("");
-  const [deParte, setDeParte] = useState("");
-  const [motivo, setMotivo] = useState(MOTIVOS[0]);
-  const [motivoCustom, setMotivoCustom] = useState("");
+  const [nombre, setNombre] = useState("");
   const [fecha, setFecha] = useState("");
   const [cantidad, setCantidad] = useState(1);
-  const [direccion, setDireccion] = useState("");
-  const [comentarios, setComentarios] = useState("");
   const [errors, setErrors] = useState<string[]>([]);
 
   const totalPrice = productPrice * cantidad;
@@ -41,11 +27,8 @@ export default function ViandaCumpleOrderModal({
 
   const validate = () => {
     const errs: string[] = [];
-    if (!para.trim()) errs.push("Ingresá para quién es la vianda.");
-    if (!deParte.trim()) errs.push("Ingresá quién la manda.");
+    if (!nombre.trim()) errs.push("Ingresá tu nombre.");
     if (!fecha) errs.push("Ingresá la fecha de entrega.");
-    if (!direccion.trim()) errs.push("Ingresá la dirección de entrega.");
-    if (motivo === "Otro" && !motivoCustom.trim()) errs.push("Describí el motivo.");
     return errs;
   };
 
@@ -54,7 +37,6 @@ export default function ViandaCumpleOrderModal({
     if (errs.length > 0) { setErrors(errs); return; }
     setErrors([]);
 
-    const motivoFinal = motivo === "Otro" ? motivoCustom.trim() : motivo;
     const precio = totalPrice.toLocaleString("es-AR");
 
     const mensaje =
@@ -62,12 +44,8 @@ export default function ViandaCumpleOrderModal({
       `*Producto:* ${productName}\n` +
       `*Cantidad:* ${cantidad} ${cantidad === 1 ? "vianda" : "viandas"}\n` +
       `*Precio estimado:* $${precio}\n\n` +
-      `*Para:* ${para.trim()}\n` +
-      `*De parte de:* ${deParte.trim()}\n` +
-      `*Motivo:* ${motivoFinal}\n` +
+      `*Nombre:* ${nombre.trim()}\n` +
       `*Fecha de entrega:* ${fecha}\n` +
-      `*Dirección de envío:* ${direccion.trim()}\n` +
-      (comentarios.trim() ? `*Comentarios:* ${comentarios.trim()}\n` : "") +
       `\nQuedo a la espera de confirmar disponibilidad y coordinar el pago. ¡Gracias!`;
 
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`;
@@ -97,51 +75,18 @@ export default function ViandaCumpleOrderModal({
         {/* Formulario */}
         <div className="p-5 space-y-3 overflow-y-auto flex-1">
           <p className="text-xs text-gray-500 italic">
-            Completá los datos del regalo y te contactamos por WhatsApp para confirmar disponibilidad y coordinar el pago.
+            Completá tus datos y te contactamos por WhatsApp para confirmar disponibilidad y coordinar el pago.
           </p>
 
           <div>
-            <label className="block text-xs font-semibold text-gray-700 mb-1">¿Para quién es? *</label>
-            <input
-              type="text"
-              placeholder="Nombre del destinatario"
-              value={para}
-              onChange={(e) => setPara(e.target.value)}
-              className="w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-celisan-red/30 focus:border-celisan-red placeholder-gray-400"
-            />
-          </div>
-
-          <div>
-            <label className="block text-xs font-semibold text-gray-700 mb-1">¿Quién lo manda? *</label>
+            <label className="block text-xs font-semibold text-gray-700 mb-1">Nombre *</label>
             <input
               type="text"
               placeholder="Tu nombre"
-              value={deParte}
-              onChange={(e) => setDeParte(e.target.value)}
+              value={nombre}
+              onChange={(e) => setNombre(e.target.value)}
               className="w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-celisan-red/30 focus:border-celisan-red placeholder-gray-400"
             />
-          </div>
-
-          <div>
-            <label className="block text-xs font-semibold text-gray-700 mb-1">Motivo *</label>
-            <select
-              value={motivo}
-              onChange={(e) => setMotivo(e.target.value)}
-              className="w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-celisan-red/30 focus:border-celisan-red bg-white"
-            >
-              {MOTIVOS.map((m) => (
-                <option key={m} value={m}>{m}</option>
-              ))}
-            </select>
-            {motivo === "Otro" && (
-              <input
-                type="text"
-                placeholder="Describí el motivo..."
-                value={motivoCustom}
-                onChange={(e) => setMotivoCustom(e.target.value)}
-                className="mt-2 w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-celisan-red/30 focus:border-celisan-red placeholder-gray-400"
-              />
-            )}
           </div>
 
           <div>
@@ -195,29 +140,6 @@ export default function ViandaCumpleOrderModal({
                   : `Delivery gratis desde ${DELIVERY_GRATIS_DESDE_UNIDADES} unidades`}
               </span>
             </div>
-          </div>
-
-          <div>
-            <label className="block text-xs font-semibold text-gray-700 mb-1">Dirección de envío *</label>
-            <input
-              type="text"
-              placeholder="Calle, altura, barrio"
-              value={direccion}
-              onChange={(e) => setDireccion(e.target.value)}
-              className="w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-celisan-red/30 focus:border-celisan-red placeholder-gray-400"
-            />
-            <p className="text-[10px] text-gray-400 mt-1 px-1">📍 Delivery solo en San Francisco (Córdoba)</p>
-          </div>
-
-          <div>
-            <label className="block text-xs font-semibold text-gray-700 mb-1">Comentarios adicionales</label>
-            <textarea
-              placeholder="Mensaje especial, preferencias, horario de entrega..."
-              value={comentarios}
-              onChange={(e) => setComentarios(e.target.value)}
-              rows={3}
-              className="w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-celisan-red/30 focus:border-celisan-red placeholder-gray-400 resize-none"
-            />
           </div>
 
           {errors.length > 0 && (

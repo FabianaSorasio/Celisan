@@ -70,19 +70,26 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* FIRMA Y DERECHOS — forma negativa */}
-      <div className="bg-black text-white text-center py-10 px-4">
+      {/* FIRMA Y DERECHOS */}
+      <div className="bg-celisan-red text-white text-center py-10 px-4">
         <img
-          src="/iso-fps.png"
-          alt="Fabiana Sorasio – Diseñadora Gráfica"
-          className="h-12 w-auto mx-auto mb-4"
+          src="/logo-celisan.png"
+          alt="Celisan"
+          className="h-8 w-auto mx-auto mb-4 brightness-0 invert"
         />
         <p className="text-sm text-white/90">
           © {new Date().getFullYear()} Celisan - Todos los derechos reservados.
         </p>
-        <p className="text-xs text-white/70 mt-2 italic">
-          Diseño y Desarrollo por Fabiana Sorasio
-        </p>
+        <div className="flex items-center justify-center gap-2 mt-3">
+          <img
+            src="/iso-fps.png"
+            alt="Fabiana Sorasio – Diseñadora Gráfica"
+            className="h-6 w-auto"
+          />
+          <p className="text-[10px] text-white/70 italic">
+            Diseño y Desarrollo por Fabiana Sorasio
+          </p>
+        </div>
       </div>
     </footer>
   );

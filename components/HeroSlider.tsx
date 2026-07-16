@@ -83,7 +83,7 @@ const SLIDES: Slide[] = [
     overlayClassName: "from-black/75 via-black/40 to-transparent",
     title: "Postres que enamoran",
     subtitle:
-      "Individuales de 10×10 cm, se pueden agrandar por módulo a medida. 100% sin gluten. Por encargo anticipado — consultanos.",
+      "Individuales de 10×10 cm, se pueden agrandar por unidad a medida. 100% sin gluten. Por encargo anticipado — consultanos.",
     cta: "Ver Postres",
     action: "postres",
   },

@@ -8,6 +8,7 @@ import DesayunoOrderModal from "@/components/DesayunoOrderModal";
 import PostreModulosModal from "@/components/PostreModulosModal";
 import ViandaCumpleOrderModal from "@/components/ViandaCumpleOrderModal";
 import ImageModal from "@/components/ImageModal";
+import VideoModal from "@/components/VideoModal";
 
 function StockBadge({ stock, isSelected }: { stock: number; isSelected?: boolean }) {
   if (stock <= 0) return <span className="text-[10px] font-normal text-gray-400 mt-0.5 block">Sin stock</span>;
@@ -39,9 +40,9 @@ export default function ProductCard({ product }: ProductCardProps) {
   const [showDesayunoModal, setShowDesayunoModal] = useState(false);
   const [showPostreModal, setShowPostreModal] = useState(false);
   const [showViandaCumpleModal, setShowViandaCumpleModal] = useState(false);
-  const [videoPlaying, setVideoPlaying] = useState(false);
   const [showFullDesc, setShowFullDesc] = useState(false);
   const [imageOpen, setImageOpen] = useState(false);
+  const [videoOpen, setVideoOpen] = useState(false);
 
   // Carrusel — activo sólo cuando hay más de 1 imagen en el array
   const gallery = product.images && product.images.length > 1 ? product.images : null;
@@ -87,7 +88,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   return (
     <article
-      className={`group relative bg-white rounded-2xl overflow-hidden transition-all duration-300 ease-out border border-gray-100/80 flex flex-col h-full ${showDesayunoModal || showPostreModal || showViandaCumpleModal ? "" : "hover:-translate-y-2 hover:shadow-antigravity-hover"}`}
+      className={`group relative bg-white rounded-2xl overflow-hidden transition-[transform,box-shadow] duration-300 ease-out border border-gray-100/80 flex flex-col h-full ${showDesayunoModal || showPostreModal || showViandaCumpleModal ? "" : "hover:-translate-y-2 hover:shadow-antigravity-hover"}`}
       style={{
         boxShadow:
           "0 25px 50px -12px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.03)",
@@ -96,20 +97,25 @@ export default function ProductCard({ product }: ProductCardProps) {
       <div className="aspect-[4/3] relative bg-gray-100 overflow-hidden">
         <button
           type="button"
-          className={`absolute inset-0 w-full h-full focus:outline-none ${videoPlaying ? "pointer-events-none" : "cursor-zoom-in"}`}
-          onClick={() => !videoPlaying && setImageOpen(true)}
-          aria-label={`Ampliar imagen de ${product.name}`}
+          className="absolute inset-0 w-full h-full focus:outline-none cursor-zoom-in"
+          onClick={() => (product.video ? setVideoOpen(true) : setImageOpen(true))}
+          aria-label={product.video ? `Ver video de ${product.name}` : `Ampliar imagen de ${product.name}`}
         >
           <img
             key={currentImage}
             src={currentImage}
             alt={product.name}
-            className={`absolute inset-0 h-full w-full object-cover transition-all duration-500 ${videoPlaying ? "opacity-0" : "group-hover:scale-105"}`}
+            className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 scale-[var(--img-zoom)] group-hover:scale-[calc(var(--img-zoom)*1.05)]"
+            style={{
+              objectPosition: `${product.imageX ?? 50}% ${product.imageY ?? 50}%`,
+              transformOrigin: `${product.imageX ?? 50}% ${product.imageY ?? 50}%`,
+              ["--img-zoom" as string]: product.imageZoom ?? 1,
+            }}
             loading="lazy"
             decoding="async"
           />
         </button>
-        {gallery && !videoPlaying && (
+        {gallery && (
           <>
             <button
               type="button"
@@ -144,48 +150,17 @@ export default function ProductCard({ product }: ProductCardProps) {
             </div>
           </>
         )}
-        {product.video && videoPlaying && (
-          <video
-            src={product.video}
-            className="absolute inset-0 h-full w-full object-cover"
-            autoPlay
-            muted
-            loop
-            playsInline
-            onClick={(e) => {
-              e.stopPropagation();
-              setVideoPlaying(false);
-            }}
-          />
-        )}
-        {product.video && !videoPlaying && (
+        {product.video && (
           <button
             type="button"
             onClick={(e) => {
               e.stopPropagation();
-              setVideoPlaying(true);
+              setVideoOpen(true);
             }}
             className="absolute top-3 left-3 px-2 py-1 rounded-lg bg-black/50 text-white text-xs font-semibold flex items-center gap-1 hover:bg-black/70 transition-colors"
           >
             ▶ Video
           </button>
-        )}
-        {product.video && videoPlaying && (
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              setVideoPlaying(false);
-            }}
-            className="absolute top-3 left-3 px-2 py-1 rounded-lg bg-black/50 text-white text-xs font-semibold flex items-center gap-1 hover:bg-black/70 transition-colors"
-          >
-            ✕ Foto
-          </button>
-        )}
-        {outOfStock && (
-          <span className="absolute top-3 right-3 px-2 py-1 rounded-lg bg-gray-900/80 text-white text-xs font-semibold">
-            Sin stock
-          </span>
         )}
       </div>
 
@@ -270,7 +245,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           <div className="mb-3 flex items-center gap-1.5 bg-amber-50 border border-amber-200 rounded-lg px-3 py-1.5">
             <span className="text-base">🍫</span>
             <span className="text-xs font-bold text-amber-800 leading-tight">
-              Individual 10×10 cm · Podés agrandar por módulo
+              Individual 10×10 cm · Podés agrandar por unidad
             </span>
           </div>
         )}
@@ -343,8 +318,15 @@ export default function ProductCard({ product }: ProductCardProps) {
         )}
 
         <div className="flex items-center justify-between mt-auto pt-2">
-          <span className="text-celisan-red font-bold text-lg">
-            ${product.price.toLocaleString("es-AR")}
+          <span className="flex items-center gap-2">
+            {outOfStock && (
+              <span className="px-2.5 py-1 rounded-lg bg-gray-900/80 text-white text-xs font-semibold">
+                Sin stock
+              </span>
+            )}
+            <span className="text-celisan-red font-bold text-lg">
+              ${product.price.toLocaleString("es-AR")}
+            </span>
           </span>
           {isDesayuno ? (
             <button
@@ -419,12 +401,22 @@ export default function ProductCard({ product }: ProductCardProps) {
         document.body
       )}
 
-      {imageOpen && (
+      {imageOpen && createPortal(
         <ImageModal
           src={currentImage}
           alt={product.name}
           onClose={() => setImageOpen(false)}
-        />
+        />,
+        document.body
+      )}
+
+      {videoOpen && product.video && createPortal(
+        <VideoModal
+          src={product.video}
+          title={product.name}
+          onClose={() => setVideoOpen(false)}
+        />,
+        document.body
       )}
     </article>
   );

@@ -3,6 +3,7 @@ import { Roboto } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import { CartProvider } from "@/components/CartProvider";
+import WhatsAppFloatingButton from "@/components/WhatsAppFloatingButton";
 
 const roboto = Roboto({
   weight: ["400", "500", "700"],
@@ -27,6 +28,7 @@ export default function RootLayout({
         <CartProvider>
           <Header />
           {children}
+          <WhatsAppFloatingButton />
         </CartProvider>
       </body>
     </html>

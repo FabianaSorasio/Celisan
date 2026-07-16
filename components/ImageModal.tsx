@@ -34,7 +34,7 @@ export default function ImageModal({ src, alt, onClose }: ImageModalProps) {
       aria-modal="true"
       aria-label={alt}
     >
-      <div className="relative w-full max-w-3xl">
+      <div className="relative w-full max-w-6xl">
         {/* Botón cerrar */}
         <button
           onClick={onClose}
@@ -57,12 +57,20 @@ export default function ImageModal({ src, alt, onClose }: ImageModalProps) {
           Cerrar
         </button>
 
-        {/* Imagen ampliada */}
-        <img
-          src={src}
-          alt={alt}
-          className="w-full rounded-2xl shadow-2xl object-contain max-h-[80vh]"
-        />
+        {/* Imagen ampliada, con fondo difuminado de la misma foto detrás */}
+        <div className="relative rounded-2xl shadow-2xl overflow-hidden max-h-[88vh]">
+          <img
+            src={src}
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 w-full h-full object-cover blur-2xl scale-110 opacity-60"
+          />
+          <img
+            src={src}
+            alt={alt}
+            className="relative w-full max-h-[88vh] object-contain"
+          />
+        </div>
 
         {/* Nombre del producto */}
         <p className="mt-3 text-center text-white/70 text-sm">{alt}</p>
