@@ -15,6 +15,9 @@ export const metadata: Metadata = {
   title: "Celisan — Sabor auténtico, 100% libre de gluten",
   description:
     "Tienda sin gluten en San Francisco. Waffles artesanales, viandas y productos Celisan. Pedí online y retirá sin preocupaciones.",
+  verification: {
+    google: "LKrWEW1NjQ4S0uS8HgrGSRHa-nLe3-KCKkztVJV0g9M",
+  },
 };
 
 export default function RootLayout({
