@@ -911,11 +911,11 @@
     "variantes": []
   },
   {
-    "id": "miska-fetuccini-200-espinaca-morron",
-    "name": "Fetuccini 200g (1 espinaca, 1 morrón) Miska",
+    "id": "miska-fetuccini-200",
+    "name": "Fetuccini 200g Miska",
     "category": "Miska",
     "price": 4791,
-    "description": "Presentación: 200 gr. Sabores: espinaca y morrón.",
+    "description": "Presentación: 200 gr.",
     "image": "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/miska/fettucini-al-huevo-x-200-gr.webp",
     "stock": 2,
     "available": false,
@@ -925,14 +925,18 @@
     "stockDulces": 0,
     "stockSalados": 0,
     "sinSelectorSabor": false,
-    "variantes": []
+    "variantes": [
+      { "nombre": "Espinaca", "stock": 1 },
+      { "nombre": "Morrón", "stock": 1 },
+      { "nombre": "Huevo", "stock": 0 }
+    ]
   },
   {
-    "id": "miska-tallarines-200-espinaca-huevo",
-    "name": "Tallarines 200g (1 espinaca, 1 huevo) Miska",
+    "id": "miska-tallarines-200",
+    "name": "Tallarines 200g Miska",
     "category": "Miska",
     "price": 4791,
-    "description": "Presentación: 200 gr. Sabores: espinaca y huevo.",
+    "description": "Presentación: 200 gr.",
     "image": "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/miska/fideos-al-huevo-x-200-gr.webp",
     "stock": 2,
     "available": false,
@@ -942,7 +946,11 @@
     "stockDulces": 0,
     "stockSalados": 0,
     "sinSelectorSabor": false,
-    "variantes": []
+    "variantes": [
+      { "nombre": "Espinaca", "stock": 1 },
+      { "nombre": "Morrón", "stock": 0 },
+      { "nombre": "Huevo", "stock": 1 }
+    ]
   },
   {
     "id": "miska-raviolon-ricota",
@@ -1018,11 +1026,11 @@
     "variantes": []
   },
   {
-    "id": "miska-tallarin-400-huevo",
-    "name": "Tallarín 400g (huevo) Miska",
+    "id": "miska-tallarines-400",
+    "name": "Tallarines 400g Miska",
     "category": "Miska",
     "price": 9199,
-    "description": "Presentación: 400 gr. Sabor: huevo.",
+    "description": "Presentación: 400 gr.",
     "image": "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/miska/fideos-al-huevo-x-200-gr.webp",
     "stock": 1,
     "available": false,
@@ -1032,14 +1040,18 @@
     "stockDulces": 0,
     "stockSalados": 0,
     "sinSelectorSabor": false,
-    "variantes": []
+    "variantes": [
+      { "nombre": "Espinaca", "stock": 0 },
+      { "nombre": "Morrón", "stock": 0 },
+      { "nombre": "Huevo", "stock": 1 }
+    ]
   },
   {
-    "id": "miska-fetuccini-400-huevo",
-    "name": "Fetuccini 400g (huevo) Miska",
+    "id": "miska-fetuccini-400",
+    "name": "Fetuccini 400g Miska",
     "category": "Miska",
     "price": 9199,
-    "description": "Presentación: 400 gr. Sabor: huevo.",
+    "description": "Presentación: 400 gr.",
     "image": "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/miska/fettucini-al-huevo-x-200-gr.webp",
     "stock": 1,
     "available": false,
@@ -1049,7 +1061,11 @@
     "stockDulces": 0,
     "stockSalados": 0,
     "sinSelectorSabor": false,
-    "variantes": []
+    "variantes": [
+      { "nombre": "Espinaca", "stock": 0 },
+      { "nombre": "Morrón", "stock": 0 },
+      { "nombre": "Huevo", "stock": 1 }
+    ]
   },
   {
     "id": "miska-pan-figacitas",
