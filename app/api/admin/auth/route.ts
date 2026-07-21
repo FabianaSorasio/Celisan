@@ -1,3 +1,4 @@
+import { timingSafeEqual } from "crypto";
 import { NextResponse } from "next/server";
 import {
   ADMIN_COOKIE_MAX_AGE,
@@ -5,8 +6,23 @@ import {
   createSessionToken,
   isAuthenticated,
 } from "@/lib/admin-auth";
+import { clearLoginAttempts, isLoginBlocked, registerFailedLogin } from "@/lib/login-rate-limit";
+
+function passwordsMatch(a: string, b: string): boolean {
+  const bufA = Buffer.from(a);
+  const bufB = Buffer.from(b);
+  if (bufA.length !== bufB.length) return false;
+  return timingSafeEqual(bufA, bufB);
+}
 
 export async function POST(req: Request) {
+  if (isLoginBlocked(req)) {
+    return NextResponse.json(
+      { error: "Demasiados intentos fallidos. Probá de nuevo en unos minutos." },
+      { status: 429 }
+    );
+  }
+
   const { password } = await req.json();
   const expected = process.env.ADMIN_PASSWORD;
 
@@ -14,9 +30,12 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "ADMIN_PASSWORD no configurado" }, { status: 500 });
   }
 
-  if (password !== expected) {
+  if (typeof password !== "string" || !passwordsMatch(password, expected)) {
+    registerFailedLogin(req);
     return NextResponse.json({ error: "Contraseña incorrecta" }, { status: 401 });
   }
+
+  clearLoginAttempts(req);
 
   const res = NextResponse.json({ ok: true });
   res.cookies.set(ADMIN_COOKIE_NAME, createSessionToken(), {
