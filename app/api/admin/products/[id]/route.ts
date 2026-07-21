@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { getProducts, saveProducts } from "@/lib/products-data";
 import type { Product } from "@/lib/products";
 import { isAuthenticated } from "@/lib/admin-auth";
@@ -18,6 +19,7 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
 
   products[index] = { ...products[index], ...body, id: params.id };
   await saveProducts(products);
+  revalidatePath("/");
   return NextResponse.json(products[index]);
 }
 
@@ -34,5 +36,6 @@ export async function DELETE(req: Request, { params }: { params: { id: string } 
   }
 
   await saveProducts(filtered);
+  revalidatePath("/");
   return NextResponse.json({ ok: true });
 }
