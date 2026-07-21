@@ -81,6 +81,7 @@ export default function ProductCard({ product }: ProductCardProps) {
     ? (sabor === "Dulces" ? product.stockDulces ?? 0 : product.stockSalados ?? 0)
     : product.stock;
 
+  const isSinLactosa = product.name.toLowerCase().includes("sin lactosa");
   const highlightedTitle = product.name.match(/(.*)\s(x[24]\.?)$/i);
   const detailLines = product.description
     ? product.description.split("\n").filter(Boolean)
@@ -161,6 +162,16 @@ export default function ProductCard({ product }: ProductCardProps) {
           >
             ▶ Video
           </button>
+        )}
+        {isSinLactosa && (
+          <div
+            className="absolute top-3 right-3 z-10 flex items-center justify-center w-9 h-9 rounded-full bg-white shadow-md"
+            title="Sin lactosa"
+            aria-label="Sin lactosa"
+          >
+            <span className="text-lg leading-none" aria-hidden="true">🥛</span>
+            <span className="absolute w-6 h-0.5 bg-red-600 rotate-45 rounded-full" aria-hidden="true" />
+          </div>
         )}
       </div>
 
