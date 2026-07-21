@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { getProducts, saveProducts } from "@/lib/products-data";
 import type { Product } from "@/lib/products";
 import { isAuthenticated } from "@/lib/admin-auth";
@@ -19,6 +20,7 @@ export async function PUT(req: Request) {
     return NextResponse.json({ error: "Se esperaba un array de productos" }, { status: 400 });
   }
   await saveProducts(body as Product[]);
+  revalidatePath("/");
   return NextResponse.json({ ok: true });
 }
 
@@ -54,5 +56,6 @@ export async function POST(req: Request) {
 
   products.push(newProduct);
   await saveProducts(products);
+  revalidatePath("/");
   return NextResponse.json(newProduct, { status: 201 });
 }
