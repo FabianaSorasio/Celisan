@@ -926,9 +926,18 @@
     "stockSalados": 0,
     "sinSelectorSabor": false,
     "variantes": [
-      { "nombre": "Espinaca", "stock": 1 },
-      { "nombre": "Morrón", "stock": 1 },
-      { "nombre": "Huevo", "stock": 0 }
+      {
+        "nombre": "Espinaca",
+        "stock": 1
+      },
+      {
+        "nombre": "Morrón",
+        "stock": 1
+      },
+      {
+        "nombre": "Huevo",
+        "stock": 0
+      }
     ]
   },
   {
@@ -947,9 +956,18 @@
     "stockSalados": 0,
     "sinSelectorSabor": false,
     "variantes": [
-      { "nombre": "Espinaca", "stock": 1 },
-      { "nombre": "Morrón", "stock": 0 },
-      { "nombre": "Huevo", "stock": 1 }
+      {
+        "nombre": "Espinaca",
+        "stock": 1
+      },
+      {
+        "nombre": "Morrón",
+        "stock": 0
+      },
+      {
+        "nombre": "Huevo",
+        "stock": 1
+      }
     ]
   },
   {
@@ -1041,9 +1059,18 @@
     "stockSalados": 0,
     "sinSelectorSabor": false,
     "variantes": [
-      { "nombre": "Espinaca", "stock": 0 },
-      { "nombre": "Morrón", "stock": 0 },
-      { "nombre": "Huevo", "stock": 1 }
+      {
+        "nombre": "Espinaca",
+        "stock": 0
+      },
+      {
+        "nombre": "Morrón",
+        "stock": 0
+      },
+      {
+        "nombre": "Huevo",
+        "stock": 1
+      }
     ]
   },
   {
@@ -1062,9 +1089,18 @@
     "stockSalados": 0,
     "sinSelectorSabor": false,
     "variantes": [
-      { "nombre": "Espinaca", "stock": 0 },
-      { "nombre": "Morrón", "stock": 0 },
-      { "nombre": "Huevo", "stock": 1 }
+      {
+        "nombre": "Espinaca",
+        "stock": 0
+      },
+      {
+        "nombre": "Morrón",
+        "stock": 0
+      },
+      {
+        "nombre": "Huevo",
+        "stock": 1
+      }
     ]
   },
   {
@@ -1186,6 +1222,49 @@
     "imageZoom": 1,
     "stockDulces": 0,
     "stockSalados": 0,
+    "sinSelectorSabor": false,
+    "variantes": []
+  },
+  {
+    "id": "prod-1784595248058",
+    "name": "Waffles dulces sin lacteos x 2",
+    "description": "Variante sin lactosa. Stock limitado. Hechos con harina de coco y leche de almendras. Probalos\n",
+    "price": 6000,
+    "image": "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/uploads/1784595511618-1000368906.jpg",
+    "images": [
+      "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/uploads/1784595511618-1000368906.jpg",
+      "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/uploads/1784595495277-1000368905.jpg",
+      "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/uploads/1784595503536-1000368907.jpg"
+    ],
+    "category": "Waffles Congelados",
+    "stock": 0,
+    "available": true,
+    "imageX": 50,
+    "imageY": 50,
+    "imageZoom": 1.05,
+    "stockDulces": 6,
+    "stockSalados": 0,
+    "sinSelectorSabor": false,
+    "variantes": []
+  },
+  {
+    "id": "prod-1784903907038",
+    "name": "Waffles salados sin lacteos x 4",
+    "description": "Variante sin lactosa. Stock limitado. Hechos con harina de coco y leche de almendras. Probalos",
+    "price": 11000,
+    "image": "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/uploads/1784904216748-whatsapp-image-2026-07-24-at-11.36.48.jpeg",
+    "images": [
+      "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/uploads/1784904216748-whatsapp-image-2026-07-24-at-11.36.48.jpeg",
+      "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/uploads/1784904223834-whatsapp-image-2026-07-24-at-11.36.48-1-.jpeg"
+    ],
+    "category": "Waffles Congelados",
+    "stock": 0,
+    "available": true,
+    "imageX": 49,
+    "imageY": 54,
+    "imageZoom": 1,
+    "stockDulces": 0,
+    "stockSalados": 1,
     "sinSelectorSabor": false,
     "variantes": []
   }
