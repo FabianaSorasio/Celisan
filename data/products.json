@@ -913,12 +913,12 @@
   {
     "id": "miska-fetuccini-200",
     "name": "Fetuccini 200g Miska",
-    "category": "Miska",
-    "price": 4791,
+    "category": "Panificados y Pastas Miska",
+    "price": 4800,
     "description": "Presentación: 200 gr.",
     "image": "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/miska/fettucini-al-huevo-x-200-gr.webp",
     "stock": 2,
-    "available": false,
+    "available": true,
     "imageX": 50,
     "imageY": 50,
     "imageZoom": 1,
@@ -934,12 +934,12 @@
   {
     "id": "miska-tallarines-200",
     "name": "Tallarines 200g Miska",
-    "category": "Miska",
-    "price": 4791,
+    "category": "Panificados y Pastas Miska",
+    "price": 4800,
     "description": "Presentación: 200 gr.",
     "image": "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/miska/fideos-al-huevo-x-200-gr.webp",
     "stock": 2,
-    "available": false,
+    "available": true,
     "imageX": 50,
     "imageY": 50,
     "imageZoom": 1,
@@ -955,12 +955,12 @@
   {
     "id": "miska-raviolon-ricota",
     "name": "Raviolón de Ricota (8 unid.) Miska",
-    "category": "Miska",
-    "price": 7015,
+    "category": "Panificados y Pastas Miska",
+    "price": 7100,
     "description": "Presentación: 8 unidades.",
     "image": "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/miska/raviolones-ricota.webp",
     "stock": 1,
-    "available": false,
+    "available": true,
     "imageX": 50,
     "imageY": 50,
     "imageZoom": 1,
@@ -972,7 +972,7 @@
   {
     "id": "miska-raviolon-pollo-espinaca",
     "name": "Raviolón de Pollo y Espinaca (8 unid.) Miska",
-    "category": "Miska",
+    "category": "Panificados y Pastas Miska",
     "price": 8455,
     "description": "Presentación: 8 unidades.",
     "image": "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/miska/raviolones-pollo-y-espinaca.webp",
@@ -989,8 +989,8 @@
   {
     "id": "miska-raviolon-jyq",
     "name": "Raviolón de Jamón y Muzza (8 unid.) Miska",
-    "category": "Miska",
-    "price": 8455,
+    "category": "Panificados y Pastas Miska",
+    "price": 8450,
     "description": "Presentación: 8 unidades.",
     "image": "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/miska/raviolones-ricota.webp",
     "stock": 1,
@@ -1006,8 +1006,8 @@
   {
     "id": "miska-pan-molde-semilla",
     "name": "Pan de molde de semilla x 750g Miska",
-    "category": "Miska",
-    "price": 7247,
+    "category": "Panificados y Pastas Miska",
+    "price": 7250,
     "description": "Presentación: 750 gr.",
     "image": "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/miska/pan-de-molde-semillas.webp",
     "images": [
@@ -1016,7 +1016,7 @@
       "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/miska/pan-de-molde-semillas-2.webp"
     ],
     "stock": 1,
-    "available": false,
+    "available": true,
     "imageX": 50,
     "imageY": 50,
     "imageZoom": 1,
@@ -1028,12 +1028,12 @@
   {
     "id": "miska-tallarines-400",
     "name": "Tallarines 400g Miska",
-    "category": "Miska",
-    "price": 9199,
+    "category": "Panificados y Pastas Miska",
+    "price": 9200,
     "description": "Presentación: 400 gr.",
     "image": "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/miska/fideos-al-huevo-x-200-gr.webp",
     "stock": 1,
-    "available": false,
+    "available": true,
     "imageX": 50,
     "imageY": 50,
     "imageZoom": 1,
@@ -1049,8 +1049,8 @@
   {
     "id": "miska-fetuccini-400",
     "name": "Fetuccini 400g Miska",
-    "category": "Miska",
-    "price": 9199,
+    "category": "Panificados y Pastas Miska",
+    "price": 9200,
     "description": "Presentación: 400 gr.",
     "image": "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/miska/fettucini-al-huevo-x-200-gr.webp",
     "stock": 1,
@@ -1070,12 +1070,12 @@
   {
     "id": "miska-pan-figacitas",
     "name": "Pan figacitas (pack x6) Miska",
-    "category": "Miska",
-    "price": 5575,
+    "category": "Panificados y Pastas Miska",
+    "price": 5600,
     "description": "Presentación: pack x6 unidades.",
     "image": "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/miska/pan-figacitas-1.webp",
     "stock": 2,
-    "available": false,
+    "available": true,
     "imageX": 50,
     "imageY": 50,
     "imageZoom": 1,
@@ -1087,8 +1087,8 @@
   {
     "id": "miska-focaccia",
     "name": "Focaccia (cebolla, tomates cherrys y albahaca) Miska",
-    "category": "Miska",
-    "price": 5575,
+    "category": "Panificados y Pastas Miska",
+    "price": 5600,
     "description": "Con cebolla, tomates cherrys y albahaca.",
     "image": "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/miska/focaccia.webp",
     "images": [
@@ -1096,7 +1096,7 @@
       "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/miska/focaccia-2.webp"
     ],
     "stock": 2,
-    "available": false,
+    "available": true,
     "imageX": 50,
     "imageY": 50,
     "imageZoom": 1,
@@ -1108,8 +1108,8 @@
   {
     "id": "plantario-medallon-tabbule",
     "name": "Medallón Plant Based Tabbule (pack x4) Plantario",
-    "category": "Plantario",
-    "price": 3528,
+    "category": "Hamburguesas Veggie Plantario",
+    "price": 3550,
     "description": "Presentación: pack x4 unidades.",
     "image": "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/miska/hamburguesa-tabule-siria-plantario.webp",
     "images": [
@@ -1117,7 +1117,7 @@
       "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/miska/hamburguesa-tabule-siria-plantario-2.webp"
     ],
     "stock": 1,
-    "available": false,
+    "available": true,
     "imageX": 50,
     "imageY": 50,
     "imageZoom": 1,
@@ -1129,8 +1129,8 @@
   {
     "id": "plantario-medallon-falafel",
     "name": "Medallón Plant Based Falafel (pack x4) Plantario",
-    "category": "Plantario",
-    "price": 3118,
+    "category": "Hamburguesas Veggie Plantario",
+    "price": 3200,
     "description": "Presentación: pack x4 unidades.",
     "image": "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/miska/hamburguesa-falabel-plantario.webp",
     "images": [
@@ -1150,8 +1150,8 @@
   {
     "id": "plantario-medallon-burrito",
     "name": "Medallón Plant Based Burrito (pack x4) Plantario",
-    "category": "Plantario",
-    "price": 3379,
+    "category": "Hamburguesas Veggie Plantario",
+    "price": 3390,
     "description": "Presentación: pack x4 unidades.",
     "image": "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/miska/hamburguesa-burrito-mexico-plantario.webp",
     "images": [
@@ -1159,7 +1159,7 @@
       "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/miska/hamburguesa-burrito-mexico-plantario-2.webp"
     ],
     "stock": 1,
-    "available": false,
+    "available": true,
     "imageX": 50,
     "imageY": 50,
     "imageZoom": 1,
@@ -1171,8 +1171,8 @@
   {
     "id": "plantario-medallon-curry",
     "name": "Medallón Plant Based Curry Plantario",
-    "category": "Plantario",
-    "price": 4579,
+    "category": "Hamburguesas Veggie Plantario",
+    "price": 4590,
     "description": "",
     "image": "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/miska/hamburguesa-curry-india-plantario.webp",
     "images": [
@@ -1180,7 +1180,7 @@
       "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/miska/hamburguesa-curry-india-plantario-2.webp"
     ],
     "stock": 1,
-    "available": false,
+    "available": true,
     "imageX": 50,
     "imageY": 50,
     "imageZoom": 1,
