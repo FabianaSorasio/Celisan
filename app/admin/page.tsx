@@ -116,6 +116,9 @@ export default function AdminPage() {
   const [savingCoupons, setSavingCoupons] = useState(false);
   const [visits, setVisits] = useState<{ total: number; today: number; last7Days: number } | null>(null);
   const [excludingDevice, setExcludingDevice] = useState(false);
+  const [showRanking, setShowRanking] = useState(false);
+  const [ranking, setRanking] = useState<{ productId: string; count: number }[]>([]);
+  const [rankingLoading, setRankingLoading] = useState(false);
 
   // Verificar sesión al cargar (la cookie es httpOnly, no se puede leer desde JS)
   useEffect(() => {
@@ -309,6 +312,20 @@ export default function AdminPage() {
     fetchCoupons();
   };
 
+  const openRanking = async () => {
+    setShowRanking(true);
+    setRankingLoading(true);
+    try {
+      const res = await fetch("/api/admin/product-views");
+      const data = await res.json();
+      setRanking(data.ranking ?? []);
+    } catch {
+      showToast("Error al cargar el ranking", false);
+    } finally {
+      setRankingLoading(false);
+    }
+  };
+
   const handleSaveCoupons = async () => {
     setSavingCoupons(true);
     try {
@@ -468,6 +485,12 @@ export default function AdminPage() {
             <span className="sm:hidden">📵</span>
             <span className="hidden sm:inline">📵 No contar este dispositivo</span>
           </button>
+          <button
+            onClick={openRanking}
+            className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-white/10 text-white font-bold text-sm hover:bg-white/20 transition-colors"
+          >
+            🏆 Más vistos
+          </button>
           <a href="/" target="_blank" className="text-xs text-white/80 hover:text-white underline">Ver sitio</a>
           <button
             onClick={openCoupons}
@@ -567,6 +590,16 @@ export default function AdminPage() {
           onChange={setCoupons}
           onSave={handleSaveCoupons}
           onClose={() => setShowCoupons(false)}
+        />
+      )}
+
+      {/* Modal de ranking de productos más vistos */}
+      {showRanking && (
+        <RankingModal
+          ranking={ranking}
+          products={products}
+          loading={rankingLoading}
+          onClose={() => setShowRanking(false)}
         />
       )}
 
@@ -742,6 +775,66 @@ function CouponsModal({
           >
             {saving ? "Guardando..." : "Guardar cambios"}
           </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Modal de ranking de productos más vistos ────────────────────────────────────
+
+function RankingModal({
+  ranking,
+  products,
+  loading,
+  onClose,
+}: {
+  ranking: { productId: string; count: number }[];
+  products: Product[];
+  loading: boolean;
+  onClose: () => void;
+}) {
+  const top5 = ranking.slice(0, 5);
+  const medals = ["🥇", "🥈", "🥉", "4️⃣", "5️⃣"];
+
+  return (
+    <div className="fixed inset-0 z-[70] flex items-center justify-center p-4">
+      <div className="absolute inset-0 bg-black/40" onClick={onClose} aria-hidden />
+      <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-md max-h-[85vh] flex flex-col">
+        <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
+          <h2 className="font-bold text-gray-800">🏆 Productos más vistos</h2>
+          <button onClick={onClose} className="w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center text-gray-400" aria-label="Cerrar">✕</button>
+        </div>
+
+        <div className="flex-1 overflow-y-auto p-5">
+          <p className="text-xs text-gray-400 mb-4">
+            Cuenta cada vez que un cliente toca la foto o el video de un producto para ampliarlo. De cualquier categoría.
+          </p>
+
+          {loading ? (
+            <p className="text-center text-gray-400 py-10 text-sm">Cargando...</p>
+          ) : top5.length === 0 ? (
+            <p className="text-center text-gray-400 py-10 text-sm">Todavía no hay datos suficientes.</p>
+          ) : (
+            <div className="space-y-2">
+              {top5.map((item, i) => {
+                const product = products.find((p) => p.id === item.productId);
+                return (
+                  <div key={item.productId} className="flex items-center gap-3 p-2.5 rounded-xl border border-gray-100 bg-gray-50">
+                    <span className="text-lg flex-shrink-0">{medals[i]}</span>
+                    {product?.image && (
+                      <img src={product.image} alt="" className="w-10 h-10 rounded-lg object-cover flex-shrink-0" />
+                    )}
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-semibold text-gray-800 truncate">{product?.name ?? "Producto eliminado"}</p>
+                      {product && <p className="text-[11px] text-gray-400 truncate">{product.category}</p>}
+                    </div>
+                    <span className="text-sm font-bold text-celisan-red flex-shrink-0">{item.count}</span>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
       </div>
     </div>

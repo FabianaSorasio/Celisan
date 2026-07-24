@@ -16,3 +16,11 @@ export function hasCookie(req: Request, name: string): boolean {
   const cookieHeader = req.headers.get("cookie") ?? "";
   return new RegExp(`(?:^|;\\s*)${name}=`).test(cookieHeader);
 }
+
+export function getCookieValue(req: Request, name: string): string | null {
+  const cookieHeader = req.headers.get("cookie") ?? "";
+  const match = cookieHeader.match(new RegExp(`(?:^|;\\s*)${name}=([^;]*)`));
+  return match ? decodeURIComponent(match[1]) : null;
+}
+
+export const VIEWED_PRODUCTS_COOKIE = "celisan_viewed";

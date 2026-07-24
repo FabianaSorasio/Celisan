@@ -82,6 +82,15 @@ export default function ProductCard({ product }: ProductCardProps) {
     : product.stock;
 
   const isSinLactosa = product.name.toLowerCase().includes("sin lactosa");
+
+  const trackProductView = () => {
+    fetch("/api/track/product-view", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ productId: product.id }),
+    }).catch(() => {});
+  };
+
   const highlightedTitle = product.name.match(/(.*)\s(x[24]\.?)$/i);
   const detailLines = product.description
     ? product.description.split("\n").filter(Boolean)
@@ -99,7 +108,11 @@ export default function ProductCard({ product }: ProductCardProps) {
         <button
           type="button"
           className="absolute inset-0 w-full h-full focus:outline-none cursor-zoom-in"
-          onClick={() => (product.video ? setVideoOpen(true) : setImageOpen(true))}
+          onClick={() => {
+            trackProductView();
+            if (product.video) setVideoOpen(true);
+            else setImageOpen(true);
+          }}
           aria-label={product.video ? `Ver video de ${product.name}` : `Ampliar imagen de ${product.name}`}
         >
           <img
@@ -156,6 +169,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             type="button"
             onClick={(e) => {
               e.stopPropagation();
+              trackProductView();
               setVideoOpen(true);
             }}
             className="absolute top-3 left-3 px-2 py-1 rounded-lg bg-black/50 text-white text-xs font-semibold flex items-center gap-1 hover:bg-black/70 transition-colors"
