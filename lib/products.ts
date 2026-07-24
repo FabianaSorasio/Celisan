@@ -7,6 +7,8 @@ export const CATALOG_CATEGORIES = [
   "Postres individuales",
   "Desayunos y Meriendas",
   "Vianda Fiesta!",
+  "Panificados y Pastas Miska",
+  "Hamburguesas Veggie Plantario",
 ] as const;
 
 export type CatalogCategoryFilter = (typeof CATALOG_CATEGORIES)[number];
