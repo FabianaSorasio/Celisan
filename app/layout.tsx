@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import { CartProvider } from "@/components/CartProvider";
 import WhatsAppFloatingButton from "@/components/WhatsAppFloatingButton";
+import VisitTracker from "@/components/VisitTracker";
 
 const roboto = Roboto({
   weight: ["400", "500", "700"],
@@ -29,6 +30,7 @@ export default function RootLayout({
     <html lang="es">
       <body className={`${roboto.className} min-h-screen bg-cream text-gray-800 antialiased`}>
         <CartProvider>
+          <VisitTracker />
           <Header />
           {children}
           <WhatsAppFloatingButton />

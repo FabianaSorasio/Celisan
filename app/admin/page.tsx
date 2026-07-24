@@ -114,6 +114,8 @@ export default function AdminPage() {
   const [coupons, setCoupons] = useState<Coupon[]>([]);
   const [couponsLoading, setCouponsLoading] = useState(false);
   const [savingCoupons, setSavingCoupons] = useState(false);
+  const [visits, setVisits] = useState<{ total: number; today: number; last7Days: number } | null>(null);
+  const [excludingDevice, setExcludingDevice] = useState(false);
 
   // Verificar sesión al cargar (la cookie es httpOnly, no se puede leer desde JS)
   useEffect(() => {
@@ -145,6 +147,26 @@ export default function AdminPage() {
   useEffect(() => {
     if (isLoggedIn) fetchProducts();
   }, [isLoggedIn, fetchProducts]);
+
+  useEffect(() => {
+    if (!isLoggedIn) return;
+    fetch("/api/admin/visits")
+      .then((res) => res.json())
+      .then((data) => setVisits(data))
+      .catch(() => setVisits(null));
+  }, [isLoggedIn]);
+
+  const handleExcludeDevice = async () => {
+    setExcludingDevice(true);
+    try {
+      await fetch("/api/track/exclude-device");
+      showToast("Este dispositivo ya no se va a contar como visita");
+    } catch {
+      showToast("No se pudo excluir el dispositivo", false);
+    } finally {
+      setExcludingDevice(false);
+    }
+  };
 
   // ── Login ─────────────────────────────────────────────────────────────────
 
@@ -430,6 +452,21 @@ export default function AdminPage() {
           </div>
         </div>
         <div className="flex items-center gap-3">
+          {visits && (
+            <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 text-white text-xs" title={`${visits.today} hoy · ${visits.last7Days} últimos 7 días`}>
+              <span>👁</span>
+              <span className="font-bold">{visits.total.toLocaleString("es-AR")}</span>
+              <span className="text-white/70">visitas</span>
+            </div>
+          )}
+          <button
+            onClick={handleExcludeDevice}
+            disabled={excludingDevice}
+            title="Usá esto en tu celular/PC para que tus propias visitas no sumen al contador"
+            className="hidden sm:block text-xs text-white/70 hover:text-white px-3 py-2 rounded-lg hover:bg-white/10 disabled:opacity-50"
+          >
+            📵 No contar este dispositivo
+          </button>
           <a href="/" target="_blank" className="text-xs text-white/80 hover:text-white underline">Ver sitio</a>
           <button
             onClick={openCoupons}
