@@ -81,7 +81,7 @@ export default function ProductCard({ product }: ProductCardProps) {
     ? (sabor === "Dulces" ? product.stockDulces ?? 0 : product.stockSalados ?? 0)
     : product.stock;
 
-  const isSinLactosa = product.name.toLowerCase().includes("sin lactosa");
+  const isSinLactosa = /sin (lactosa|l[aá]cteos?)/i.test(product.name);
 
   const trackProductView = () => {
     fetch("/api/track/product-view", {

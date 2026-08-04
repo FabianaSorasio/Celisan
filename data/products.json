@@ -1267,5 +1267,40 @@
     "stockSalados": 1,
     "sinSelectorSabor": false,
     "variantes": []
+  },
+  {
+    "id": "prod-1785436424886",
+    "name": "Frolitas N° 10",
+    "description": "",
+    "price": 2300,
+    "image": "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/uploads/1785436472408-1000373841.jpg",
+    "category": "Panificados y Pastas congeladas Soy Sin Gluten",
+    "stock": 5,
+    "available": true,
+    "imageX": 50,
+    "imageY": 55,
+    "imageZoom": 1
+  },
+  {
+    "id": "prod-1785798010075",
+    "name": "Waffles integrales salados x 2 unidades sin lacteo",
+    "description": "Wafles por dos unidades con trigo sarraceno, sin lácteo",
+    "price": 6000,
+    "image": "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/uploads/1785798045515-whatsapp-image-2026-08-03-at-19.55.27.jpeg",
+    "images": [
+      "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/uploads/1785798045515-whatsapp-image-2026-08-03-at-19.55.27.jpeg",
+      "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/uploads/1785798039155-whatsapp-image-2026-08-03-at-19.55.32.jpeg"
+    ],
+    "video": "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/uploads/1785798071046-whatsapp-video-2026-08-03-at-19.55.32.mp4",
+    "category": "Waffles Congelados",
+    "stock": 0,
+    "available": true,
+    "imageX": 50,
+    "imageY": 50,
+    "imageZoom": 1,
+    "stockDulces": 0,
+    "stockSalados": 5,
+    "sinSelectorSabor": false,
+    "variantes": []
   }
 ]
