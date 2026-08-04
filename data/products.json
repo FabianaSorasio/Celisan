@@ -1293,14 +1293,14 @@
     ],
     "video": "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/uploads/1785798071046-whatsapp-video-2026-08-03-at-19.55.32.mp4",
     "category": "Waffles Congelados",
-    "stock": 0,
+    "stock": 5,
     "available": true,
     "imageX": 50,
     "imageY": 50,
     "imageZoom": 1,
     "stockDulces": 0,
-    "stockSalados": 5,
-    "sinSelectorSabor": false,
+    "stockSalados": 0,
+    "sinSelectorSabor": true,
     "variantes": []
   }
 ]
