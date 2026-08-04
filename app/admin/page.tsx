@@ -119,6 +119,8 @@ export default function AdminPage() {
   const [showRanking, setShowRanking] = useState(false);
   const [ranking, setRanking] = useState<{ productId: string; count: number }[]>([]);
   const [rankingLoading, setRankingLoading] = useState(false);
+  const [selectMode, setSelectMode] = useState(false);
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
 
   // Verificar sesión al cargar (la cookie es httpOnly, no se puede leer desde JS)
   useEffect(() => {
@@ -326,6 +328,63 @@ export default function AdminPage() {
     }
   };
 
+  // Igual que en el catálogo público: no se muestra esta categoría todavía.
+  const WHATSAPP_LIST_HIDDEN: ProductCategory[] = ["Waffles con Cobertura"];
+
+  function effectiveStock(p: Product): number {
+    if (p.variantes && p.variantes.length > 0) {
+      return p.variantes.reduce((sum, v) => sum + v.stock, 0);
+    }
+    if (p.category === "Waffles Congelados") {
+      return (p.stockDulces ?? 0) + (p.stockSalados ?? 0);
+    }
+    return p.stock;
+  }
+
+  const buildWhatsAppList = (items: Product[], intro: string) => {
+    const lines: string[] = [intro, ""];
+
+    for (const category of CATEGORIES) {
+      if (WHATSAPP_LIST_HIDDEN.includes(category)) continue;
+      const inCat = items.filter((p) => p.category === category);
+      if (inCat.length === 0) continue;
+      lines.push(`*${category}*`);
+      for (const p of inCat) {
+        lines.push(`• ${p.name} — $${p.price.toLocaleString("es-AR")}`);
+      }
+      lines.push("");
+    }
+
+    lines.push("Contame qué te gustaría pedir y lo coordinamos 😊");
+
+    const url = `https://wa.me/?text=${encodeURIComponent(lines.join("\n"))}`;
+    window.open(url, "_blank");
+  };
+
+  const handleSendWhatsAppList = () => {
+    const inStock = products.filter(
+      (p) => p.available !== false && !WHATSAPP_LIST_HIDDEN.includes(p.category) && effectiveStock(p) > 0
+    );
+    buildWhatsAppList(inStock, "¡Hola! 👋 Este es el catálogo completo de Celisan, con lo que tenemos disponible ahora:");
+  };
+
+  const toggleSelected = (id: string) => {
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const handleSendSelection = () => {
+    const chosen = products.filter((p) => selectedIds.has(p.id));
+    if (chosen.length === 0) return;
+    buildWhatsAppList(chosen, "¡Hola! 👋 Te paso estas opciones de Celisan:");
+    setSelectMode(false);
+    setSelectedIds(new Set());
+  };
+
   const handleSaveCoupons = async () => {
     setSavingCoupons(true);
     try {
@@ -485,6 +544,41 @@ export default function AdminPage() {
             <span className="sm:hidden">📵</span>
             <span className="hidden sm:inline">📵 No contar este dispositivo</span>
           </button>
+          {selectMode ? (
+            <>
+              <span className="text-xs text-white/80">{selectedIds.size} seleccionados</span>
+              <button
+                onClick={handleSendSelection}
+                disabled={selectedIds.size === 0}
+                className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-white text-celisan-red font-bold text-sm hover:bg-gray-100 transition-colors disabled:opacity-50"
+              >
+                📋 Enviar selección
+              </button>
+              <button
+                onClick={() => { setSelectMode(false); setSelectedIds(new Set()); }}
+                className="text-xs text-white/70 hover:text-white px-3 py-2 rounded-lg hover:bg-white/10"
+              >
+                Cancelar
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                onClick={handleSendWhatsAppList}
+                title="Arma la lista de todo lo que tiene stock y abre WhatsApp Web para mandársela a un cliente"
+                className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-white/10 text-white font-bold text-sm hover:bg-white/20 transition-colors"
+              >
+                📋 Todo el stock
+              </button>
+              <button
+                onClick={() => setSelectMode(true)}
+                title="Elegí productos puntuales para armar una lista más corta"
+                className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-white/10 text-white font-bold text-sm hover:bg-white/20 transition-colors"
+              >
+                ☑️ Elegir productos
+              </button>
+            </>
+          )}
           <button
             onClick={openRanking}
             className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-white/10 text-white font-bold text-sm hover:bg-white/20 transition-colors"
@@ -558,6 +652,9 @@ export default function AdminPage() {
                   onMoveDown={() => handleMoveProduct(product.id, "down")}
                   isFirst={posInCat === 0}
                   isLast={posInCat === sameInDisplayed.length - 1}
+                  selectMode={selectMode}
+                  selected={selectedIds.has(product.id)}
+                  onToggleSelect={() => toggleSelected(product.id)}
                 />
               );
             })}
@@ -852,6 +949,9 @@ function AdminCard({
   onMoveDown,
   isFirst,
   isLast,
+  selectMode = false,
+  selected = false,
+  onToggleSelect,
 }: {
   product: Product;
   onEdit: () => void;
@@ -861,6 +961,9 @@ function AdminCard({
   onMoveDown: () => void;
   isFirst: boolean;
   isLast: boolean;
+  selectMode?: boolean;
+  selected?: boolean;
+  onToggleSelect?: () => void;
 }) {
   const isHidden = product.available === false;
   const hasVariantes = !!product.variantes?.length;
@@ -873,8 +976,20 @@ function AdminCard({
     : product.stock <= 0;
 
   return (
-    <div className={`bg-white rounded-xl border ${isHidden ? "border-gray-200 opacity-60" : "border-gray-100"} overflow-hidden shadow-sm flex flex-col`}>
+    <div
+      onClick={selectMode ? onToggleSelect : undefined}
+      className={`bg-white rounded-xl border overflow-hidden shadow-sm flex flex-col ${
+        selectMode
+          ? `cursor-pointer ${selected ? "border-celisan-red ring-2 ring-celisan-red" : "border-gray-200 hover:border-gray-300"}`
+          : `${isHidden ? "border-gray-200 opacity-60" : "border-gray-100"}`
+      }`}
+    >
       <div className="aspect-[4/3] relative bg-gray-100 overflow-hidden">
+        {selectMode && (
+          <div className={`absolute top-2 right-2 z-10 w-6 h-6 rounded-md border-2 flex items-center justify-center transition-colors ${selected ? "bg-celisan-red border-celisan-red" : "bg-white/90 border-gray-300"}`}>
+            {selected && <span className="text-white font-bold text-sm leading-none">✓</span>}
+          </div>
+        )}
         <img
           src={product.image}
           alt={product.name}
@@ -919,35 +1034,39 @@ function AdminCard({
             </span>
           )}
         </div>
-        <div className="flex gap-1.5">
-          <button onClick={onToggle} className={`flex-1 py-1.5 rounded-lg text-xs font-semibold transition-colors ${isHidden ? "bg-green-100 text-green-700 hover:bg-green-200" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}>
-            {isHidden ? "👁 Mostrar" : "🙈 Ocultar"}
-          </button>
-          <button onClick={onEdit} className="flex-1 py-1.5 rounded-lg bg-celisan-red/10 text-celisan-red text-xs font-semibold hover:bg-celisan-red/20">
-            ✏️ Editar
-          </button>
-          <button onClick={onDelete} className="py-1.5 px-2.5 rounded-lg bg-gray-100 text-gray-500 hover:bg-red-50 hover:text-red-500 text-xs">
-            🗑
-          </button>
-        </div>
-        <div className="flex gap-1.5 mt-1.5">
-          <button
-            onClick={onMoveUp}
-            disabled={isFirst}
-            className="flex-1 py-1.5 rounded-lg bg-gray-50 text-gray-500 text-xs font-semibold hover:bg-gray-100 disabled:opacity-25 disabled:cursor-not-allowed transition-colors"
-            title="Mover arriba en la categoría"
-          >
-            ↑ Subir
-          </button>
-          <button
-            onClick={onMoveDown}
-            disabled={isLast}
-            className="flex-1 py-1.5 rounded-lg bg-gray-50 text-gray-500 text-xs font-semibold hover:bg-gray-100 disabled:opacity-25 disabled:cursor-not-allowed transition-colors"
-            title="Mover abajo en la categoría"
-          >
-            ↓ Bajar
-          </button>
-        </div>
+        {!selectMode && (
+          <>
+            <div className="flex gap-1.5">
+              <button onClick={onToggle} className={`flex-1 py-1.5 rounded-lg text-xs font-semibold transition-colors ${isHidden ? "bg-green-100 text-green-700 hover:bg-green-200" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}>
+                {isHidden ? "👁 Mostrar" : "🙈 Ocultar"}
+              </button>
+              <button onClick={onEdit} className="flex-1 py-1.5 rounded-lg bg-celisan-red/10 text-celisan-red text-xs font-semibold hover:bg-celisan-red/20">
+                ✏️ Editar
+              </button>
+              <button onClick={onDelete} className="py-1.5 px-2.5 rounded-lg bg-gray-100 text-gray-500 hover:bg-red-50 hover:text-red-500 text-xs">
+                🗑
+              </button>
+            </div>
+            <div className="flex gap-1.5 mt-1.5">
+              <button
+                onClick={onMoveUp}
+                disabled={isFirst}
+                className="flex-1 py-1.5 rounded-lg bg-gray-50 text-gray-500 text-xs font-semibold hover:bg-gray-100 disabled:opacity-25 disabled:cursor-not-allowed transition-colors"
+                title="Mover arriba en la categoría"
+              >
+                ↑ Subir
+              </button>
+              <button
+                onClick={onMoveDown}
+                disabled={isLast}
+                className="flex-1 py-1.5 rounded-lg bg-gray-50 text-gray-500 text-xs font-semibold hover:bg-gray-100 disabled:opacity-25 disabled:cursor-not-allowed transition-colors"
+                title="Mover abajo en la categoría"
+              >
+                ↓ Bajar
+              </button>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
