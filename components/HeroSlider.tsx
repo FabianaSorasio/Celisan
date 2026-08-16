@@ -35,18 +35,22 @@ interface Slide {
   textPosition?: TextPosition;
   /** Logo pequeño que aparece debajo del botón CTA */
   logo?: string;
+  /** Muestra la placa "Sin Lácteos" junto a la de "Sin Gluten", solo en este slide */
+  sinLactosa?: boolean;
 }
 
 const SLIDES: Slide[] = [
   // 1 — Desayunos y Meriendas
   {
     id: 0,
-    image: "/images/banner/banner-desayunos.png",
-    imageAlt: "Desayuno y merienda artesanal sin gluten para regalar",
+    image: "/images/banner/banner-box-proteico.png",
+    imageAlt: "Box proteico con waffle integral sin gluten y sin lácteos para regalar",
     overlayClassName: "from-black/75 via-black/45 to-olive/30",
-    title: "Box Desayunos o Meriendas para regalar",
-    subtitle: "Desde el proteico para tu dieta fitness al clásico de jamón y queso — cambiá los ingredientes a tu gusto, ¡todo es posible!",
+    kicker: "¡Novedad!",
+    title: "Box proteico con waffle integral",
+    subtitle: "Ideal para tu dieta fitness — con waffle integral, sin gluten y sin lácteos. También tenés el clásico de jamón y queso y más opciones para regalar.",
     subtitleBelow: true,
+    sinLactosa: true,
     cta: "Ver Desayunos y Meriendas",
     action: "desayunos",
   },
@@ -317,6 +321,17 @@ export default function HeroSlider() {
             className="w-full h-full object-contain"
           />
         </div>
+
+        {/* Placa "Sin Lácteos" — solo en los slides que la necesitan */}
+        {SLIDES[active]?.sinLactosa && (
+          <div className="absolute top-16 right-3 sm:top-20 sm:right-4 z-20 w-11 h-11 sm:w-14 sm:h-14 drop-shadow-lg">
+            <img
+              src="/images/banner/badge-sin-lacteos.png"
+              alt="Sin Lácteos"
+              className="w-full h-full object-contain"
+            />
+          </div>
+        )}
 
         {/* Flechas */}
         <button
