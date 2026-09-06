@@ -37,13 +37,19 @@ interface Slide {
   logo?: string;
   /** Muestra la placa "Sin Lácteos" junto a la de "Sin Gluten", solo en este slide */
   sinLactosa?: boolean;
+  /** Texto legal/aclaratorio chico, debajo de todo (ej: condiciones de una promo) */
+  legal?: string;
+  /** "contain" muestra la foto completa sin recortar (con fondo difuminado a los
+   * costados) — usar con fotos verticales donde no se puede perder nada. Por
+   * defecto "cover" (llena todo el banner, recortando lo que no entra). */
+  imageFit?: "cover" | "contain";
 }
 
 const SLIDES: Slide[] = [
   // 1 — Desayunos y Meriendas
   {
     id: 0,
-    image: "/images/banner/banner-box-proteico.png",
+    image: "/images/banner/banner-box-proteico.webp",
     imageAlt: "Box proteico con waffle integral sin gluten y sin lácteos para regalar",
     overlayClassName: "from-black/75 via-black/45 to-olive/30",
     kicker: "¡Novedad!",
@@ -57,7 +63,7 @@ const SLIDES: Slide[] = [
   // 2 — Waffles salados congelados (foto de fondo)
   {
     id: 1,
-    image: "/images/banner/banner-waffle-salado-foto.jpg",
+    image: "/images/banner/banner-waffle-salado-foto.webp",
     imageAlt: "Waffle salado congelado sin gluten",
     overlayClassName: "from-[#3d2314]/85 via-[#5c3a2a]/60 to-black/40",
     kicker: "Waffles congelados salados:",
@@ -69,7 +75,7 @@ const SLIDES: Slide[] = [
   // 3 — Soy Sin Gluten
   {
     id: 2,
-    image: "/images/banner/banner-soysingluten.jpg",
+    image: "/images/banner/banner-soysingluten.webp",
     imageAlt: "Sorrentinos sin gluten con salsa — Soy Sin Gluten",
     overlayClassName: "from-black/55 via-black/25 to-transparent",
     title: "Sabor casero,\n100% sin gluten",
@@ -77,12 +83,12 @@ const SLIDES: Slide[] = [
       "Todo un abanico de posibilidades de comidas congeladas sin gluten.",
     cta: "Ver Viandas Sin Gluten",
     action: "viandas",
-    logo: "/images/banner/logo-soysingluten.png",
+    logo: "/images/banner/logo-soysingluten.webp",
   },
   // 4 — Postres individuales
   {
     id: 3,
-    image: "/images/banner/banner-postres.jpg",
+    image: "/images/banner/banner-postres.webp",
     imageAlt: "Postre individual de chocolate con crema mascarpone sin gluten",
     overlayClassName: "from-black/75 via-black/40 to-transparent",
     title: "Postres que enamoran",
@@ -94,7 +100,7 @@ const SLIDES: Slide[] = [
   // 5 — Delivery
   {
     id: 4,
-    image: "/images/banner/banner-delivery.png",
+    image: "/images/banner/banner-delivery.webp",
     imageAlt: "Delivery Celisan — llevamos el sabor a tu puerta",
     overlayClassName: "from-black/80 via-olive/55 to-black/35",
     title: "¡Llevamos el sabor a tu puerta!",
@@ -104,6 +110,24 @@ const SLIDES: Slide[] = [
     action: "catalog",
     ctaHref:
       "https://wa.me/5493564626508?text=Hola%20Celisan!%20Quería%20consultar%20los%20días,%20horarios%20y%20costos%20del%20servicio%20de%20delivery",
+  },
+  // 6 — Evento Tarde de Waffles en Bar Gardenia (sin publicar hasta confirmar fecha)
+  {
+    id: 5,
+    image: "/images/banner/banner-tarde-waffles-gardenia.webp",
+    imageAlt: "Tarde de Waffles en Bar Gardenia — waffle con avocado y café",
+    imageFit: "contain",
+    overlayClassName: "from-black/75 via-black/45 to-transparent",
+    kicker: "Evento especial",
+    title: "Tarde de Waffles en Bar Gardenia",
+    subtitle: "Fecha y hora a confirmar — ¡no te lo pierdas!",
+    subtitleBelow: true,
+    cta: "Consultar por WhatsApp",
+    action: "catalog",
+    ctaHref:
+      "https://wa.me/5493564626508?text=Hola%20Celisan!%20Quería%20consultar%20por%20la%20Tarde%20de%20Waffles%20en%20Bar%20Gardenia",
+    logo: "/images/banner/logo-gardenia.webp",
+    legal: "Precios promocionales por degustación. Dos variantes: proteica y clásica. Opción waffle integral para alérgicos a la lactosa.",
   },
 ];
 
@@ -227,13 +251,33 @@ export default function HeroSlider() {
                   autoPlay={isActive}
                   className="absolute inset-0 w-full h-full object-contain object-center bg-gray-900"
                 />
+              ) : slide.image && slide.imageFit === "contain" ? (
+                <>
+                  {/* Fondo difuminado de la misma foto, para rellenar los costados sin recortar la imagen */}
+                  <Image
+                    src={slide.image}
+                    alt=""
+                    aria-hidden="true"
+                    fill
+                    className="object-cover blur-2xl scale-110 opacity-50"
+                    sizes="100vw"
+                  />
+                  <Image
+                    src={slide.image}
+                    alt={slide.imageAlt}
+                    fill
+                    priority={index === 0}
+                    className="object-contain"
+                    sizes="100vw"
+                  />
+                </>
               ) : slide.image ? (
                 <Image
                   src={slide.image}
                   alt={slide.imageAlt}
                   fill
                   priority={index === 0}
-                  className="object-cover object-center"
+                  className={`object-cover ${slide.imageClassName ?? "object-center"}`}
                   sizes="100vw"
                 />
               ) : null}
@@ -306,6 +350,11 @@ export default function HeroSlider() {
                         className="mt-3 h-20 sm:h-28 lg:h-36 w-auto object-contain drop-shadow-md"
                       />
                     )}
+                    {slide.legal && (
+                      <p className="mt-2 text-[10px] sm:text-xs text-white/60 leading-snug max-w-sm">
+                        {slide.legal}
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
@@ -316,7 +365,7 @@ export default function HeroSlider() {
         {/* Placa "Sin Gluten" — fija, visible en todos los slides */}
         <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20 w-11 h-11 sm:w-14 sm:h-14 drop-shadow-lg">
           <img
-            src="/images/banner/badge-sin-gluten.png"
+            src="/images/banner/badge-sin-gluten.webp"
             alt="Certificado Sin Gluten"
             className="w-full h-full object-contain"
           />
@@ -326,7 +375,7 @@ export default function HeroSlider() {
         {SLIDES[active]?.sinLactosa && (
           <div className="absolute top-16 right-3 sm:top-20 sm:right-4 z-20 w-11 h-11 sm:w-14 sm:h-14 drop-shadow-lg">
             <img
-              src="/images/banner/badge-sin-lacteos.png"
+              src="/images/banner/badge-sin-lacteos.webp"
               alt="Sin Lácteos"
               className="w-full h-full object-contain"
             />
