@@ -111,6 +111,23 @@ const SLIDES: Slide[] = [
     ctaHref:
       "https://wa.me/5493564626508?text=Hola%20Celisan!%20Quería%20consultar%20los%20días,%20horarios%20y%20costos%20del%20servicio%20de%20delivery",
   },
+  // 6 — Evento Tarde de Waffles en Bar Gardenia (sin publicar hasta confirmar fecha)
+  {
+    id: 5,
+    image: "/images/banner/banner-tarde-waffles-gardenia-v2.webp",
+    imageAlt: "Tarde de Waffles en Bar Gardenia — waffle con avocado y café",
+    overlayClassName: "from-black/80 via-black/50 to-transparent",
+    kicker: "Evento especial",
+    title: "Tarde de Waffles en Bar Gardenia",
+    subtitle: "Fecha y hora a confirmar — ¡no te lo pierdas!",
+    subtitleBelow: true,
+    cta: "Consultar por WhatsApp",
+    action: "catalog",
+    ctaHref:
+      "https://wa.me/5493564626508?text=%C2%A1Hola%20Celisan!%20Quiero%20m%C3%A1s%20info%20para%20reservar%20mesa%20en%20la%20Tarde%20de%20Waffles%20en%20Bar%20Gardenia.%20%C2%BFHay%20disponibilidad%3F",
+    logo: "/images/banner/logo-gardenia.webp",
+    legal: "Precios promocionales por degustación. Dos variantes: proteica y clásica. Opción waffle integral para alérgicos a la lactosa.",
+  },
 ];
 
 function scrollToId(id: string) {
