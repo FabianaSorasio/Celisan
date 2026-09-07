@@ -88,7 +88,7 @@ const SLIDES: Slide[] = [
   // 4 — Postres individuales
   {
     id: 3,
-    image: "/images/banner/banner-postres.webp",
+    image: "/images/banner/banner-postres-v3.webp",
     imageAlt: "Postre individual de chocolate con crema mascarpone sin gluten",
     overlayClassName: "from-black/75 via-black/40 to-transparent",
     title: "Postres que enamoran",
