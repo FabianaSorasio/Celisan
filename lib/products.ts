@@ -9,7 +9,7 @@ export const CATALOG_CATEGORIES = [
   "Vianda Fiesta!",
   "Panificados y Pastas Miska",
   "Hamburguesas Veggie Plantario",
-  "Productos By Giro",
+  "Pancakes By Giro",
 ] as const;
 
 export type CatalogCategoryFilter = (typeof CATALOG_CATEGORIES)[number];
