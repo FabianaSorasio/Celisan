@@ -24,7 +24,13 @@ interface Slide {
   /** Texto chico opcional arriba del título (ej: "Waffles congelados salados:") */
   kicker?: string;
   title: string;
+  /** Si se define, reemplaza el texto de title por un logo/tipografía ilustrada */
+  titleImage?: string;
   subtitle: string;
+  /** Texto en negrita que antecede al subtitle (ej: fecha y hora de un evento) */
+  subtitleBold?: string;
+  /** Agrega "¡Con música en vivo!" en negrita al final del subtítulo */
+  musicLive?: boolean;
   /** Si true, el subtitle se muestra debajo del botón CTA en lugar de arriba */
   subtitleBelow?: boolean;
   cta: string;
@@ -46,7 +52,27 @@ interface Slide {
 }
 
 const SLIDES: Slide[] = [
-  // 1 — Desayunos y Meriendas
+  // 1 — Evento Tarde de Waffles en Bar Gardenia
+  {
+    id: 5,
+    image: "/images/banner/banner-tarde-waffles-gardenia-v2.webp",
+    imageAlt: "Tarde de Waffles en Bar Gardenia — waffle con avocado y café",
+    overlayClassName: "from-black/80 via-black/50 to-transparent",
+    kicker: "Evento especial",
+    title: "Tarde de Waffles en Bar Gardenia",
+    titleImage: "/images/banner/logo-tarde-de-waffles.webp",
+    subtitleBold: "Sábado 10 de octubre, a partir de las 17 hs — ",
+    subtitle: "con reserva previa, ¡lugares limitados!",
+    subtitleBelow: true,
+    musicLive: true,
+    cta: "Consultar por WhatsApp",
+    action: "catalog",
+    ctaHref:
+      "https://wa.me/5493564626508?text=%C2%A1Hola%20Celisan!%20Quiero%20m%C3%A1s%20info%20para%20reservar%20mesa%20en%20la%20Tarde%20de%20Waffles%20en%20Bar%20Gardenia.%20%C2%BFHay%20disponibilidad%3F",
+    logo: "/images/banner/logo-gardenia.webp",
+    legal: "Precios promocionales por degustación. Dos variantes: proteica y clásica. Opción waffle integral para alérgicos a la lactosa.",
+  },
+  // 2 — Desayunos y Meriendas
   {
     id: 0,
     image: "/images/banner/banner-box-proteico.webp",
@@ -60,7 +86,7 @@ const SLIDES: Slide[] = [
     cta: "Ver Desayunos y Meriendas",
     action: "desayunos",
   },
-  // 2 — Waffles salados congelados (foto de fondo)
+  // 3 — Waffles salados congelados (foto de fondo)
   {
     id: 1,
     image: "/images/banner/banner-waffle-salado-foto.webp",
@@ -72,7 +98,7 @@ const SLIDES: Slide[] = [
     cta: "Ver Waffles",
     action: "waffles",
   },
-  // 3 — Soy Sin Gluten
+  // 4 — Soy Sin Gluten
   {
     id: 2,
     image: "/images/banner/banner-soysingluten.webp",
@@ -85,7 +111,7 @@ const SLIDES: Slide[] = [
     action: "viandas",
     logo: "/images/banner/logo-soysingluten.webp",
   },
-  // 4 — Postres individuales
+  // 5 — Postres individuales
   {
     id: 3,
     image: "/images/banner/banner-postres-v3.webp",
@@ -97,7 +123,7 @@ const SLIDES: Slide[] = [
     cta: "Ver Postres",
     action: "postres",
   },
-  // 5 — Delivery
+  // 6 — Delivery
   {
     id: 4,
     image: "/images/banner/banner-delivery.webp",
@@ -110,23 +136,6 @@ const SLIDES: Slide[] = [
     action: "catalog",
     ctaHref:
       "https://wa.me/5493564626508?text=Hola%20Celisan!%20Quería%20consultar%20los%20días,%20horarios%20y%20costos%20del%20servicio%20de%20delivery",
-  },
-  // 6 — Evento Tarde de Waffles en Bar Gardenia (sin publicar hasta confirmar fecha)
-  {
-    id: 5,
-    image: "/images/banner/banner-tarde-waffles-gardenia-v2.webp",
-    imageAlt: "Tarde de Waffles en Bar Gardenia — waffle con avocado y café",
-    overlayClassName: "from-black/80 via-black/50 to-transparent",
-    kicker: "Evento especial",
-    title: "Tarde de Waffles en Bar Gardenia",
-    subtitle: "Fecha y hora a confirmar — ¡no te lo pierdas!",
-    subtitleBelow: true,
-    cta: "Consultar por WhatsApp",
-    action: "catalog",
-    ctaHref:
-      "https://wa.me/5493564626508?text=%C2%A1Hola%20Celisan!%20Quiero%20m%C3%A1s%20info%20para%20reservar%20mesa%20en%20la%20Tarde%20de%20Waffles%20en%20Bar%20Gardenia.%20%C2%BFHay%20disponibilidad%3F",
-    logo: "/images/banner/logo-gardenia.webp",
-    legal: "Precios promocionales por degustación. Dos variantes: proteica y clásica. Opción waffle integral para alérgicos a la lactosa.",
   },
 ];
 
@@ -311,9 +320,19 @@ export default function HeroSlider() {
                         {slide.kicker}
                       </p>
                     )}
-                    <h1 className="text-2xl sm:text-3xl lg:text-5xl font-bold leading-tight tracking-tight drop-shadow-sm whitespace-pre-line">
-                      {slide.title}
-                    </h1>
+                    {slide.titleImage ? (
+                      <h1 className="drop-shadow-sm">
+                        <img
+                          src={slide.titleImage}
+                          alt={slide.title}
+                          className="h-28 sm:h-36 lg:h-48 w-auto object-contain"
+                        />
+                      </h1>
+                    ) : (
+                      <h1 className="text-2xl sm:text-3xl lg:text-5xl font-bold leading-tight tracking-tight drop-shadow-sm whitespace-pre-line">
+                        {slide.title}
+                      </h1>
+                    )}
                     {!slide.subtitleBelow && slide.subtitle && (
                       <p className="mt-3 sm:mt-4 text-sm sm:text-base lg:text-lg text-white/90 leading-relaxed max-w-lg">
                         {slide.subtitle}
@@ -339,7 +358,13 @@ export default function HeroSlider() {
                     )}
                     {slide.subtitleBelow && (
                       <p className="mt-3 text-sm sm:text-base text-white/90 font-medium leading-snug">
+                        {slide.subtitleBold && (
+                          <strong className="font-bold">{slide.subtitleBold}</strong>
+                        )}
                         {slide.subtitle}
+                        {slide.musicLive && (
+                          <strong className="font-bold"> ¡Con música en vivo!</strong>
+                        )}
                       </p>
                     )}
                     {slide.logo && (
