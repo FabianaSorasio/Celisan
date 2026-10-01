@@ -325,7 +325,7 @@ export default function HeroSlider() {
                         <img
                           src={slide.titleImage}
                           alt={slide.title}
-                          className="h-28 sm:h-36 lg:h-48 w-auto object-contain"
+                          className="h-14 sm:h-28 lg:h-48 w-auto object-contain"
                         />
                       </h1>
                     ) : (
