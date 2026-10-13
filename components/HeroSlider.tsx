@@ -52,7 +52,23 @@ interface Slide {
 }
 
 const SLIDES: Slide[] = [
-  // 1 — Desayunos y Meriendas
+  // 1 — Box Desayunos Día de la Madre
+  {
+    id: 6,
+    image: "/images/banner/banner-box-dia-de-la-madre.webp",
+    imageAlt: "Box de Desayunos Celisan para el Día de la Madre, con waffle, tartaleta y café",
+    overlayClassName: "from-black/80 via-black/50 to-transparent",
+    kicker: "¡Edición especial!",
+    title: "Box Desayunos Día de la Madre",
+    subtitleBold: "¡Cupos limitados! ",
+    subtitle: "Reservá ya tu box sorpresa 100% sin gluten.",
+    subtitleBelow: true,
+    cta: "Consultar por WhatsApp",
+    action: "catalog",
+    ctaHref:
+      "https://wa.me/5493564626508?text=%C2%A1Hola%20Celisan!%20Quiero%20reservar%20un%20Box%20Desayunos%20para%20el%20D%C3%ADa%20de%20la%20Madre.%20%C2%BFTienen%20disponibilidad%3F",
+  },
+  // 2 — Desayunos y Meriendas
   {
     id: 0,
     image: "/images/banner/banner-box-proteico.webp",
@@ -66,7 +82,7 @@ const SLIDES: Slide[] = [
     cta: "Ver Desayunos y Meriendas",
     action: "desayunos",
   },
-  // 2 — Waffles salados congelados (foto de fondo)
+  // 3 — Waffles salados congelados (foto de fondo)
   {
     id: 1,
     image: "/images/banner/banner-waffle-salado-foto.webp",
@@ -78,7 +94,7 @@ const SLIDES: Slide[] = [
     cta: "Ver Waffles",
     action: "waffles",
   },
-  // 3 — Soy Sin Gluten
+  // 4 — Soy Sin Gluten
   {
     id: 2,
     image: "/images/banner/banner-soysingluten.webp",
@@ -91,7 +107,7 @@ const SLIDES: Slide[] = [
     action: "viandas",
     logo: "/images/banner/logo-soysingluten.webp",
   },
-  // 4 — Postres individuales
+  // 5 — Postres individuales
   {
     id: 3,
     image: "/images/banner/banner-postres-v3.webp",
@@ -103,7 +119,7 @@ const SLIDES: Slide[] = [
     cta: "Ver Postres",
     action: "postres",
   },
-  // 5 — Delivery
+  // 6 — Delivery
   {
     id: 4,
     image: "/images/banner/banner-delivery.webp",
