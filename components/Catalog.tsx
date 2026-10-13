@@ -96,6 +96,17 @@ export default function Catalog({ products }: CatalogProps) {
         </section>
       )}
 
+      {selectedCategory === "Box Día de la Madre" && (
+        <section className="mb-8 rounded-2xl p-6 sm:p-8 text-center border-2 border-celisan-red/30 bg-celisan-red/5">
+          <p className="text-xs sm:text-sm font-semibold tracking-wide text-celisan-red uppercase mb-1">
+            Edición limitada
+          </p>
+          <p className="text-base sm:text-lg font-bold text-gray-800">
+            Box Desayunos Día de la Madre — ¡Cupos limitados, reservá ya!
+          </p>
+        </section>
+      )}
+
       {filtered.length === 0 ? (
         <p className="text-center text-gray-500 py-16">
           No hay productos en esta categoría.

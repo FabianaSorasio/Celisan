@@ -1,5 +1,6 @@
 export const CATALOG_CATEGORIES = [
   "Todas",
+  "Box Día de la Madre",
   "Viandas Soy Sin Gluten",
   "Panificados y Pastas congeladas Soy Sin Gluten",
   "Waffles Congelados",
