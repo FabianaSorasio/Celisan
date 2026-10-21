@@ -3,7 +3,7 @@
 import { CATALOG_CATEGORIES, type CatalogCategoryFilter } from "@/lib/products";
 
 // Categorías ocultas temporalmente del menú (siguen existiendo en los datos)
-const HIDDEN_CATEGORIES: CatalogCategoryFilter[] = ["Waffles con Cobertura"];
+const HIDDEN_CATEGORIES: CatalogCategoryFilter[] = ["Waffles con Cobertura", "Box Día de la Madre"];
 const VISIBLE_CATEGORIES = CATALOG_CATEGORIES.filter(
   (c) => !HIDDEN_CATEGORIES.includes(c)
 );

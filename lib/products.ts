@@ -11,6 +11,7 @@ export const CATALOG_CATEGORIES = [
   "Panificados y Pastas Miska",
   "Hamburguesas Veggie Plantario",
   "Pancakes By Giro",
+  "Productos Cresfood",
 ] as const;
 
 export type CatalogCategoryFilter = (typeof CATALOG_CATEGORIES)[number];

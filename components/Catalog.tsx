@@ -12,7 +12,7 @@ import { CATALOG_CATEGORIES } from "@/lib/products";
 import type { CatalogCategoryFilter, Product } from "@/lib/products";
 
 // Categorías ocultas temporalmente (siguen existiendo en los datos)
-const HIDDEN_CATEGORIES: string[] = ["Waffles con Cobertura"];
+const HIDDEN_CATEGORIES: string[] = ["Waffles con Cobertura", "Box Día de la Madre"];
 
 interface CatalogProps {
   products: Product[];
