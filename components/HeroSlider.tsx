@@ -106,12 +106,14 @@ const SLIDES: Slide[] = [
   // 5 — Delivery
   {
     id: 4,
-    image: "/images/banner/banner-delivery.webp",
+    image: "/images/banner/banner-delivery-v2.webp",
     imageAlt: "Delivery Celisan — llevamos el sabor a tu puerta",
     overlayClassName: "from-black/80 via-olive/55 to-black/35",
     title: "¡Llevamos el sabor a tu puerta!",
+    subtitleBold: "Lunes, miércoles y sábados de 11:30 a 13 hs. ",
     subtitle:
-      "Consultá por nuestro servicio de delivery para conocer los días, horarios y costos. Válido sólo en la ciudad de San Francisco.",
+      "Consultá por costos y zona de cobertura. Válido sólo en la ciudad de San Francisco.",
+    subtitleBelow: true,
     cta: "Consultar por WhatsApp",
     action: "catalog",
     ctaHref:
