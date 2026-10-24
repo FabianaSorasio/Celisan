@@ -65,6 +65,7 @@ const SLIDES: Slide[] = [
     sinLactosa: true,
     cta: "Ver Desayunos y Meriendas",
     action: "desayunos",
+    legal: "Delivery gratis. Válido sólo en la ciudad de San Francisco.",
   },
   // 2 — Waffles salados congelados (foto de fondo)
   {
