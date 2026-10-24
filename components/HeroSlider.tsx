@@ -110,15 +110,13 @@ const SLIDES: Slide[] = [
     imageAlt: "Delivery Celisan — llevamos el sabor a tu puerta",
     overlayClassName: "from-black/80 via-olive/55 to-black/35",
     title: "¡Llevamos el sabor a tu puerta!",
-    subtitleBold: "Lunes, miércoles y sábados de 11:30 a 13 hs. ",
-    subtitle:
-      "Envío gratis en compras mayores a $35.000. Costo de envío: $2.500.",
+    subtitle: "Lunes, miércoles y sábados de 11:30 a 13 hs.",
     subtitleBelow: true,
     cta: "Consultar por WhatsApp",
     action: "catalog",
     ctaHref:
       "https://wa.me/5493564626508?text=Hola%20Celisan!%20Quería%20consultar%20los%20días,%20horarios%20y%20costos%20del%20servicio%20de%20delivery",
-    legal: "Válido sólo en la ciudad de San Francisco.",
+    legal: "Envío gratis en compras mayores a $35.000. Costo de envío: $2.500. Válido sólo en la ciudad de San Francisco.",
   },
 ];
 
