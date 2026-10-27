@@ -117,7 +117,7 @@ const SLIDES: Slide[] = [
     action: "catalog",
     ctaHref:
       "https://wa.me/5493564626508?text=Hola%20Celisan!%20Quería%20consultar%20los%20días,%20horarios%20y%20costos%20del%20servicio%20de%20delivery",
-    legal: "Envío gratis en compras mayores a $35.000. Costo de envío: $2.500. Válido sólo en la ciudad de San Francisco.",
+    legal: "Envío gratis en compras mayores a $30.000. Costo de envío: $2.000. Válido sólo en la ciudad de San Francisco.",
   },
 ];
 
