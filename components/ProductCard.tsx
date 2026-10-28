@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import type { Product } from "@/lib/products";
 import { useCart } from "@/components/CartProvider";
 import DesayunoOrderModal from "@/components/DesayunoOrderModal";
+import BoxDesayunoModal from "@/components/BoxDesayunoModal";
 import PostreModulosModal from "@/components/PostreModulosModal";
 import ViandaCumpleOrderModal from "@/components/ViandaCumpleOrderModal";
 import ImageModal from "@/components/ImageModal";
@@ -34,6 +35,7 @@ type Sabor = "Dulces" | "Salados";
 export default function ProductCard({ product }: ProductCardProps) {
   const { addItem } = useCart();
   const isDesayuno = product.category === "Desayunos y Meriendas";
+  const isBoxArmable = product.id === "box-armado-desayuno";
   const isViandaCumple = product.category === "Vianda Fiesta!";
   const isPostre = product.category === "Postres individuales";
   const isPedidoEspecial = isDesayuno || isViandaCumple || isPostre;
@@ -353,7 +355,15 @@ export default function ProductCard({ product }: ProductCardProps) {
               ${product.price.toLocaleString("es-AR")}
             </span>
           </span>
-          {isDesayuno ? (
+          {isBoxArmable ? (
+            <button
+              type="button"
+              onClick={() => setShowDesayunoModal(true)}
+              className="px-5 py-2.5 rounded-xl bg-celisan-red text-white text-sm font-semibold hover:opacity-90 transition-all active:scale-95 shadow-sm"
+            >
+              Armar mi Box
+            </button>
+          ) : isDesayuno ? (
             <button
               type="button"
               onClick={() => setShowDesayunoModal(true)}
@@ -399,7 +409,11 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
       </div>
 
-      {showDesayunoModal && createPortal(
+      {showDesayunoModal && isBoxArmable && createPortal(
+        <BoxDesayunoModal onClose={() => setShowDesayunoModal(false)} />,
+        document.body
+      )}
+      {showDesayunoModal && !isBoxArmable && createPortal(
         <DesayunoOrderModal
           productName={product.name}
           productPrice={product.price}
