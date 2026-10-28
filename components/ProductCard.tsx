@@ -226,7 +226,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             const visible = showFullDesc ? lines : lines.slice(0, PREVIEW);
             return (
               <div className="mb-3">
-                <p className="text-sm text-gray-600 whitespace-pre-line first-line:font-bold first-line:text-celisan-red">
+                <p className={`text-sm text-gray-600 whitespace-pre-line ${isBoxArmable ? "" : "first-line:font-bold first-line:text-celisan-red"}`}>
                   {visible.join("\n")}
                 </p>
                 {needsToggle && (

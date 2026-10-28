@@ -7,9 +7,8 @@ const testProduct: Product = {
   category: "Desayunos y Meriendas",
   price: 28000,
   description:
-    "Box base: infusión + 2 waffles salados + queso crema, palta y endulzantes + delivery a domicilio. Sumá extras a tu gusto.",
-  image:
-    "https://pub-f0e70736a7c2487fab7517b592d315f4.r2.dev/images/productos/desayunos/des-clasico-2.png",
+    "Infusión + 2 waffles salados + queso crema, palta y endulzantes + delivery a domicilio. Sumá extras a tu gusto.",
+  image: "/images/productos/desayunos/box-proteico-base.webp",
   stock: 99,
   available: true,
   imageX: 50,

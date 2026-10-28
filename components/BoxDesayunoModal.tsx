@@ -95,8 +95,8 @@ export default function BoxDesayunoModal({ onClose }: BoxDesayunoModalProps) {
         {/* Header */}
         <div className="bg-celisan-red px-5 py-4 flex items-center justify-between shrink-0">
           <div>
-            <p className="text-white/80 text-xs font-medium uppercase tracking-wide">Box Proteico Base</p>
-            <h2 className="text-white font-bold text-lg leading-tight">Armá tu Desayuno o Merienda</h2>
+            <p className="text-white/80 text-xs font-medium uppercase tracking-wide">Armá tu Box</p>
+            <h2 className="text-white font-bold text-lg leading-tight">Box Proteico Base</h2>
           </div>
           <button
             type="button"
@@ -109,7 +109,7 @@ export default function BoxDesayunoModal({ onClose }: BoxDesayunoModalProps) {
         {/* Formulario */}
         <div className="p-5 space-y-4 overflow-y-auto">
           <div className="bg-cream/60 border border-olive/20 rounded-xl px-3 py-2.5">
-            <p className="text-xs font-semibold text-olive mb-0.5">Incluye el Box Proteico Base:</p>
+            <p className="text-xs font-semibold text-olive mb-0.5">Incluye:</p>
             <p className="text-xs text-gray-600">
               Infusión + 2 waffles salados + queso crema, palta y endulzantes + delivery a domicilio.
             </p>
