@@ -24,6 +24,7 @@ const EXTRAS: Extra[] = [
   { key: "fruta", label: "Fruta", price: 1500 },
   { key: "mermelada", label: "Mermelada", price: 500 },
   { key: "dulceDeLeche", label: "Dulce de leche", price: 800 },
+  { key: "panIntegral", label: "Pan integral sin leche (4 rodajas)", price: 2500 },
   { key: "tazaCuchara", label: "Taza con cuchara", price: 15000 },
 ];
 
