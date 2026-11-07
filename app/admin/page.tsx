@@ -368,6 +368,25 @@ export default function AdminPage() {
     buildWhatsAppList(inStock, "¡Hola! 👋 Este es el catálogo completo de Celisan, con lo que tenemos disponible ahora:");
   };
 
+  const SIN_GLUTEN_LIST_CATEGORIES: ProductCategory[] = [
+    "Viandas Soy Sin Gluten",
+    "Panificados y Pastas congeladas Soy Sin Gluten",
+    "Waffles Congelados",
+    "Panificados y Pastas Miska",
+    "Hamburguesas Veggie Plantario",
+    "Productos Cresfood",
+  ];
+
+  const handleSendSinGlutenList = () => {
+    const inStock = products.filter(
+      (p) =>
+        p.available !== false &&
+        SIN_GLUTEN_LIST_CATEGORIES.includes(p.category) &&
+        effectiveStock(p) > 0
+    );
+    buildWhatsAppList(inStock, "¡Hola! 👋 Este es nuestro listado de productos sin gluten disponibles:");
+  };
+
   const toggleSelected = (id: string) => {
     setSelectedIds((prev) => {
       const next = new Set(prev);
@@ -569,6 +588,13 @@ export default function AdminPage() {
                 className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-white/10 text-white font-bold text-sm hover:bg-white/20 transition-colors"
               >
                 📋 Todo el stock
+              </button>
+              <button
+                onClick={handleSendSinGlutenList}
+                title="Arma la lista de Viandas, Panificados, Waffles Congelados, Miska, Plantario y Cresfood con stock, y abre WhatsApp"
+                className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-white/10 text-white font-bold text-sm hover:bg-white/20 transition-colors"
+              >
+                📋 Líneas Sin Gluten
               </button>
               <button
                 onClick={() => setSelectMode(true)}
